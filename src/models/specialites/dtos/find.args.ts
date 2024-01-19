@@ -12,11 +12,21 @@ registerEnumType(Prisma.SpecialiteScalarFieldEnum, {
 class FindManySpecialiteArgsStrict
   implements RestrictProperties<FindManySpecialiteArgsStrict, Omit<Prisma.SpecialiteFindManyArgs, 'include' | 'select'>>
 {
+  @Field(() => SpecialiteWhereInput, { nullable: true })
   where: SpecialiteWhereInput
+
+  @Field(() => [SpecialiteOrderByWithRelationInput], { nullable: true })
   orderBy: SpecialiteOrderByWithRelationInput[]
+
+  @Field(() => SpecialiteWhereUniqueInput, { nullable: true })
   cursor: SpecialiteWhereUniqueInput
+
+  @Field(() => Number, { nullable: true })
   take: number
+
+  @Field(() => Number, { nullable: true })
   skip: number
+
   @Field(() => [Prisma.SpecialiteScalarFieldEnum])
   distinct: Prisma.SpecialiteScalarFieldEnum[]
 }
@@ -24,7 +34,7 @@ class FindManySpecialiteArgsStrict
 @ArgsType()
 export class FindManySpecialiteArgs extends PartialType(
   FindManySpecialiteArgsStrict,
-) {}
+) { }
 
 @ArgsType()
 export class FindUniqueSpecialiteArgs {

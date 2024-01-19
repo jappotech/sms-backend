@@ -3,10 +3,11 @@ import { FindManyClasseArgs, FindUniqueClasseArgs } from './dtos/find.args'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { CreateClasseInput } from './dtos/create-classe.input'
 import { UpdateClasseInput } from './dtos/update-classe.input'
+import { Prisma } from '@prisma/client'
 
 @Injectable()
 export class ClassesService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   create(createClasseInput: CreateClasseInput) {
     return this.prisma.classe.create({
       data: createClasseInput,

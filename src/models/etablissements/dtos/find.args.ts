@@ -12,11 +12,22 @@ registerEnumType(Prisma.EtablissementScalarFieldEnum, {
 class FindManyEtablissementArgsStrict
   implements RestrictProperties<FindManyEtablissementArgsStrict, Omit<Prisma.EtablissementFindManyArgs, 'include' | 'select'>>
 {
+
+  @Field(() => EtablissementWhereInput, { nullable: true })
   where: EtablissementWhereInput
+
+  @Field(() => [EtablissementOrderByWithRelationInput], { nullable: true })
   orderBy: EtablissementOrderByWithRelationInput[]
+
+  @Field(() => EtablissementWhereUniqueInput, { nullable: true })
   cursor: EtablissementWhereUniqueInput
+
+  @Field(() => Number, { nullable: true })
   take: number
+
+  @Field(() => Number, { nullable: true })
   skip: number
+
   @Field(() => [Prisma.EtablissementScalarFieldEnum])
   distinct: Prisma.EtablissementScalarFieldEnum[]
 }
@@ -24,7 +35,7 @@ class FindManyEtablissementArgsStrict
 @ArgsType()
 export class FindManyEtablissementArgs extends PartialType(
   FindManyEtablissementArgsStrict,
-) {}
+) { }
 
 @ArgsType()
 export class FindUniqueEtablissementArgs {

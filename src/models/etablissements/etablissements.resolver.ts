@@ -8,6 +8,7 @@ import { checkRowLevelPermission } from 'src/common/auth/util'
 import { GetUserType } from 'src/common/types'
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { PrismaService } from 'src/common/prisma/prisma.service'
+import { Prisma } from '@prisma/client'
 
 @Resolver(() => Etablissement)
 export class EtablissementsResolver {
@@ -17,7 +18,7 @@ export class EtablissementsResolver {
   @AllowAuthenticated()
   @Mutation(() => Etablissement)
   createEtablissement(@Args('createEtablissementInput') args: CreateEtablissementInput, @GetUser() user: GetUserType) {
-    // checkRowLevelPermission(user, args.uid)
+    // // checkRowLevelPermission(user, args.uid)
     return this.etablissementsService.create(args)
   }
 
@@ -35,7 +36,7 @@ export class EtablissementsResolver {
   @Mutation(() => Etablissement)
   async updateEtablissement(@Args('updateEtablissementInput') args: UpdateEtablissementInput, @GetUser() user: GetUserType) {
     const etablissement = await this.prisma.etablissement.findUnique({ where: { id: args.id } })
-    checkRowLevelPermission(user, etablissement.uid)
+    // checkRowLevelPermission(user, etablissement.uid)
     return this.etablissementsService.update(args)
   }
 
@@ -43,7 +44,7 @@ export class EtablissementsResolver {
   @Mutation(() => Etablissement)
   async removeEtablissement(@Args() args: FindUniqueEtablissementArgs, @GetUser() user: GetUserType) {
     const etablissement = await this.prisma.etablissement.findUnique(args)
-    checkRowLevelPermission(user, etablissement.uid)
+    // checkRowLevelPermission(user, etablissement.uid)
     return this.etablissementsService.remove(args)
   }
 }

@@ -8,6 +8,7 @@ import { checkRowLevelPermission } from 'src/common/auth/util'
 import { GetUserType } from 'src/common/types'
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { PrismaService } from 'src/common/prisma/prisma.service'
+import { Prisma } from '@prisma/client'
 
 @Resolver(() => Diplome)
 export class DiplomesResolver {
@@ -17,7 +18,7 @@ export class DiplomesResolver {
   @AllowAuthenticated()
   @Mutation(() => Diplome)
   createDiplome(@Args('createDiplomeInput') args: CreateDiplomeInput, @GetUser() user: GetUserType) {
-    // checkRowLevelPermission(user, args.uid)
+    // // checkRowLevelPermission(user, args.uid)
     return this.diplomesService.create(args)
   }
 
@@ -35,7 +36,7 @@ export class DiplomesResolver {
   @Mutation(() => Diplome)
   async updateDiplome(@Args('updateDiplomeInput') args: UpdateDiplomeInput, @GetUser() user: GetUserType) {
     const diplome = await this.prisma.diplome.findUnique({ where: { id: args.id } })
-    checkRowLevelPermission(user, diplome.uid)
+    // checkRowLevelPermission(user, diplome.uid)
     return this.diplomesService.update(args)
   }
 
@@ -43,7 +44,7 @@ export class DiplomesResolver {
   @Mutation(() => Diplome)
   async removeDiplome(@Args() args: FindUniqueDiplomeArgs, @GetUser() user: GetUserType) {
     const diplome = await this.prisma.diplome.findUnique(args)
-    checkRowLevelPermission(user, diplome.uid)
+    // checkRowLevelPermission(user, diplome.uid)
     return this.diplomesService.remove(args)
   }
 }

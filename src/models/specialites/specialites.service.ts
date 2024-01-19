@@ -3,10 +3,11 @@ import { FindManySpecialiteArgs, FindUniqueSpecialiteArgs } from './dtos/find.ar
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { CreateSpecialiteInput } from './dtos/create-specialite.input'
 import { UpdateSpecialiteInput } from './dtos/update-specialite.input'
+import { Prisma } from '@prisma/client'
 
 @Injectable()
 export class SpecialitesService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   create(createSpecialiteInput: CreateSpecialiteInput) {
     return this.prisma.specialite.create({
       data: createSpecialiteInput,

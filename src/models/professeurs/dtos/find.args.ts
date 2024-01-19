@@ -12,11 +12,21 @@ registerEnumType(Prisma.ProfesseurScalarFieldEnum, {
 class FindManyProfesseurArgsStrict
   implements RestrictProperties<FindManyProfesseurArgsStrict, Omit<Prisma.ProfesseurFindManyArgs, 'include' | 'select'>>
 {
+  @Field(() => ProfesseurWhereInput, { nullable: true })
   where: ProfesseurWhereInput
+
+  @Field(() => [ProfesseurOrderByWithRelationInput], { nullable: true })
   orderBy: ProfesseurOrderByWithRelationInput[]
+
+  @Field(() => ProfesseurWhereUniqueInput, { nullable: true })
   cursor: ProfesseurWhereUniqueInput
+
+  @Field(() => Number, { nullable: true })
   take: number
+
+  @Field(() => Number, { nullable: true })
   skip: number
+
   @Field(() => [Prisma.ProfesseurScalarFieldEnum])
   distinct: Prisma.ProfesseurScalarFieldEnum[]
 }
@@ -24,7 +34,7 @@ class FindManyProfesseurArgsStrict
 @ArgsType()
 export class FindManyProfesseurArgs extends PartialType(
   FindManyProfesseurArgsStrict,
-) {}
+) { }
 
 @ArgsType()
 export class FindUniqueProfesseurArgs {

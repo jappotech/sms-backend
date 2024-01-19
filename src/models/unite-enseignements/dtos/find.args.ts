@@ -12,11 +12,21 @@ registerEnumType(Prisma.UniteEnseignementScalarFieldEnum, {
 class FindManyUniteEnseignementArgsStrict
   implements RestrictProperties<FindManyUniteEnseignementArgsStrict, Omit<Prisma.UniteEnseignementFindManyArgs, 'include' | 'select'>>
 {
+  @Field(() => UniteEnseignementWhereInput, { nullable: true })
   where: UniteEnseignementWhereInput
+
+  @Field(() => [UniteEnseignementOrderByWithRelationInput], { nullable: true })
   orderBy: UniteEnseignementOrderByWithRelationInput[]
+
+  @Field(() => UniteEnseignementWhereUniqueInput, { nullable: true })
   cursor: UniteEnseignementWhereUniqueInput
+
+  @Field(() => Number, { nullable: true })
   take: number
+
+  @Field(() => Number, { nullable: true })
   skip: number
+
   @Field(() => [Prisma.UniteEnseignementScalarFieldEnum])
   distinct: Prisma.UniteEnseignementScalarFieldEnum[]
 }
@@ -24,7 +34,7 @@ class FindManyUniteEnseignementArgsStrict
 @ArgsType()
 export class FindManyUniteEnseignementArgs extends PartialType(
   FindManyUniteEnseignementArgsStrict,
-) {}
+) { }
 
 @ArgsType()
 export class FindUniqueUniteEnseignementArgs {

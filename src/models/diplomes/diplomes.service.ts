@@ -3,10 +3,11 @@ import { FindManyDiplomeArgs, FindUniqueDiplomeArgs } from './dtos/find.args'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { CreateDiplomeInput } from './dtos/create-diplome.input'
 import { UpdateDiplomeInput } from './dtos/update-diplome.input'
+import { Prisma } from '@prisma/client'
 
 @Injectable()
 export class DiplomesService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   create(createDiplomeInput: CreateDiplomeInput) {
     return this.prisma.diplome.create({
       data: createDiplomeInput,

@@ -12,11 +12,21 @@ registerEnumType(Prisma.AdresseScalarFieldEnum, {
 class FindManyAdresseArgsStrict
   implements RestrictProperties<FindManyAdresseArgsStrict, Omit<Prisma.AdresseFindManyArgs, 'include' | 'select'>>
 {
+  @Field(() => AdresseWhereInput, { nullable: true })
   where: AdresseWhereInput
+
+  @Field(() => [AdresseOrderByWithRelationInput], { nullable: true })
   orderBy: AdresseOrderByWithRelationInput[]
+
+  @Field(() => AdresseWhereUniqueInput, { nullable: true })
   cursor: AdresseWhereUniqueInput
+
+  @Field(() => Number, { nullable: true })
   take: number
+
+  @Field(() => Number, { nullable: true })
   skip: number
+
   @Field(() => [Prisma.AdresseScalarFieldEnum])
   distinct: Prisma.AdresseScalarFieldEnum[]
 }
@@ -24,7 +34,7 @@ class FindManyAdresseArgsStrict
 @ArgsType()
 export class FindManyAdresseArgs extends PartialType(
   FindManyAdresseArgsStrict,
-) {}
+) { }
 
 @ArgsType()
 export class FindUniqueAdresseArgs {

@@ -12,11 +12,21 @@ registerEnumType(Prisma.ReseauSocialScalarFieldEnum, {
 class FindManyReseauSocialArgsStrict
   implements RestrictProperties<FindManyReseauSocialArgsStrict, Omit<Prisma.ReseauSocialFindManyArgs, 'include' | 'select'>>
 {
+  @Field(() => ReseauSocialWhereInput, { nullable: true })
   where: ReseauSocialWhereInput
+
+  @Field(() => [ReseauSocialOrderByWithRelationInput], { nullable: true })
   orderBy: ReseauSocialOrderByWithRelationInput[]
+
+  @Field(() => ReseauSocialWhereUniqueInput, { nullable: true })
   cursor: ReseauSocialWhereUniqueInput
+
+  @Field(() => Number, { nullable: true })
   take: number
+
+  @Field(() => Number, { nullable: true })
   skip: number
+
   @Field(() => [Prisma.ReseauSocialScalarFieldEnum])
   distinct: Prisma.ReseauSocialScalarFieldEnum[]
 }
@@ -24,7 +34,7 @@ class FindManyReseauSocialArgsStrict
 @ArgsType()
 export class FindManyReseauSocialArgs extends PartialType(
   FindManyReseauSocialArgsStrict,
-) {}
+) { }
 
 @ArgsType()
 export class FindUniqueReseauSocialArgs {

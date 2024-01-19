@@ -3,10 +3,11 @@ import { FindManyUtilisateurArgs, FindUniqueUtilisateurArgs } from './dtos/find.
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { CreateUtilisateurInput } from './dtos/create-utilisateur.input'
 import { UpdateUtilisateurInput } from './dtos/update-utilisateur.input'
+import { Prisma } from '@prisma/client'
 
 @Injectable()
 export class UtilisateursService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   create(createUtilisateurInput: CreateUtilisateurInput) {
     return this.prisma.utilisateur.create({
       data: createUtilisateurInput,

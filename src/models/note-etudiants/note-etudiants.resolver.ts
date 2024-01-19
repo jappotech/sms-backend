@@ -8,6 +8,7 @@ import { checkRowLevelPermission } from 'src/common/auth/util'
 import { GetUserType } from 'src/common/types'
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { PrismaService } from 'src/common/prisma/prisma.service'
+import { Prisma } from '@prisma/client'
 
 @Resolver(() => NoteEtudiant)
 export class NoteEtudiantsResolver {
@@ -17,7 +18,7 @@ export class NoteEtudiantsResolver {
   @AllowAuthenticated()
   @Mutation(() => NoteEtudiant)
   createNoteEtudiant(@Args('createNoteEtudiantInput') args: CreateNoteEtudiantInput, @GetUser() user: GetUserType) {
-    // checkRowLevelPermission(user, args.uid)
+    // // checkRowLevelPermission(user, args.uid)
     return this.noteEtudiantsService.create(args)
   }
 
@@ -35,7 +36,7 @@ export class NoteEtudiantsResolver {
   @Mutation(() => NoteEtudiant)
   async updateNoteEtudiant(@Args('updateNoteEtudiantInput') args: UpdateNoteEtudiantInput, @GetUser() user: GetUserType) {
     const noteEtudiant = await this.prisma.noteEtudiant.findUnique({ where: { id: args.id } })
-    checkRowLevelPermission(user, noteEtudiant.uid)
+    // checkRowLevelPermission(user, noteEtudiant.uid)
     return this.noteEtudiantsService.update(args)
   }
 
@@ -43,7 +44,7 @@ export class NoteEtudiantsResolver {
   @Mutation(() => NoteEtudiant)
   async removeNoteEtudiant(@Args() args: FindUniqueNoteEtudiantArgs, @GetUser() user: GetUserType) {
     const noteEtudiant = await this.prisma.noteEtudiant.findUnique(args)
-    checkRowLevelPermission(user, noteEtudiant.uid)
+    // checkRowLevelPermission(user, noteEtudiant.uid)
     return this.noteEtudiantsService.remove(args)
   }
 }

@@ -3,10 +3,11 @@ import { FindManySalleArgs, FindUniqueSalleArgs } from './dtos/find.args'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { CreateSalleInput } from './dtos/create-salle.input'
 import { UpdateSalleInput } from './dtos/update-salle.input'
+import { Prisma } from '@prisma/client'
 
 @Injectable()
 export class SallesService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   create(createSalleInput: CreateSalleInput) {
     return this.prisma.salle.create({
       data: createSalleInput,

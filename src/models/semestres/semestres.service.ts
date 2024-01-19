@@ -3,10 +3,11 @@ import { FindManySemestreArgs, FindUniqueSemestreArgs } from './dtos/find.args'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { CreateSemestreInput } from './dtos/create-semestre.input'
 import { UpdateSemestreInput } from './dtos/update-semestre.input'
+import { Prisma } from '@prisma/client'
 
 @Injectable()
 export class SemestresService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   create(createSemestreInput: CreateSemestreInput) {
     return this.prisma.semestre.create({
       data: createSemestreInput,

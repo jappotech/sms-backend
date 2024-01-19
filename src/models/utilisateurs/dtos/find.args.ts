@@ -12,11 +12,21 @@ registerEnumType(Prisma.UtilisateurScalarFieldEnum, {
 class FindManyUtilisateurArgsStrict
   implements RestrictProperties<FindManyUtilisateurArgsStrict, Omit<Prisma.UtilisateurFindManyArgs, 'include' | 'select'>>
 {
+  @Field(() => UtilisateurWhereInput, { nullable: true })
   where: UtilisateurWhereInput
+
+  @Field(() => [UtilisateurOrderByWithRelationInput], { nullable: true })
   orderBy: UtilisateurOrderByWithRelationInput[]
+
+  @Field(() => UtilisateurWhereInput, { nullable: true })
   cursor: UtilisateurWhereUniqueInput
+
+  @Field(() => Number, { nullable: true })
   take: number
+
+  @Field(() => Number, { nullable: true })
   skip: number
+
   @Field(() => [Prisma.UtilisateurScalarFieldEnum])
   distinct: Prisma.UtilisateurScalarFieldEnum[]
 }
@@ -24,7 +34,7 @@ class FindManyUtilisateurArgsStrict
 @ArgsType()
 export class FindManyUtilisateurArgs extends PartialType(
   FindManyUtilisateurArgsStrict,
-) {}
+) { }
 
 @ArgsType()
 export class FindUniqueUtilisateurArgs {

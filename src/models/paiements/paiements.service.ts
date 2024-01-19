@@ -3,10 +3,11 @@ import { FindManyPaiementArgs, FindUniquePaiementArgs } from './dtos/find.args'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { CreatePaiementInput } from './dtos/create-paiement.input'
 import { UpdatePaiementInput } from './dtos/update-paiement.input'
+import { Prisma } from '@prisma/client'
 
 @Injectable()
 export class PaiementsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   create(createPaiementInput: CreatePaiementInput) {
     return this.prisma.paiement.create({
       data: createPaiementInput,

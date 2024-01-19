@@ -17,8 +17,8 @@ export class UtilisateursResolver {
 
   @AllowAuthenticated()
   @Mutation(() => Utilisateur)
-  createUtilisateur(@Args('createUtilisateurInput') args: CreateUtilisateurInput & Prisma.UtilisateurCreateInput, @GetUser() user: GetUserType) {
-    // // checkRowLevelPermission(user, args.uid)
+  createUtilisateur(@Args('createUtilisateurInput') args: CreateUtilisateurInput, @GetUser() user: GetUserType) {
+    // // // checkRowLevelPermission(user, args.uid)
     return this.utilisateursService.create(args)
   }
 
@@ -36,7 +36,7 @@ export class UtilisateursResolver {
   @Mutation(() => Utilisateur)
   async updateUtilisateur(@Args('updateUtilisateurInput') args: UpdateUtilisateurInput, @GetUser() user: GetUserType) {
     const utilisateur = await this.prisma.utilisateur.findUnique({ where: { id: args.id } })
-    // checkRowLevelPermission(user, utilisateur.uid)
+    // // checkRowLevelPermission(user, utilisateur.uid)
     return this.utilisateursService.update(args)
   }
 
@@ -44,7 +44,7 @@ export class UtilisateursResolver {
   @Mutation(() => Utilisateur)
   async removeUtilisateur(@Args() args: FindUniqueUtilisateurArgs, @GetUser() user: GetUserType) {
     const utilisateur = await this.prisma.utilisateur.findUnique(args)
-    // checkRowLevelPermission(user, utilisateur.uid)
+    // // checkRowLevelPermission(user, utilisateur.uid)
     return this.utilisateursService.remove(args)
   }
 }

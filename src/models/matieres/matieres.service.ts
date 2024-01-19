@@ -3,10 +3,11 @@ import { FindManyMatiereArgs, FindUniqueMatiereArgs } from './dtos/find.args'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { CreateMatiereInput } from './dtos/create-matiere.input'
 import { UpdateMatiereInput } from './dtos/update-matiere.input'
+import { Prisma } from '@prisma/client'
 
 @Injectable()
 export class MatieresService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   create(createMatiereInput: CreateMatiereInput) {
     return this.prisma.matiere.create({
       data: createMatiereInput,

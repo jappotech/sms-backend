@@ -12,11 +12,21 @@ registerEnumType(Prisma.EvaluationEtudiantsScalarFieldEnum, {
 class FindManyEvaluationEtudiantsArgsStrict
   implements RestrictProperties<FindManyEvaluationEtudiantsArgsStrict, Omit<Prisma.EvaluationEtudiantsFindManyArgs, 'include' | 'select'>>
 {
+  @Field(() => EvaluationEtudiantsWhereInput, { nullable: true })
   where: EvaluationEtudiantsWhereInput
+
+  @Field(() => [EvaluationEtudiantsOrderByWithRelationInput], { nullable: true })
   orderBy: EvaluationEtudiantsOrderByWithRelationInput[]
+
+  @Field(() => EvaluationEtudiantsWhereUniqueInput, { nullable: true })
   cursor: EvaluationEtudiantsWhereUniqueInput
+
+  @Field(() => Number, { nullable: true })
   take: number
+
+  @Field(() => Number, { nullable: true })
   skip: number
+
   @Field(() => [Prisma.EvaluationEtudiantsScalarFieldEnum])
   distinct: Prisma.EvaluationEtudiantsScalarFieldEnum[]
 }
@@ -24,7 +34,7 @@ class FindManyEvaluationEtudiantsArgsStrict
 @ArgsType()
 export class FindManyEvaluationEtudiantsArgs extends PartialType(
   FindManyEvaluationEtudiantsArgsStrict,
-) {}
+) { }
 
 @ArgsType()
 export class FindUniqueEvaluationEtudiantsArgs {

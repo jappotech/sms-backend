@@ -3,10 +3,11 @@ import { FindManyAdresseArgs, FindUniqueAdresseArgs } from './dtos/find.args'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { CreateAdresseInput } from './dtos/create-adresse.input'
 import { UpdateAdresseInput } from './dtos/update-adresse.input'
+import { Prisma } from '@prisma/client'
 
 @Injectable()
 export class AdressesService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   create(createAdresseInput: CreateAdresseInput) {
     return this.prisma.adresse.create({
       data: createAdresseInput,

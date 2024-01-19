@@ -3,10 +3,11 @@ import { FindManyFeuillePresenceArgs, FindUniqueFeuillePresenceArgs } from './dt
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { CreateFeuillePresenceInput } from './dtos/create-feuille-presence.input'
 import { UpdateFeuillePresenceInput } from './dtos/update-feuille-presence.input'
+import { Prisma } from '@prisma/client'
 
 @Injectable()
 export class FeuillePresencesService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   create(createFeuillePresenceInput: CreateFeuillePresenceInput) {
     return this.prisma.feuillePresence.create({
       data: createFeuillePresenceInput,

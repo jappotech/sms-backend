@@ -10,6 +10,7 @@ import { PermissionListRelationFilter } from 'src/models/permissions/dtos/where.
 
 @InputType()
 export class UtilisateurWhereUniqueInput {
+  @Field(() => Number, { nullable: true })
   id: number
 }
 
@@ -42,13 +43,13 @@ export class UtilisateurWhereInputStrict implements RestrictProperties<Utilisate
   @Field(() => StringFilter, { nullable: true })
   cni: StringFilter
 
-  @Field(() => $Enums.Genre, { nullable: true })
+  @Field(() => StringFilter, { nullable: true })
   genre: Prisma.EnumGenreFilter;
 
   @Field(() => StringFilter, { nullable: true })
   nationalite: StringFilter
 
-  @Field(() => $Enums.GroupeSanguin, { nullable: true })
+  @Field(() => StringFilter, { nullable: true })
   groupeSanguin: Prisma.EnumGroupeSanguinNullableFilter;
 
   @Field(() => IntFilter, { nullable: true })
@@ -57,7 +58,91 @@ export class UtilisateurWhereInputStrict implements RestrictProperties<Utilisate
   @Field(() => StringFilter, { nullable: true })
   statutCompte: StringFilter;
 
-  @Field(() => $Enums.Role, { nullable: true })
+  @Field(() => StringFilter, { nullable: true })
+  roles: Prisma.EnumRoleNullableListFilter;
+
+  @Field(() => IntFilter, { nullable: true })
+  contactId: IntFilter;
+
+  @Field(() => IntFilter, { nullable: true })
+  adresseId: IntFilter;
+
+  @Field(() => ContactRelationFilter, { nullable: true })
+  contact: ContactRelationFilter;
+
+  @Field(() => AdresseRelationFilter, { nullable: true })
+  adresse: AdresseRelationFilter;
+
+  @Field(() => EtudiantRelationFilter, { nullable: true })
+  etudiant: EtudiantRelationFilter;
+
+  @Field(() => PermissionListRelationFilter, { nullable: true })
+  permissions: PermissionListRelationFilter;
+
+  @Field(() => ProfesseurRelationFilter, { nullable: true })
+  Professeur: ProfesseurRelationFilter;
+
+  @Field(() => EtablissementRelationFilter, { nullable: true })
+  etablissement: EtablissementRelationFilter;
+
+  @Field(() => [UtilisateurWhereInputStrict], { nullable: true })
+  AND: UtilisateurWhereInputStrict[]
+
+  @Field(() => [UtilisateurWhereInputStrict], { nullable: true })
+  OR: UtilisateurWhereInputStrict[]
+
+  @Field(() => [UtilisateurWhereInputStrict], { nullable: true })
+  NOT: UtilisateurWhereInputStrict[]
+
+}
+
+@InputType()
+export class UtilisateurWhereInput extends PartialType(
+  UtilisateurWhereInputStrict,
+) {
+  @Field(() => IntFilter, { nullable: true })
+  id: IntFilter
+
+  @Field(() => StringFilter, { nullable: true })
+  matricule: StringFilter
+
+  @Field(() => DateTimeFilter, { nullable: true })
+  createdAt: StringFilter
+
+  @Field(() => DateTimeFilter, { nullable: true })
+  updatedAt: DateTimeFilter
+
+  @Field(() => StringFilter, { nullable: true })
+  prenom: StringFilter
+
+  @Field(() => StringFilter, { nullable: true })
+  nom: StringFilter
+
+  @Field(() => DateTimeFilter, { nullable: true })
+  dateNaissance: DateTimeFilter
+
+  @Field(() => StringFilter, { nullable: true })
+  lieuNaissance: StringFilter
+
+  @Field(() => StringFilter, { nullable: true })
+  cni: StringFilter
+
+  @Field(() => StringFilter, { nullable: true })
+  genre: Prisma.EnumGenreFilter;
+
+  @Field(() => StringFilter, { nullable: true })
+  nationalite: StringFilter
+
+  @Field(() => StringFilter, { nullable: true })
+  groupeSanguin: Prisma.EnumGroupeSanguinNullableFilter;
+
+  @Field(() => IntFilter, { nullable: true })
+  etablissementId: IntFilter;
+
+  @Field(() => StringFilter, { nullable: true })
+  statutCompte: StringFilter;
+
+  @Field(() => StringFilter, { nullable: true })
   roles: Prisma.EnumRoleNullableListFilter;
 
   @Field(() => IntFilter, { nullable: true })
@@ -85,20 +170,14 @@ export class UtilisateurWhereInputStrict implements RestrictProperties<Utilisate
   etablissement: EtablissementRelationFilter;
 
   @Field(() => [UtilisateurWhereInput], { nullable: true })
-  AND: Prisma.UtilisateurWhereInput | Prisma.UtilisateurWhereInput[]
+  AND: UtilisateurWhereInput[]
 
   @Field(() => [UtilisateurWhereInput], { nullable: true })
-  OR: Prisma.UtilisateurWhereInput[]
+  OR: UtilisateurWhereInput[]
 
   @Field(() => [UtilisateurWhereInput], { nullable: true })
-  NOT: Prisma.UtilisateurWhereInput | Prisma.UtilisateurWhereInput[]
-
+  NOT: UtilisateurWhereInput[]
 }
-
-@InputType()
-export class UtilisateurWhereInput extends PartialType(
-  UtilisateurWhereInputStrict,
-) { }
 
 @InputType()
 export class UtilisateurListRelationFilter {

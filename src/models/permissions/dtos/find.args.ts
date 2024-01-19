@@ -12,11 +12,21 @@ registerEnumType(Prisma.PermissionScalarFieldEnum, {
 class FindManyPermissionArgsStrict
   implements RestrictProperties<FindManyPermissionArgsStrict, Omit<Prisma.PermissionFindManyArgs, 'include' | 'select'>>
 {
+  @Field(() => PermissionWhereInput, { nullable: true })
   where: PermissionWhereInput
+
+  @Field(() => [PermissionOrderByWithRelationInput], { nullable: true })
   orderBy: PermissionOrderByWithRelationInput[]
+
+  @Field(() => PermissionWhereUniqueInput, { nullable: true })
   cursor: PermissionWhereUniqueInput
+
+  @Field(() => Number, { nullable: true })
   take: number
+
+  @Field(() => Number, { nullable: true })
   skip: number
+
   @Field(() => [Prisma.PermissionScalarFieldEnum])
   distinct: Prisma.PermissionScalarFieldEnum[]
 }
@@ -24,7 +34,7 @@ class FindManyPermissionArgsStrict
 @ArgsType()
 export class FindManyPermissionArgs extends PartialType(
   FindManyPermissionArgsStrict,
-) {}
+) { }
 
 @ArgsType()
 export class FindUniquePermissionArgs {

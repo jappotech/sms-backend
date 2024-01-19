@@ -12,11 +12,21 @@ registerEnumType(Prisma.ContactScalarFieldEnum, {
 class FindManyContactArgsStrict
   implements RestrictProperties<FindManyContactArgsStrict, Omit<Prisma.ContactFindManyArgs, 'include' | 'select'>>
 {
+  @Field(() => ContactWhereInput, { nullable: true })
   where: ContactWhereInput
+
+  @Field(() => [ContactOrderByWithRelationInput], { nullable: true })
   orderBy: ContactOrderByWithRelationInput[]
+
+  @Field(() => ContactWhereUniqueInput, { nullable: true })
   cursor: ContactWhereUniqueInput
+
+  @Field(() => Number, { nullable: true })
   take: number
+
+  @Field(() => Number, { nullable: true })
   skip: number
+
   @Field(() => [Prisma.ContactScalarFieldEnum])
   distinct: Prisma.ContactScalarFieldEnum[]
 }
@@ -24,7 +34,7 @@ class FindManyContactArgsStrict
 @ArgsType()
 export class FindManyContactArgs extends PartialType(
   FindManyContactArgsStrict,
-) {}
+) { }
 
 @ArgsType()
 export class FindUniqueContactArgs {

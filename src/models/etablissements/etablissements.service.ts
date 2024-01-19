@@ -3,10 +3,11 @@ import { FindManyEtablissementArgs, FindUniqueEtablissementArgs } from './dtos/f
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { CreateEtablissementInput } from './dtos/create-etablissement.input'
 import { UpdateEtablissementInput } from './dtos/update-etablissement.input'
+import { Prisma } from '@prisma/client'
 
 @Injectable()
 export class EtablissementsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   create(createEtablissementInput: CreateEtablissementInput) {
     return this.prisma.etablissement.create({
       data: createEtablissementInput,

@@ -3,10 +3,11 @@ import { FindManyReseauSocialArgs, FindUniqueReseauSocialArgs } from './dtos/fin
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { CreateReseauSocialInput } from './dtos/create-reseau-social.input'
 import { UpdateReseauSocialInput } from './dtos/update-reseau-social.input'
+import { Prisma } from '@prisma/client'
 
 @Injectable()
 export class ReseauSocialsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   create(createReseauSocialInput: CreateReseauSocialInput) {
     return this.prisma.reseauSocial.create({
       data: createReseauSocialInput,

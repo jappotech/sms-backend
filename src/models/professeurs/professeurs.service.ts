@@ -3,10 +3,11 @@ import { FindManyProfesseurArgs, FindUniqueProfesseurArgs } from './dtos/find.ar
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { CreateProfesseurInput } from './dtos/create-professeur.input'
 import { UpdateProfesseurInput } from './dtos/update-professeur.input'
+import { Prisma } from '@prisma/client'
 
 @Injectable()
 export class ProfesseursService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   create(createProfesseurInput: CreateProfesseurInput) {
     return this.prisma.professeur.create({
       data: createProfesseurInput,

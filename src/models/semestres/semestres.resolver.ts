@@ -8,6 +8,7 @@ import { checkRowLevelPermission } from 'src/common/auth/util'
 import { GetUserType } from 'src/common/types'
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { PrismaService } from 'src/common/prisma/prisma.service'
+import { Prisma } from '@prisma/client'
 
 @Resolver(() => Semestre)
 export class SemestresResolver {
@@ -17,7 +18,7 @@ export class SemestresResolver {
   @AllowAuthenticated()
   @Mutation(() => Semestre)
   createSemestre(@Args('createSemestreInput') args: CreateSemestreInput, @GetUser() user: GetUserType) {
-    // checkRowLevelPermission(user, args.uid)
+    // // checkRowLevelPermission(user, args.uid)
     return this.semestresService.create(args)
   }
 
@@ -35,7 +36,7 @@ export class SemestresResolver {
   @Mutation(() => Semestre)
   async updateSemestre(@Args('updateSemestreInput') args: UpdateSemestreInput, @GetUser() user: GetUserType) {
     const semestre = await this.prisma.semestre.findUnique({ where: { id: args.id } })
-    checkRowLevelPermission(user, semestre.uid)
+    // checkRowLevelPermission(user, semestre.uid)
     return this.semestresService.update(args)
   }
 
@@ -43,7 +44,7 @@ export class SemestresResolver {
   @Mutation(() => Semestre)
   async removeSemestre(@Args() args: FindUniqueSemestreArgs, @GetUser() user: GetUserType) {
     const semestre = await this.prisma.semestre.findUnique(args)
-    checkRowLevelPermission(user, semestre.uid)
+    // checkRowLevelPermission(user, semestre.uid)
     return this.semestresService.remove(args)
   }
 }

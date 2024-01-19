@@ -3,10 +3,11 @@ import { FindManyPermissionArgs, FindUniquePermissionArgs } from './dtos/find.ar
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { CreatePermissionInput } from './dtos/create-permission.input'
 import { UpdatePermissionInput } from './dtos/update-permission.input'
+import { Prisma } from '@prisma/client'
 
 @Injectable()
 export class PermissionsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   create(createPermissionInput: CreatePermissionInput) {
     return this.prisma.permission.create({
       data: createPermissionInput,

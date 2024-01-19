@@ -8,6 +8,7 @@ import { checkRowLevelPermission } from 'src/common/auth/util'
 import { GetUserType } from 'src/common/types'
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { PrismaService } from 'src/common/prisma/prisma.service'
+import { Prisma } from '@prisma/client'
 
 @Resolver(() => Salle)
 export class SallesResolver {
@@ -17,7 +18,7 @@ export class SallesResolver {
   @AllowAuthenticated()
   @Mutation(() => Salle)
   createSalle(@Args('createSalleInput') args: CreateSalleInput, @GetUser() user: GetUserType) {
-    // checkRowLevelPermission(user, args.uid)
+    // // checkRowLevelPermission(user, args.uid)
     return this.sallesService.create(args)
   }
 
@@ -35,7 +36,7 @@ export class SallesResolver {
   @Mutation(() => Salle)
   async updateSalle(@Args('updateSalleInput') args: UpdateSalleInput, @GetUser() user: GetUserType) {
     const salle = await this.prisma.salle.findUnique({ where: { id: args.id } })
-    checkRowLevelPermission(user, salle.uid)
+    // checkRowLevelPermission(user, salle.uid)
     return this.sallesService.update(args)
   }
 
@@ -43,7 +44,7 @@ export class SallesResolver {
   @Mutation(() => Salle)
   async removeSalle(@Args() args: FindUniqueSalleArgs, @GetUser() user: GetUserType) {
     const salle = await this.prisma.salle.findUnique(args)
-    checkRowLevelPermission(user, salle.uid)
+    // checkRowLevelPermission(user, salle.uid)
     return this.sallesService.remove(args)
   }
 }

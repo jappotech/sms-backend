@@ -3,10 +3,11 @@ import { FindManyContactArgs, FindUniqueContactArgs } from './dtos/find.args'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { CreateContactInput } from './dtos/create-contact.input'
 import { UpdateContactInput } from './dtos/update-contact.input'
+import { Prisma } from '@prisma/client'
 
 @Injectable()
 export class ContactsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   create(createContactInput: CreateContactInput) {
     return this.prisma.contact.create({
       data: createContactInput,

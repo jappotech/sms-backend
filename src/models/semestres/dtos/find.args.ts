@@ -12,11 +12,21 @@ registerEnumType(Prisma.SemestreScalarFieldEnum, {
 class FindManySemestreArgsStrict
   implements RestrictProperties<FindManySemestreArgsStrict, Omit<Prisma.SemestreFindManyArgs, 'include' | 'select'>>
 {
+  @Field(() => SemestreWhereInput, { nullable: true })
   where: SemestreWhereInput
+
+  @Field(() => [SemestreOrderByWithRelationInput], { nullable: true })
   orderBy: SemestreOrderByWithRelationInput[]
+
+  @Field(() => SemestreWhereUniqueInput, { nullable: true })
   cursor: SemestreWhereUniqueInput
+
+  @Field(() => Number, { nullable: true })
   take: number
+
+  @Field(() => Number, { nullable: true })
   skip: number
+
   @Field(() => [Prisma.SemestreScalarFieldEnum])
   distinct: Prisma.SemestreScalarFieldEnum[]
 }
@@ -24,7 +34,7 @@ class FindManySemestreArgsStrict
 @ArgsType()
 export class FindManySemestreArgs extends PartialType(
   FindManySemestreArgsStrict,
-) {}
+) { }
 
 @ArgsType()
 export class FindUniqueSemestreArgs {

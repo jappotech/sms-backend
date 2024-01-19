@@ -8,6 +8,7 @@ import { checkRowLevelPermission } from 'src/common/auth/util'
 import { GetUserType } from 'src/common/types'
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { PrismaService } from 'src/common/prisma/prisma.service'
+import { Prisma } from '@prisma/client'
 
 @Resolver(() => EvaluationEtudiants)
 export class EvaluationEtudiantsResolver {
@@ -17,7 +18,7 @@ export class EvaluationEtudiantsResolver {
   @AllowAuthenticated()
   @Mutation(() => EvaluationEtudiants)
   createEvaluationEtudiants(@Args('createEvaluationEtudiantsInput') args: CreateEvaluationEtudiantsInput, @GetUser() user: GetUserType) {
-    // checkRowLevelPermission(user, args.uid)
+    // // checkRowLevelPermission(user, args.uid)
     return this.evaluationEtudiantsService.create(args)
   }
 
@@ -35,7 +36,7 @@ export class EvaluationEtudiantsResolver {
   @Mutation(() => EvaluationEtudiants)
   async updateEvaluationEtudiants(@Args('updateEvaluationEtudiantsInput') args: UpdateEvaluationEtudiantsInput, @GetUser() user: GetUserType) {
     const evaluationEtudiants = await this.prisma.evaluationEtudiants.findUnique({ where: { id: args.id } })
-    checkRowLevelPermission(user, evaluationEtudiants.uid)
+    // checkRowLevelPermission(user, evaluationEtudiants.uid)
     return this.evaluationEtudiantsService.update(args)
   }
 
@@ -43,7 +44,7 @@ export class EvaluationEtudiantsResolver {
   @Mutation(() => EvaluationEtudiants)
   async removeEvaluationEtudiants(@Args() args: FindUniqueEvaluationEtudiantsArgs, @GetUser() user: GetUserType) {
     const evaluationEtudiants = await this.prisma.evaluationEtudiants.findUnique(args)
-    checkRowLevelPermission(user, evaluationEtudiants.uid)
+    // checkRowLevelPermission(user, evaluationEtudiants.uid)
     return this.evaluationEtudiantsService.remove(args)
   }
 }

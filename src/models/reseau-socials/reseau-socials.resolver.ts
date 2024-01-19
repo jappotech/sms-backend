@@ -8,6 +8,7 @@ import { checkRowLevelPermission } from 'src/common/auth/util'
 import { GetUserType } from 'src/common/types'
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { PrismaService } from 'src/common/prisma/prisma.service'
+import { Prisma } from '@prisma/client'
 
 @Resolver(() => ReseauSocial)
 export class ReseauSocialsResolver {
@@ -17,7 +18,7 @@ export class ReseauSocialsResolver {
   @AllowAuthenticated()
   @Mutation(() => ReseauSocial)
   createReseauSocial(@Args('createReseauSocialInput') args: CreateReseauSocialInput, @GetUser() user: GetUserType) {
-    // checkRowLevelPermission(user, args.uid)
+    // // checkRowLevelPermission(user, args.uid)
     return this.reseauSocialsService.create(args)
   }
 
@@ -35,7 +36,7 @@ export class ReseauSocialsResolver {
   @Mutation(() => ReseauSocial)
   async updateReseauSocial(@Args('updateReseauSocialInput') args: UpdateReseauSocialInput, @GetUser() user: GetUserType) {
     const reseauSocial = await this.prisma.reseauSocial.findUnique({ where: { id: args.id } })
-    checkRowLevelPermission(user, reseauSocial.uid)
+    // checkRowLevelPermission(user, reseauSocial.uid)
     return this.reseauSocialsService.update(args)
   }
 
@@ -43,7 +44,7 @@ export class ReseauSocialsResolver {
   @Mutation(() => ReseauSocial)
   async removeReseauSocial(@Args() args: FindUniqueReseauSocialArgs, @GetUser() user: GetUserType) {
     const reseauSocial = await this.prisma.reseauSocial.findUnique(args)
-    checkRowLevelPermission(user, reseauSocial.uid)
+    // checkRowLevelPermission(user, reseauSocial.uid)
     return this.reseauSocialsService.remove(args)
   }
 }

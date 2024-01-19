@@ -8,6 +8,7 @@ import { checkRowLevelPermission } from 'src/common/auth/util'
 import { GetUserType } from 'src/common/types'
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { PrismaService } from 'src/common/prisma/prisma.service'
+import { Prisma } from '@prisma/client'
 
 @Resolver(() => Domaine)
 export class DomainesResolver {
@@ -17,7 +18,7 @@ export class DomainesResolver {
   @AllowAuthenticated()
   @Mutation(() => Domaine)
   createDomaine(@Args('createDomaineInput') args: CreateDomaineInput, @GetUser() user: GetUserType) {
-    // checkRowLevelPermission(user, args.uid)
+    // // checkRowLevelPermission(user, args.uid)
     return this.domainesService.create(args)
   }
 
@@ -35,7 +36,7 @@ export class DomainesResolver {
   @Mutation(() => Domaine)
   async updateDomaine(@Args('updateDomaineInput') args: UpdateDomaineInput, @GetUser() user: GetUserType) {
     const domaine = await this.prisma.domaine.findUnique({ where: { id: args.id } })
-    checkRowLevelPermission(user, domaine.uid)
+    // checkRowLevelPermission(user, domaine.uid)
     return this.domainesService.update(args)
   }
 
@@ -43,7 +44,7 @@ export class DomainesResolver {
   @Mutation(() => Domaine)
   async removeDomaine(@Args() args: FindUniqueDomaineArgs, @GetUser() user: GetUserType) {
     const domaine = await this.prisma.domaine.findUnique(args)
-    checkRowLevelPermission(user, domaine.uid)
+    // checkRowLevelPermission(user, domaine.uid)
     return this.domainesService.remove(args)
   }
 }

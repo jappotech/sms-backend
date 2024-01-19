@@ -12,11 +12,21 @@ registerEnumType(Prisma.MatiereScalarFieldEnum, {
 class FindManyMatiereArgsStrict
   implements RestrictProperties<FindManyMatiereArgsStrict, Omit<Prisma.MatiereFindManyArgs, 'include' | 'select'>>
 {
+  @Field(() => MatiereWhereInput, { nullable: true })
   where: MatiereWhereInput
+
+  @Field(() => [MatiereOrderByWithRelationInput], { nullable: true })
   orderBy: MatiereOrderByWithRelationInput[]
+
+  @Field(() => MatiereWhereUniqueInput, { nullable: true })
   cursor: MatiereWhereUniqueInput
+
+  @Field(() => Number, { nullable: true })
   take: number
+
+  @Field(() => Number, { nullable: true })
   skip: number
+
   @Field(() => [Prisma.MatiereScalarFieldEnum])
   distinct: Prisma.MatiereScalarFieldEnum[]
 }
@@ -24,7 +34,7 @@ class FindManyMatiereArgsStrict
 @ArgsType()
 export class FindManyMatiereArgs extends PartialType(
   FindManyMatiereArgsStrict,
-) {}
+) { }
 
 @ArgsType()
 export class FindUniqueMatiereArgs {

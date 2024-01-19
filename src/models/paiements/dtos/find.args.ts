@@ -12,11 +12,21 @@ registerEnumType(Prisma.PaiementScalarFieldEnum, {
 class FindManyPaiementArgsStrict
   implements RestrictProperties<FindManyPaiementArgsStrict, Omit<Prisma.PaiementFindManyArgs, 'include' | 'select'>>
 {
+  @Field(() => PaiementWhereInput, { nullable: true })
   where: PaiementWhereInput
+
+  @Field(() => [PaiementOrderByWithRelationInput], { nullable: true })
   orderBy: PaiementOrderByWithRelationInput[]
+
+  @Field(() => PaiementWhereUniqueInput, { nullable: true })
   cursor: PaiementWhereUniqueInput
+
+  @Field(() => Number, { nullable: true })
   take: number
+
+  @Field(() => Number, { nullable: true })
   skip: number
+
   @Field(() => [Prisma.PaiementScalarFieldEnum])
   distinct: Prisma.PaiementScalarFieldEnum[]
 }
@@ -24,7 +34,7 @@ class FindManyPaiementArgsStrict
 @ArgsType()
 export class FindManyPaiementArgs extends PartialType(
   FindManyPaiementArgsStrict,
-) {}
+) { }
 
 @ArgsType()
 export class FindUniquePaiementArgs {

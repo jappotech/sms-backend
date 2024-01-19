@@ -8,6 +8,7 @@ import { checkRowLevelPermission } from 'src/common/auth/util'
 import { GetUserType } from 'src/common/types'
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { PrismaService } from 'src/common/prisma/prisma.service'
+import { Prisma } from '@prisma/client'
 
 @Resolver(() => Professeur)
 export class ProfesseursResolver {
@@ -17,7 +18,7 @@ export class ProfesseursResolver {
   @AllowAuthenticated()
   @Mutation(() => Professeur)
   createProfesseur(@Args('createProfesseurInput') args: CreateProfesseurInput, @GetUser() user: GetUserType) {
-    // checkRowLevelPermission(user, args.uid)
+    // // checkRowLevelPermission(user, args.uid)
     return this.professeursService.create(args)
   }
 
@@ -35,7 +36,7 @@ export class ProfesseursResolver {
   @Mutation(() => Professeur)
   async updateProfesseur(@Args('updateProfesseurInput') args: UpdateProfesseurInput, @GetUser() user: GetUserType) {
     const professeur = await this.prisma.professeur.findUnique({ where: { id: args.id } })
-    checkRowLevelPermission(user, professeur.uid)
+    // checkRowLevelPermission(user, professeur.uid)
     return this.professeursService.update(args)
   }
 
@@ -43,7 +44,7 @@ export class ProfesseursResolver {
   @Mutation(() => Professeur)
   async removeProfesseur(@Args() args: FindUniqueProfesseurArgs, @GetUser() user: GetUserType) {
     const professeur = await this.prisma.professeur.findUnique(args)
-    checkRowLevelPermission(user, professeur.uid)
+    // checkRowLevelPermission(user, professeur.uid)
     return this.professeursService.remove(args)
   }
 }

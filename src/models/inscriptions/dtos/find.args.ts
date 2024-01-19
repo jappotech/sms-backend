@@ -12,11 +12,21 @@ registerEnumType(Prisma.InscriptionScalarFieldEnum, {
 class FindManyInscriptionArgsStrict
   implements RestrictProperties<FindManyInscriptionArgsStrict, Omit<Prisma.InscriptionFindManyArgs, 'include' | 'select'>>
 {
+  @Field(() => InscriptionWhereInput, { nullable: true })
   where: InscriptionWhereInput
+
+  @Field(() => [InscriptionOrderByWithRelationInput], { nullable: true })
   orderBy: InscriptionOrderByWithRelationInput[]
+
+  @Field(() => InscriptionWhereUniqueInput, { nullable: true })
   cursor: InscriptionWhereUniqueInput
+
+  @Field(() => Number, { nullable: true })
   take: number
+
+  @Field(() => Number, { nullable: true })
   skip: number
+
   @Field(() => [Prisma.InscriptionScalarFieldEnum])
   distinct: Prisma.InscriptionScalarFieldEnum[]
 }
@@ -24,7 +34,7 @@ class FindManyInscriptionArgsStrict
 @ArgsType()
 export class FindManyInscriptionArgs extends PartialType(
   FindManyInscriptionArgsStrict,
-) {}
+) { }
 
 @ArgsType()
 export class FindUniqueInscriptionArgs {

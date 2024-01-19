@@ -12,11 +12,21 @@ registerEnumType(Prisma.NoteEtudiantScalarFieldEnum, {
 class FindManyNoteEtudiantArgsStrict
   implements RestrictProperties<FindManyNoteEtudiantArgsStrict, Omit<Prisma.NoteEtudiantFindManyArgs, 'include' | 'select'>>
 {
+  @Field(() => NoteEtudiantWhereInput, { nullable: true })
   where: NoteEtudiantWhereInput
+
+  @Field(() => [NoteEtudiantOrderByWithRelationInput], { nullable: true })
   orderBy: NoteEtudiantOrderByWithRelationInput[]
+
+  @Field(() => NoteEtudiantWhereUniqueInput, { nullable: true })
   cursor: NoteEtudiantWhereUniqueInput
+
+  @Field(() => Number, { nullable: true })
   take: number
+
+  @Field(() => Number, { nullable: true })
   skip: number
+
   @Field(() => [Prisma.NoteEtudiantScalarFieldEnum])
   distinct: Prisma.NoteEtudiantScalarFieldEnum[]
 }
@@ -24,7 +34,7 @@ class FindManyNoteEtudiantArgsStrict
 @ArgsType()
 export class FindManyNoteEtudiantArgs extends PartialType(
   FindManyNoteEtudiantArgsStrict,
-) {}
+) { }
 
 @ArgsType()
 export class FindUniqueNoteEtudiantArgs {

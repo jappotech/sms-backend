@@ -8,6 +8,7 @@ import { checkRowLevelPermission } from 'src/common/auth/util'
 import { GetUserType } from 'src/common/types'
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { PrismaService } from 'src/common/prisma/prisma.service'
+import { Prisma } from '@prisma/client'
 
 @Resolver(() => EmploiDuTemps)
 export class EmploiDuTempsResolver {
@@ -17,7 +18,7 @@ export class EmploiDuTempsResolver {
   @AllowAuthenticated()
   @Mutation(() => EmploiDuTemps)
   createEmploiDuTemps(@Args('createEmploiDuTempsInput') args: CreateEmploiDuTempsInput, @GetUser() user: GetUserType) {
-    // checkRowLevelPermission(user, args.uid)
+    // // checkRowLevelPermission(user, args.uid)
     return this.emploiDuTempsService.create(args)
   }
 
@@ -35,7 +36,7 @@ export class EmploiDuTempsResolver {
   @Mutation(() => EmploiDuTemps)
   async updateEmploiDuTemps(@Args('updateEmploiDuTempsInput') args: UpdateEmploiDuTempsInput, @GetUser() user: GetUserType) {
     const emploiDuTemps = await this.prisma.emploiDuTemps.findUnique({ where: { id: args.id } })
-    checkRowLevelPermission(user, emploiDuTemps.uid)
+    // checkRowLevelPermission(user, emploiDuTemps.uid)
     return this.emploiDuTempsService.update(args)
   }
 
@@ -43,7 +44,7 @@ export class EmploiDuTempsResolver {
   @Mutation(() => EmploiDuTemps)
   async removeEmploiDuTemps(@Args() args: FindUniqueEmploiDuTempsArgs, @GetUser() user: GetUserType) {
     const emploiDuTemps = await this.prisma.emploiDuTemps.findUnique(args)
-    checkRowLevelPermission(user, emploiDuTemps.uid)
+    // checkRowLevelPermission(user, emploiDuTemps.uid)
     return this.emploiDuTempsService.remove(args)
   }
 }

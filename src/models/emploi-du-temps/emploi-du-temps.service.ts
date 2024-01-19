@@ -3,10 +3,11 @@ import { FindManyEmploiDuTempsArgs, FindUniqueEmploiDuTempsArgs } from './dtos/f
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { CreateEmploiDuTempsInput } from './dtos/create-emploi-du-temps.input'
 import { UpdateEmploiDuTempsInput } from './dtos/update-emploi-du-temps.input'
+import { Prisma } from '@prisma/client'
 
 @Injectable()
 export class EmploiDuTempsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   create(createEmploiDuTempsInput: CreateEmploiDuTempsInput) {
     return this.prisma.emploiDuTemps.create({
       data: createEmploiDuTempsInput,

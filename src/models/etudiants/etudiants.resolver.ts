@@ -8,6 +8,7 @@ import { checkRowLevelPermission } from 'src/common/auth/util'
 import { GetUserType } from 'src/common/types'
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { PrismaService } from 'src/common/prisma/prisma.service'
+import { Prisma } from '@prisma/client'
 
 @Resolver(() => Etudiant)
 export class EtudiantsResolver {
@@ -17,7 +18,7 @@ export class EtudiantsResolver {
   @AllowAuthenticated()
   @Mutation(() => Etudiant)
   createEtudiant(@Args('createEtudiantInput') args: CreateEtudiantInput, @GetUser() user: GetUserType) {
-    // checkRowLevelPermission(user, args.uid)
+    // // checkRowLevelPermission(user, args.uid)
     return this.etudiantsService.create(args)
   }
 
@@ -35,7 +36,7 @@ export class EtudiantsResolver {
   @Mutation(() => Etudiant)
   async updateEtudiant(@Args('updateEtudiantInput') args: UpdateEtudiantInput, @GetUser() user: GetUserType) {
     const etudiant = await this.prisma.etudiant.findUnique({ where: { id: args.id } })
-    checkRowLevelPermission(user, etudiant.uid)
+    // checkRowLevelPermission(user, etudiant.uid)
     return this.etudiantsService.update(args)
   }
 
@@ -43,7 +44,7 @@ export class EtudiantsResolver {
   @Mutation(() => Etudiant)
   async removeEtudiant(@Args() args: FindUniqueEtudiantArgs, @GetUser() user: GetUserType) {
     const etudiant = await this.prisma.etudiant.findUnique(args)
-    checkRowLevelPermission(user, etudiant.uid)
+    // checkRowLevelPermission(user, etudiant.uid)
     return this.etudiantsService.remove(args)
   }
 }

@@ -8,6 +8,7 @@ import { checkRowLevelPermission } from 'src/common/auth/util'
 import { GetUserType } from 'src/common/types'
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { PrismaService } from 'src/common/prisma/prisma.service'
+import { Prisma } from '@prisma/client'
 
 @Resolver(() => Specialite)
 export class SpecialitesResolver {
@@ -17,7 +18,7 @@ export class SpecialitesResolver {
   @AllowAuthenticated()
   @Mutation(() => Specialite)
   createSpecialite(@Args('createSpecialiteInput') args: CreateSpecialiteInput, @GetUser() user: GetUserType) {
-    // checkRowLevelPermission(user, args.uid)
+    // // checkRowLevelPermission(user, args.uid)
     return this.specialitesService.create(args)
   }
 
@@ -35,7 +36,7 @@ export class SpecialitesResolver {
   @Mutation(() => Specialite)
   async updateSpecialite(@Args('updateSpecialiteInput') args: UpdateSpecialiteInput, @GetUser() user: GetUserType) {
     const specialite = await this.prisma.specialite.findUnique({ where: { id: args.id } })
-    checkRowLevelPermission(user, specialite.uid)
+    // checkRowLevelPermission(user, specialite.uid)
     return this.specialitesService.update(args)
   }
 
@@ -43,7 +44,7 @@ export class SpecialitesResolver {
   @Mutation(() => Specialite)
   async removeSpecialite(@Args() args: FindUniqueSpecialiteArgs, @GetUser() user: GetUserType) {
     const specialite = await this.prisma.specialite.findUnique(args)
-    checkRowLevelPermission(user, specialite.uid)
+    // checkRowLevelPermission(user, specialite.uid)
     return this.specialitesService.remove(args)
   }
 }

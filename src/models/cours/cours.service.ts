@@ -3,10 +3,11 @@ import { FindManyCoursArgs, FindUniqueCoursArgs } from './dtos/find.args'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { CreateCoursInput } from './dtos/create-cours.input'
 import { UpdateCoursInput } from './dtos/update-cours.input'
+import { Prisma } from '@prisma/client'
 
 @Injectable()
 export class CoursService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   create(createCoursInput: CreateCoursInput) {
     return this.prisma.cours.create({
       data: createCoursInput,

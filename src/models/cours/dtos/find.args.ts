@@ -12,11 +12,21 @@ registerEnumType(Prisma.CoursScalarFieldEnum, {
 class FindManyCoursArgsStrict
   implements RestrictProperties<FindManyCoursArgsStrict, Omit<Prisma.CoursFindManyArgs, 'include' | 'select'>>
 {
+  @Field(() => CoursWhereInput, { nullable: true })
   where: CoursWhereInput
+
+  @Field(() => [CoursOrderByWithRelationInput], { nullable: true })
   orderBy: CoursOrderByWithRelationInput[]
+
+  @Field(() => CoursWhereUniqueInput, { nullable: true })
   cursor: CoursWhereUniqueInput
+
+  @Field(() => Number, { nullable: true })
   take: number
+
+  @Field(() => Number, { nullable: true })
   skip: number
+
   @Field(() => [Prisma.CoursScalarFieldEnum])
   distinct: Prisma.CoursScalarFieldEnum[]
 }
@@ -24,7 +34,7 @@ class FindManyCoursArgsStrict
 @ArgsType()
 export class FindManyCoursArgs extends PartialType(
   FindManyCoursArgsStrict,
-) {}
+) { }
 
 @ArgsType()
 export class FindUniqueCoursArgs {

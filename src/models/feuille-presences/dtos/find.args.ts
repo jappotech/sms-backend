@@ -12,11 +12,21 @@ registerEnumType(Prisma.FeuillePresenceScalarFieldEnum, {
 class FindManyFeuillePresenceArgsStrict
   implements RestrictProperties<FindManyFeuillePresenceArgsStrict, Omit<Prisma.FeuillePresenceFindManyArgs, 'include' | 'select'>>
 {
+  @Field(() => FeuillePresenceWhereInput, { nullable: true })
   where: FeuillePresenceWhereInput
+
+  @Field(() => [FeuillePresenceOrderByWithRelationInput], { nullable: true })
   orderBy: FeuillePresenceOrderByWithRelationInput[]
+
+  @Field(() => FeuillePresenceWhereUniqueInput, { nullable: true })
   cursor: FeuillePresenceWhereUniqueInput
+
+  @Field(() => Number, { nullable: true })
   take: number
+
+  @Field(() => Number, { nullable: true })
   skip: number
+
   @Field(() => [Prisma.FeuillePresenceScalarFieldEnum])
   distinct: Prisma.FeuillePresenceScalarFieldEnum[]
 }
@@ -24,7 +34,7 @@ class FindManyFeuillePresenceArgsStrict
 @ArgsType()
 export class FindManyFeuillePresenceArgs extends PartialType(
   FindManyFeuillePresenceArgsStrict,
-) {}
+) { }
 
 @ArgsType()
 export class FindUniqueFeuillePresenceArgs {

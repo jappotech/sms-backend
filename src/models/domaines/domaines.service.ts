@@ -3,10 +3,11 @@ import { FindManyDomaineArgs, FindUniqueDomaineArgs } from './dtos/find.args'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { CreateDomaineInput } from './dtos/create-domaine.input'
 import { UpdateDomaineInput } from './dtos/update-domaine.input'
+import { Prisma } from '@prisma/client'
 
 @Injectable()
 export class DomainesService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   create(createDomaineInput: CreateDomaineInput) {
     return this.prisma.domaine.create({
       data: createDomaineInput,

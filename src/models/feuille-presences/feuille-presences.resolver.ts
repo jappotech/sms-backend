@@ -8,6 +8,7 @@ import { checkRowLevelPermission } from 'src/common/auth/util'
 import { GetUserType } from 'src/common/types'
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { PrismaService } from 'src/common/prisma/prisma.service'
+import { Prisma } from '@prisma/client'
 
 @Resolver(() => FeuillePresence)
 export class FeuillePresencesResolver {
@@ -17,7 +18,7 @@ export class FeuillePresencesResolver {
   @AllowAuthenticated()
   @Mutation(() => FeuillePresence)
   createFeuillePresence(@Args('createFeuillePresenceInput') args: CreateFeuillePresenceInput, @GetUser() user: GetUserType) {
-    // checkRowLevelPermission(user, args.uid)
+    // // checkRowLevelPermission(user, args.uid)
     return this.feuillePresencesService.create(args)
   }
 
@@ -35,7 +36,7 @@ export class FeuillePresencesResolver {
   @Mutation(() => FeuillePresence)
   async updateFeuillePresence(@Args('updateFeuillePresenceInput') args: UpdateFeuillePresenceInput, @GetUser() user: GetUserType) {
     const feuillePresence = await this.prisma.feuillePresence.findUnique({ where: { id: args.id } })
-    checkRowLevelPermission(user, feuillePresence.uid)
+    // checkRowLevelPermission(user, feuillePresence.uid)
     return this.feuillePresencesService.update(args)
   }
 
@@ -43,7 +44,7 @@ export class FeuillePresencesResolver {
   @Mutation(() => FeuillePresence)
   async removeFeuillePresence(@Args() args: FindUniqueFeuillePresenceArgs, @GetUser() user: GetUserType) {
     const feuillePresence = await this.prisma.feuillePresence.findUnique(args)
-    checkRowLevelPermission(user, feuillePresence.uid)
+    // checkRowLevelPermission(user, feuillePresence.uid)
     return this.feuillePresencesService.remove(args)
   }
 }

@@ -8,6 +8,7 @@ import { checkRowLevelPermission } from 'src/common/auth/util'
 import { GetUserType } from 'src/common/types'
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { PrismaService } from 'src/common/prisma/prisma.service'
+import { Prisma } from '@prisma/client'
 
 @Resolver(() => Mention)
 export class MentionsResolver {
@@ -17,7 +18,7 @@ export class MentionsResolver {
   @AllowAuthenticated()
   @Mutation(() => Mention)
   createMention(@Args('createMentionInput') args: CreateMentionInput, @GetUser() user: GetUserType) {
-    // checkRowLevelPermission(user, args.uid)
+    // // checkRowLevelPermission(user, args.uid)
     return this.mentionsService.create(args)
   }
 
@@ -35,7 +36,7 @@ export class MentionsResolver {
   @Mutation(() => Mention)
   async updateMention(@Args('updateMentionInput') args: UpdateMentionInput, @GetUser() user: GetUserType) {
     const mention = await this.prisma.mention.findUnique({ where: { id: args.id } })
-    checkRowLevelPermission(user, mention.uid)
+    // checkRowLevelPermission(user, mention.uid)
     return this.mentionsService.update(args)
   }
 
@@ -43,7 +44,7 @@ export class MentionsResolver {
   @Mutation(() => Mention)
   async removeMention(@Args() args: FindUniqueMentionArgs, @GetUser() user: GetUserType) {
     const mention = await this.prisma.mention.findUnique(args)
-    checkRowLevelPermission(user, mention.uid)
+    // checkRowLevelPermission(user, mention.uid)
     return this.mentionsService.remove(args)
   }
 }

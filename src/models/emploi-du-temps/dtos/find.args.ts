@@ -12,11 +12,21 @@ registerEnumType(Prisma.EmploiDuTempsScalarFieldEnum, {
 class FindManyEmploiDuTempsArgsStrict
   implements RestrictProperties<FindManyEmploiDuTempsArgsStrict, Omit<Prisma.EmploiDuTempsFindManyArgs, 'include' | 'select'>>
 {
+  @Field(() => EmploiDuTempsWhereInput, { nullable: true })
   where: EmploiDuTempsWhereInput
+
+  @Field(() => [EmploiDuTempsOrderByWithRelationInput], { nullable: true })
   orderBy: EmploiDuTempsOrderByWithRelationInput[]
+
+  @Field(() => EmploiDuTempsWhereUniqueInput, { nullable: true })
   cursor: EmploiDuTempsWhereUniqueInput
+
+  @Field(() => Number, { nullable: true })
   take: number
+
+  @Field(() => Number, { nullable: true })
   skip: number
+
   @Field(() => [Prisma.EmploiDuTempsScalarFieldEnum])
   distinct: Prisma.EmploiDuTempsScalarFieldEnum[]
 }
@@ -24,7 +34,7 @@ class FindManyEmploiDuTempsArgsStrict
 @ArgsType()
 export class FindManyEmploiDuTempsArgs extends PartialType(
   FindManyEmploiDuTempsArgsStrict,
-) {}
+) { }
 
 @ArgsType()
 export class FindUniqueEmploiDuTempsArgs {

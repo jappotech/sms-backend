@@ -31,13 +31,13 @@ export class Utilisateur implements RestrictProperties<Utilisateur, UtilisateurT
     @Field({ nullable: true })
     cni: string
 
-    @Field()
+    @Field(() => String, { nullable: true })
     genre: $Enums.Genre
 
     @Field({ nullable: true })
     nationalite: string
 
-    @Field({ nullable: true })
+    @Field(type => String, { nullable: true })
     groupeSanguin: $Enums.GroupeSanguin
 
     @Field({ nullable: true })
@@ -46,7 +46,7 @@ export class Utilisateur implements RestrictProperties<Utilisateur, UtilisateurT
     @Field({ nullable: true })
     statutCompte: string
 
-    @Field()
+    @Field(type => [String])
     roles: $Enums.Role[]
 
     @Field({ nullable: true })

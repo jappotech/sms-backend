@@ -3,10 +3,11 @@ import { FindManyNoteEtudiantArgs, FindUniqueNoteEtudiantArgs } from './dtos/fin
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { CreateNoteEtudiantInput } from './dtos/create-note-etudiant.input'
 import { UpdateNoteEtudiantInput } from './dtos/update-note-etudiant.input'
+import { Prisma } from '@prisma/client'
 
 @Injectable()
 export class NoteEtudiantsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   create(createNoteEtudiantInput: CreateNoteEtudiantInput) {
     return this.prisma.noteEtudiant.create({
       data: createNoteEtudiantInput,

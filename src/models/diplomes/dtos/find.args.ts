@@ -12,11 +12,21 @@ registerEnumType(Prisma.DiplomeScalarFieldEnum, {
 class FindManyDiplomeArgsStrict
   implements RestrictProperties<FindManyDiplomeArgsStrict, Omit<Prisma.DiplomeFindManyArgs, 'include' | 'select'>>
 {
+  @Field(() => DiplomeWhereInput, { nullable: true })
   where: DiplomeWhereInput
+
+  @Field(() => [DiplomeOrderByWithRelationInput], { nullable: true })
   orderBy: DiplomeOrderByWithRelationInput[]
+
+  @Field(() => DiplomeWhereUniqueInput, { nullable: true })
   cursor: DiplomeWhereUniqueInput
+
+  @Field(() => Number, { nullable: true })
   take: number
+
+  @Field(() => Number, { nullable: true })
   skip: number
+
   @Field(() => [Prisma.DiplomeScalarFieldEnum])
   distinct: Prisma.DiplomeScalarFieldEnum[]
 }
@@ -24,7 +34,7 @@ class FindManyDiplomeArgsStrict
 @ArgsType()
 export class FindManyDiplomeArgs extends PartialType(
   FindManyDiplomeArgsStrict,
-) {}
+) { }
 
 @ArgsType()
 export class FindUniqueDiplomeArgs {

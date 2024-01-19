@@ -8,6 +8,7 @@ import { checkRowLevelPermission } from 'src/common/auth/util'
 import { GetUserType } from 'src/common/types'
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { PrismaService } from 'src/common/prisma/prisma.service'
+import { Prisma } from '@prisma/client'
 
 @Resolver(() => Adresse)
 export class AdressesResolver {
@@ -17,7 +18,7 @@ export class AdressesResolver {
   @AllowAuthenticated()
   @Mutation(() => Adresse)
   createAdresse(@Args('createAdresseInput') args: CreateAdresseInput, @GetUser() user: GetUserType) {
-    // checkRowLevelPermission(user, args.uid)
+    // // checkRowLevelPermission(user, args.uid)
     return this.adressesService.create(args)
   }
 
@@ -35,7 +36,7 @@ export class AdressesResolver {
   @Mutation(() => Adresse)
   async updateAdresse(@Args('updateAdresseInput') args: UpdateAdresseInput, @GetUser() user: GetUserType) {
     const adresse = await this.prisma.adresse.findUnique({ where: { id: args.id } })
-    checkRowLevelPermission(user, adresse.uid)
+    // checkRowLevelPermission(user, adresse.uid)
     return this.adressesService.update(args)
   }
 
@@ -43,7 +44,7 @@ export class AdressesResolver {
   @Mutation(() => Adresse)
   async removeAdresse(@Args() args: FindUniqueAdresseArgs, @GetUser() user: GetUserType) {
     const adresse = await this.prisma.adresse.findUnique(args)
-    checkRowLevelPermission(user, adresse.uid)
+    // checkRowLevelPermission(user, adresse.uid)
     return this.adressesService.remove(args)
   }
 }
