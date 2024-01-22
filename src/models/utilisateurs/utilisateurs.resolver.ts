@@ -22,11 +22,13 @@ export class UtilisateursResolver {
     return this.utilisateursService.create(args)
   }
 
+  @AllowAuthenticated()
   @Query(() => [Utilisateur], { name: 'utilisateurs' })
   findAll(@Args() args: FindManyUtilisateurArgs) {
     return this.utilisateursService.findAll(args)
   }
 
+  @AllowAuthenticated()
   @Query(() => Utilisateur, { name: 'utilisateur' })
   findOne(@Args() args: FindUniqueUtilisateurArgs) {
     return this.utilisateursService.findOne(args)

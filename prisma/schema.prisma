@@ -37,9 +37,22 @@ enum Role {
   SUPERVISEUR // Read Only
 }
 
+model Account {
+  id        Int      @id @default(autoincrement())
+  uid       String   @unique @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  username  String   @unique
+  password  String
+  roles     Role[]   @default([UTILISATEUR])
+  isActive  Boolean  @default(false)
+
+  userId Int
+}
+
 model Utilisateur {
   id              Int            @id @default(autoincrement())
-  matricule       String
+  matricule       String         @unique
   createdAt       DateTime       @default(now())
   updatedAt       DateTime       @updatedAt
   prenom          String
@@ -62,6 +75,7 @@ model Utilisateur {
   etudiant        Etudiant?
   permissions     Permission[]
   Professeur      Professeur?
+  accountId       Int?
 }
 
 model Permission {

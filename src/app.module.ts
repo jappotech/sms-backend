@@ -32,6 +32,8 @@ import { SpecialitesModule } from './models/specialites/specialites.module';
 import { UniteEnseignementsModule } from './models/unite-enseignements/unite-enseignements.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
+import { AuthModule } from './auth/auth.module';
+import { AccountsModule } from './models/accounts/accounts.module';
 
 @Module({
   imports: [
@@ -49,9 +51,10 @@ import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin
     JwtModule.register({
       global: true,
       secret: 'jwtConstants.secret',
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: '3600s' },
     }),
 
+    AccountsModule,
     AdressesModule,
     ClassesModule,
     ContactsModule,
@@ -76,6 +79,7 @@ import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin
     SpecialitesModule,
     UniteEnseignementsModule,
     UtilisateursModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

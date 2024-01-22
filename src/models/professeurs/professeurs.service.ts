@@ -4,13 +4,16 @@ import { PrismaService } from 'src/common/prisma/prisma.service'
 import { CreateProfesseurInput } from './dtos/create-professeur.input'
 import { UpdateProfesseurInput } from './dtos/update-professeur.input'
 import { Prisma } from '@prisma/client'
+import { UtilisateursService } from '../utilisateurs/utilisateurs.service'
+import slugify from 'slugify'
 
 @Injectable()
 export class ProfesseursService {
-  constructor(private readonly prisma: PrismaService) { }
-  create(createProfesseurInput: CreateProfesseurInput) {
+  constructor(private readonly prisma: PrismaService, private readonly utilisateurService: UtilisateursService) { }
+  async create(createProfesseurInput: CreateProfesseurInput) {
+    const utilisateur = await this.utilisateurService.create(createProfesseurInput.profile)
     return this.prisma.professeur.create({
-      data: createProfesseurInput,
+      data: { profileId: utilisateur.id },
     })
   }
 
@@ -23,7 +26,7 @@ export class ProfesseursService {
   }
 
   update(updateProfesseurInput: UpdateProfesseurInput) {
-    const { id, ...data } = updateProfesseurInput
+    const { id, profile, ...data } = updateProfesseurInput
     return this.prisma.professeur.update({
       where: { id },
       data: data,

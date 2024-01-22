@@ -9,6 +9,7 @@ import { JwtService } from '@nestjs/jwt'
 import { Reflector } from '@nestjs/core'
 import { Role } from 'src/common/types'
 import { PrismaService } from 'src/common/prisma/prisma.service'
+import { $Enums, Account } from '@prisma/client'
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -40,6 +41,7 @@ export class AuthGuard implements CanActivate {
       req.user = user
     } catch (err) {
       console.error('Token validation error:', err)
+      throw new UnauthorizedException('Token validation error:', err)
     }
 
     if (!req.user) {
@@ -52,7 +54,8 @@ export class AuthGuard implements CanActivate {
     context: ExecutionContext,
   ): Promise<boolean> {
     const requiredRoles = this.getMetadata<Role[]>('roles', context)
-    const userRoles = await this.getUserRoles(req.user.uid)
+    const account: Account = await this.prisma.account.findUnique({ where: { uid: req.user.uid } })
+    const userRoles = account.roles
 
     req.user.roles = userRoles
 
@@ -60,9 +63,15 @@ export class AuthGuard implements CanActivate {
       return true
     }
 
-    return userRoles.some((userRole) =>
+    const hasRole = userRoles.some((userRole) =>
       requiredRoles.every((requiredRole) => requiredRole === userRole),
     )
+
+    if (!hasRole) {
+      throw new UnauthorizedException('Invalid role.')
+    }
+
+    return true
   }
 
   private getMetadata<T>(key: string, context: ExecutionContext): T {
@@ -72,18 +81,4 @@ export class AuthGuard implements CanActivate {
     ])
   }
 
-  private async getUserRoles(uid: string): Promise<Role[]> {
-    const rolePromises = [
-      // this.prisma.admin.findUnique({ where: { uid } }),
-      // Add promises for other role models here
-    ]
-
-    const roles: Role[] = []
-
-    const [admin] = await Promise.all(rolePromises)
-    admin && roles.push('admin')
-
-    // return roles
-    return ['admin']
-  }
 }

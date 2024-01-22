@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql'
+import { Resolver, Query, Mutation, Args, ResolveField, Parent } from '@nestjs/graphql'
 import { ProfesseursService } from './professeurs.service'
 import { Professeur } from './entity/professeur.entity'
 import { FindManyProfesseurArgs, FindUniqueProfesseurArgs } from './dtos/find.args'
@@ -9,6 +9,7 @@ import { GetUserType } from 'src/common/types'
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { Prisma } from '@prisma/client'
+import { Utilisateur } from '../utilisateurs/entity/utilisateur.entity'
 
 @Resolver(() => Professeur)
 export class ProfesseursResolver {
@@ -22,11 +23,13 @@ export class ProfesseursResolver {
     return this.professeursService.create(args)
   }
 
+  @AllowAuthenticated()
   @Query(() => [Professeur], { name: 'professeurs' })
   findAll(@Args() args: FindManyProfesseurArgs) {
     return this.professeursService.findAll(args)
   }
 
+  @AllowAuthenticated()
   @Query(() => Professeur, { name: 'professeur' })
   findOne(@Args() args: FindUniqueProfesseurArgs) {
     return this.professeursService.findOne(args)
@@ -46,5 +49,12 @@ export class ProfesseursResolver {
     const professeur = await this.prisma.professeur.findUnique(args)
     // checkRowLevelPermission(user, professeur.uid)
     return this.professeursService.remove(args)
+  }
+
+  @ResolveField(() => Utilisateur)
+  async profile(@Parent() parent: Professeur) {
+    return this.prisma.utilisateur.findUnique({
+      where: { id: parent.profileId }
+    })
   }
 }

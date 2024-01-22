@@ -19,6 +19,7 @@ type Utilisateur {
   statutCompte: String
   roles: [String!]!
   contactId: Float
+  accountId: Float!
   adresseId: Float
 }
 
@@ -26,6 +27,18 @@ type Utilisateur {
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
+
+type Account {
+  id: ID!
+  uid: String!
+  createdAt: DateTime
+  updatedAt: DateTime
+  username: String!
+  password: String!
+  roles: [String!]!
+  isActive: Boolean!
+  userId: Float
+}
 
 type Adresse {
   id: Float!
@@ -130,6 +143,7 @@ type Etudiant {
   anneeBaccaleaureat: Float
   profileId: Float!
   feuillePresencesId: Float
+  profile: Utilisateur!
 }
 
 type EvaluationEtudiants {
@@ -226,6 +240,7 @@ type Professeur {
   createdAt: DateTime!
   updatedAt: DateTime
   profileId: Float!
+  profile: Utilisateur!
 }
 
 type ReseauSocial {
@@ -280,7 +295,13 @@ type UniteEnseignement {
   semestreId: Float
 }
 
+type LoginResponse {
+  access_token: String!
+}
+
 type Query {
+  accounts(where: AccountWhereInput, orderBy: [AccountOrderByWithRelationInput!], cursor: AccountWhereUniqueInput, take: Float, skip: Float, distinct: [AccountScalarFieldEnum!]): [Account!]!
+  account(where: AccountWhereUniqueInput!): Account!
   adresses(where: AdresseWhereInput, orderBy: [AdresseOrderByWithRelationInput!], cursor: AdresseWhereUniqueInput, take: Float, skip: Float, distinct: [AdresseScalarFieldEnum!]): [Adresse!]!
   adresse(where: AdresseWhereUniqueInput!): Adresse!
   classes(where: ClasseWhereInput, orderBy: [ClasseOrderByWithRelationInput!], cursor: ClasseWhereUniqueInput, take: Float, skip: Float, distinct: [ClasseScalarFieldEnum!]): [Classe!]!
@@ -297,6 +318,8 @@ type Query {
   etablissement(where: EtablissementWhereUniqueInput!): Etablissement!
   etudiants(where: EtudiantWhereInput, orderBy: [EtudiantOrderByWithRelationInput!], cursor: EtudiantWhereUniqueInput, take: Float, skip: Float, distinct: [EtudiantScalarFieldEnum!]): [Etudiant!]!
   etudiant(where: EtudiantWhereUniqueInput!): Etudiant!
+  utilisateurs(where: UtilisateurWhereInput, orderBy: [UtilisateurOrderByWithRelationInput!], cursor: UtilisateurWhereInput, take: Float, skip: Float, distinct: [UtilisateurScalarFieldEnum!]): [Utilisateur!]!
+  utilisateur(where: UtilisateurWhereUniqueInput!): Utilisateur!
   evaluationEtudiants(where: EvaluationEtudiantsWhereUniqueInput!): EvaluationEtudiants!
   feuillePresences(where: FeuillePresenceWhereInput, orderBy: [FeuillePresenceOrderByWithRelationInput!], cursor: FeuillePresenceWhereUniqueInput, take: Float, skip: Float, distinct: [FeuillePresenceScalarFieldEnum!]): [FeuillePresence!]!
   feuillePresence(where: FeuillePresenceWhereUniqueInput!): FeuillePresence!
@@ -324,22 +347,21 @@ type Query {
   specialite(where: SpecialiteWhereUniqueInput!): Specialite!
   uniteEnseignements(where: UniteEnseignementWhereInput, orderBy: [UniteEnseignementOrderByWithRelationInput!], cursor: UniteEnseignementWhereUniqueInput, take: Float, skip: Float, distinct: [UniteEnseignementScalarFieldEnum!]): [UniteEnseignement!]!
   uniteEnseignement(where: UniteEnseignementWhereUniqueInput!): UniteEnseignement!
-  utilisateurs(where: UtilisateurWhereInput, orderBy: [UtilisateurOrderByWithRelationInput!], cursor: UtilisateurWhereInput, take: Float, skip: Float, distinct: [UtilisateurScalarFieldEnum!]): [Utilisateur!]!
-  utilisateur(where: UtilisateurWhereUniqueInput!): Utilisateur!
 }
 
-input AdresseWhereInput {
+input AccountWhereInput {
   id: IntFilter
-  pays: StringFilter
-  region: StringFilter
-  ville: StringFilter
-  codePostal: StringFilter
-  geolocalisation: StringFilter
-  utilisateurs: UtilisateurListRelationFilter
-  etablissements: EtablissementListRelationFilter
-  AND: [AdresseWhereInput!]
-  OR: [AdresseWhereInput!]
-  NOT: [AdresseWhereInput!]
+  uid: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  username: StringFilter
+  password: StringFilter
+  roles: StringFilter
+  isActive: BoolFilter
+  userId: IntFilter
+  AND: [AccountWhereInput!]
+  OR: [AccountWhereInput!]
+  NOT: [AccountWhereInput!]
 }
 
 input IntFilter {
@@ -370,6 +392,68 @@ enum QueryMode {
   insensitive
 }
 
+input DateTimeFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+}
+
+input BoolFilter {
+  equals: Boolean
+  not: Boolean
+}
+
+input AccountOrderByWithRelationInput {
+  id: SortOrder!
+  uid: SortOrder!
+  createdAt: SortOrder!
+  updatedAt: SortOrder!
+  username: SortOrder!
+  password: SortOrder!
+  roles: SortOrder!
+  isActive: SortOrder!
+  userId: SortOrder!
+}
+
+enum SortOrder {
+  asc
+  desc
+}
+
+input AccountWhereUniqueInput {
+  id: Float!
+}
+
+enum AccountScalarFieldEnum {
+  id
+  uid
+  createdAt
+  updatedAt
+  username
+  password
+  roles
+  isActive
+  userId
+}
+
+input AdresseWhereInput {
+  id: IntFilter
+  pays: StringFilter
+  region: StringFilter
+  ville: StringFilter
+  codePostal: StringFilter
+  geolocalisation: StringFilter
+  utilisateurs: UtilisateurListRelationFilter
+  etablissements: EtablissementListRelationFilter
+  AND: [AdresseWhereInput!]
+  OR: [AdresseWhereInput!]
+  NOT: [AdresseWhereInput!]
+}
+
 input UtilisateurListRelationFilter {
   every: UtilisateurWhereInput
   some: UtilisateurWhereInput
@@ -391,9 +475,10 @@ input UtilisateurWhereInput {
   groupeSanguin: StringFilter
   etablissementId: IntFilter
   statutCompte: StringFilter
-  roles: StringFilter
+  roles: StringListFilter
   contactId: IntFilter
   adresseId: IntFilter
+  accountId: IntFilter
   contact: ContactRelationFilter
   adresse: AdresseRelationFilter
   etudiant: EtudiantRelationFilter
@@ -405,14 +490,12 @@ input UtilisateurWhereInput {
   NOT: [UtilisateurWhereInput!]
 }
 
-input DateTimeFilter {
-  equals: String
-  in: [String!]
-  notIn: [String!]
-  lt: String
-  lte: String
-  gt: String
-  gte: String
+input StringListFilter {
+  equals: [String!]
+  has: String
+  hasEvery: [String!]
+  hasSome: [String!]
+  isEmpty: Boolean
 }
 
 input ContactRelationFilter {
@@ -721,11 +804,6 @@ input SalleWhereInput {
   NOT: [SalleWhereInput!]
 }
 
-input BoolFilter {
-  equals: Boolean
-  not: Boolean
-}
-
 input EmploiDuTempsListRelationFilter {
   every: EmploiDuTempsWhereInput
   some: EmploiDuTempsWhereInput
@@ -920,14 +998,6 @@ input DiplomeWhereInput {
   NOT: [DiplomeWhereInput!]
 }
 
-input StringListFilter {
-  equals: [String!]
-  has: String
-  hasEvery: [String!]
-  hasSome: [String!]
-  isEmpty: Boolean
-}
-
 input SpecialiteRelationFilter {
   is: SpecialiteWhereInput
   isNot: SpecialiteWhereInput
@@ -1021,11 +1091,6 @@ input AdresseOrderByWithRelationInput {
   geolocalisation: SortOrder
   utilisateurs: UtilisateurOrderByRelationAggregateInput
   etablissements: EtablissementOrderByRelationAggregateInput
-}
-
-enum SortOrder {
-  asc
-  desc
 }
 
 input UtilisateurOrderByRelationAggregateInput {
@@ -1289,29 +1354,30 @@ input EtudiantOrderByWithRelationInput {
 }
 
 input UtilisateurOrderByWithRelationInput {
-  id: SortOrder!
-  matricule: SortOrder!
-  createdAt: SortOrder!
-  updatedAt: SortOrder!
-  prenom: SortOrder!
-  nom: SortOrder!
-  dateNaissance: SortOrder!
-  lieuNaissance: SortOrder!
-  cni: SortOrder!
-  genre: SortOrder!
-  nationalite: SortOrder!
-  groupeSanguin: SortOrder!
-  etablissementId: SortOrder!
-  statutCompte: SortOrder!
-  roles: SortOrder!
-  contactId: SortOrder!
-  adresseId: SortOrder!
-  contact: ContactOrderByWithRelationInput!
+  id: SortOrder
+  matricule: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  prenom: SortOrder
+  nom: SortOrder
+  dateNaissance: SortOrder
+  lieuNaissance: SortOrder
+  cni: SortOrder
+  genre: SortOrder
+  nationalite: SortOrder
+  groupeSanguin: SortOrder
+  etablissementId: SortOrder
+  statutCompte: SortOrder
+  roles: SortOrder
+  contactId: SortOrder
+  adresseId: SortOrder
+  accountId: SortOrder
+  contact: ContactOrderByWithRelationInput
   adresse: AdresseOrderByWithRelationInput
   etablissement: EtablissementOrderByWithRelationInput
   etudiant: EtudiantOrderByWithRelationInput
-  permissions: PermissionOrderByRelationAggregateInput!
-  Professeur: ProfesseurOrderByWithRelationInput!
+  permissions: PermissionOrderByRelationAggregateInput
+  Professeur: ProfesseurOrderByWithRelationInput
 }
 
 input PermissionOrderByRelationAggregateInput {
@@ -1354,6 +1420,31 @@ enum EtudiantScalarFieldEnum {
   anneeBaccaleaureat
   profileId
   feuillePresencesId
+}
+
+enum UtilisateurScalarFieldEnum {
+  id
+  matricule
+  createdAt
+  updatedAt
+  prenom
+  nom
+  dateNaissance
+  lieuNaissance
+  cni
+  genre
+  nationalite
+  groupeSanguin
+  etablissementId
+  statutCompte
+  roles
+  contactId
+  adresseId
+  accountId
+}
+
+input UtilisateurWhereUniqueInput {
+  id: Float
 }
 
 input EvaluationEtudiantsWhereUniqueInput {
@@ -1730,31 +1821,10 @@ enum UniteEnseignementScalarFieldEnum {
   semestreId
 }
 
-enum UtilisateurScalarFieldEnum {
-  id
-  matricule
-  createdAt
-  updatedAt
-  prenom
-  nom
-  dateNaissance
-  lieuNaissance
-  cni
-  genre
-  nationalite
-  groupeSanguin
-  etablissementId
-  statutCompte
-  roles
-  contactId
-  adresseId
-}
-
-input UtilisateurWhereUniqueInput {
-  id: Float
-}
-
 type Mutation {
+  createAccount(createAccountInput: CreateAccountInput!): Account!
+  updateAccount(updateAccountInput: UpdateAccountInput!): Account!
+  removeAccount(where: AccountWhereUniqueInput!): Account!
   createAdresse(createAdresseInput: CreateAdresseInput!): Adresse!
   updateAdresse(updateAdresseInput: UpdateAdresseInput!): Adresse!
   removeAdresse(where: AdresseWhereUniqueInput!): Adresse!
@@ -1782,6 +1852,9 @@ type Mutation {
   createEtudiant(createEtudiantInput: CreateEtudiantInput!): Etudiant!
   updateEtudiant(updateEtudiantInput: UpdateEtudiantInput!): Etudiant!
   removeEtudiant(where: EtudiantWhereUniqueInput!): Etudiant!
+  createUtilisateur(createUtilisateurInput: CreateUtilisateurInput!): Utilisateur!
+  updateUtilisateur(updateUtilisateurInput: UpdateUtilisateurInput!): Utilisateur!
+  removeUtilisateur(where: UtilisateurWhereUniqueInput!): Utilisateur!
   createEvaluationEtudiants(createEvaluationEtudiantsInput: CreateEvaluationEtudiantsInput!): EvaluationEtudiants!
   updateEvaluationEtudiants(updateEvaluationEtudiantsInput: UpdateEvaluationEtudiantsInput!): EvaluationEtudiants!
   removeEvaluationEtudiants(where: EvaluationEtudiantsWhereUniqueInput!): EvaluationEtudiants!
@@ -1824,9 +1897,22 @@ type Mutation {
   createUniteEnseignement(createUniteEnseignementInput: CreateUniteEnseignementInput!): UniteEnseignement!
   updateUniteEnseignement(updateUniteEnseignementInput: UpdateUniteEnseignementInput!): UniteEnseignement!
   removeUniteEnseignement(where: UniteEnseignementWhereUniqueInput!): UniteEnseignement!
-  createUtilisateur(createUtilisateurInput: CreateUtilisateurInput!): Utilisateur!
-  updateUtilisateur(updateUtilisateurInput: UpdateUtilisateurInput!): Utilisateur!
-  removeUtilisateur(where: UtilisateurWhereUniqueInput!): Utilisateur!
+  login(loginInput: LoginInput!): LoginResponse!
+}
+
+input CreateAccountInput {
+  username: String!
+  password: String!
+  roles: [String!]! = ["UTILISATEUR"]
+  userId: Float
+}
+
+input UpdateAccountInput {
+  username: String
+  password: String
+  roles: [String!] = ["UTILISATEUR"]
+  userId: Float
+  id: Float!
 }
 
 input CreateAdresseInput {
@@ -1987,6 +2073,29 @@ input CreateEtudiantInput {
   anneeBaccaleaureat: Float
   profileId: Float!
   feuillePresencesId: Float
+  profile: UtilisateurWithAccount!
+}
+
+input UtilisateurWithAccount {
+  id: Float
+  matricule: String!
+  createdAt: DateTime
+  updatedAt: DateTime
+  prenom: String!
+  nom: String!
+  dateNaissance: DateTime
+  lieuNaissance: String
+  cni: String
+  genre: String
+  nationalite: String
+  groupeSanguin: String
+  etablissementId: Float
+  statutCompte: String
+  roles: [String!]
+  contactId: Float
+  accountId: Float
+  adresseId: Float
+  account: CreateAccountInput!
 }
 
 input UpdateEtudiantInput {
@@ -1995,6 +2104,44 @@ input UpdateEtudiantInput {
   anneeBaccaleaureat: Float
   profileId: Float
   feuillePresencesId: Float
+  profile: UtilisateurWithAccount
+  id: Float!
+}
+
+input CreateUtilisateurInput {
+  matricule: String!
+  prenom: String!
+  nom: String!
+  dateNaissance: DateTime
+  lieuNaissance: String
+  cni: String
+  genre: String
+  nationalite: String
+  groupeSanguin: String
+  etablissementId: Float
+  statutCompte: String
+  roles: [String!]
+  contactId: Float
+  adresseId: Float
+  account: CreateAccountInput!
+}
+
+input UpdateUtilisateurInput {
+  matricule: String
+  prenom: String
+  nom: String
+  dateNaissance: DateTime
+  lieuNaissance: String
+  cni: String
+  genre: String
+  nationalite: String
+  groupeSanguin: String
+  etablissementId: Float
+  statutCompte: String
+  roles: [String!]
+  contactId: Float
+  adresseId: Float
+  account: CreateAccountInput
   id: Float!
 }
 
@@ -2137,11 +2284,11 @@ input UpdatePermissionInput {
 }
 
 input CreateProfesseurInput {
-  profileId: Float!
+  profile: UtilisateurWithAccount!
 }
 
 input UpdateProfesseurInput {
-  profileId: Float
+  profile: UtilisateurWithAccount
   id: Float!
 }
 
@@ -2222,37 +2369,7 @@ input UpdateUniteEnseignementInput {
   id: Float!
 }
 
-input CreateUtilisateurInput {
-  matricule: String!
-  prenom: String!
-  nom: String!
-  dateNaissance: DateTime
-  lieuNaissance: String
-  cni: String
-  genre: String
-  nationalite: String
-  groupeSanguin: String
-  etablissementId: Float
-  statutCompte: String
-  roles: [String!]!
-  contactId: Float
-  adresseId: Float
-}
-
-input UpdateUtilisateurInput {
-  matricule: String
-  prenom: String
-  nom: String
-  dateNaissance: DateTime
-  lieuNaissance: String
-  cni: String
-  genre: String
-  nationalite: String
-  groupeSanguin: String
-  etablissementId: Float
-  statutCompte: String
-  roles: [String!]
-  contactId: Float
-  adresseId: Float
-  id: Float!
+input LoginInput {
+  username: String!
+  password: String!
 }

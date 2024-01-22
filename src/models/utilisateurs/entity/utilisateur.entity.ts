@@ -4,6 +4,7 @@ import { RestrictProperties } from 'src/common/dtos/common.input'
 
 @ObjectType()
 export class Utilisateur implements RestrictProperties<Utilisateur, UtilisateurType> {
+
     @Field()
     id: number
 
@@ -51,6 +52,9 @@ export class Utilisateur implements RestrictProperties<Utilisateur, UtilisateurT
 
     @Field({ nullable: true })
     contactId: number
+
+    @Field({ nullable: false })
+    accountId: number
 
     @Field({ nullable: true })
     adresseId: number

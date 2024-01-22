@@ -3,14 +3,21 @@ import { FindManyEtudiantArgs, FindUniqueEtudiantArgs } from './dtos/find.args'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { CreateEtudiantInput } from './dtos/create-etudiant.input'
 import { UpdateEtudiantInput } from './dtos/update-etudiant.input'
-import { Prisma } from '@prisma/client'
+import { UtilisateursService } from '../utilisateurs/utilisateurs.service'
+import slugify from 'slugify'
 
 @Injectable()
 export class EtudiantsService {
-  constructor(private readonly prisma: PrismaService) { }
-  create(createEtudiantInput: CreateEtudiantInput) {
+  constructor(private readonly prisma: PrismaService, private readonly utilisateurService: UtilisateursService) { }
+  async create(createEtudiantInput: CreateEtudiantInput) {
+    // create utilisateur
+    const utilisateur = await this.utilisateurService.create(createEtudiantInput.profile)
+
+    // create etudiant without profile
+    const { profile, ...studentData } = createEtudiantInput
+    const slug = slugify(`${profile.nom} ${utilisateur.accountId} ${profile.prenom}`)
     return this.prisma.etudiant.create({
-      data: createEtudiantInput,
+      data: { ...studentData, profileId: utilisateur.id, slug },
     })
   }
 
@@ -23,7 +30,7 @@ export class EtudiantsService {
   }
 
   update(updateEtudiantInput: UpdateEtudiantInput) {
-    const { id, ...data } = updateEtudiantInput
+    const { id, profile, ...data } = updateEtudiantInput
     return this.prisma.etudiant.update({
       where: { id },
       data: data,

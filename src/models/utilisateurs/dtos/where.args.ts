@@ -1,6 +1,6 @@
 import { Field, InputType, PartialType } from '@nestjs/graphql'
 import { $Enums, Prisma } from '@prisma/client'
-import { DateTimeFilter, IntFilter, RestrictProperties, StringFilter } from 'src/common/dtos/common.input'
+import { DateTimeFilter, IntFilter, RestrictProperties, StringFilter, StringListFilter } from 'src/common/dtos/common.input'
 import { ContactRelationFilter } from 'src/models/contacts/dtos/where.args';
 import { AdresseListRelationFilter, AdresseRelationFilter } from 'src/models/adresses/dtos/where.args';
 import { EtablissementRelationFilter } from 'src/models/etablissements/dtos/where.args';
@@ -66,6 +66,9 @@ export class UtilisateurWhereInputStrict implements RestrictProperties<Utilisate
 
   @Field(() => IntFilter, { nullable: true })
   adresseId: IntFilter;
+
+  @Field(() => IntFilter, { nullable: true })
+  accountId: IntFilter;
 
   @Field(() => ContactRelationFilter, { nullable: true })
   contact: ContactRelationFilter;
@@ -142,11 +145,14 @@ export class UtilisateurWhereInput extends PartialType(
   @Field(() => StringFilter, { nullable: true })
   statutCompte: StringFilter;
 
-  @Field(() => StringFilter, { nullable: true })
+  @Field(() => StringListFilter, { nullable: true })
   roles: Prisma.EnumRoleNullableListFilter;
 
   @Field(() => IntFilter, { nullable: true })
   contactId: IntFilter;
+
+  @Field(() => IntFilter, { nullable: true })
+  accountId: IntFilter;
 
   @Field(() => IntFilter, { nullable: true })
   adresseId: IntFilter;

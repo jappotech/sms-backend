@@ -13,56 +13,59 @@ export class UtilisateurOrderByWithRelationInputStrict
   implements RestrictProperties<UtilisateurOrderByWithRelationInputStrict, Prisma.UtilisateurOrderByWithRelationInput>
 {
 
-  @Field(() => Prisma.SortOrder)
+  @Field(() => Prisma.SortOrder, { nullable: true })
   id: Prisma.SortOrder
 
-  @Field(() => Prisma.SortOrder)
+  @Field(() => Prisma.SortOrder, { nullable: true })
   matricule: Prisma.SortOrder
 
-  @Field(() => Prisma.SortOrder)
+  @Field(() => Prisma.SortOrder, { nullable: true })
   createdAt: Prisma.SortOrder
 
-  @Field(() => Prisma.SortOrder)
+  @Field(() => Prisma.SortOrder, { nullable: true })
   updatedAt: Prisma.SortOrder
 
-  @Field(() => Prisma.SortOrder)
+  @Field(() => Prisma.SortOrder, { nullable: true })
   prenom: Prisma.SortOrder
 
-  @Field(() => Prisma.SortOrder)
+  @Field(() => Prisma.SortOrder, { nullable: true })
   nom: Prisma.SortOrder
 
-  @Field(() => Prisma.SortOrder)
+  @Field(() => Prisma.SortOrder, { nullable: true })
   dateNaissance: Prisma.SortOrder | Prisma.SortOrderInput
 
-  @Field(() => Prisma.SortOrder)
+  @Field(() => Prisma.SortOrder, { nullable: true })
   lieuNaissance: Prisma.SortOrder | Prisma.SortOrderInput
 
-  @Field(() => Prisma.SortOrder)
+  @Field(() => Prisma.SortOrder, { nullable: true })
   cni: Prisma.SortOrder | Prisma.SortOrderInput
 
-  @Field(() => Prisma.SortOrder)
+  @Field(() => Prisma.SortOrder, { nullable: true })
   genre: Prisma.SortOrder
 
-  @Field(() => Prisma.SortOrder)
+  @Field(() => Prisma.SortOrder, { nullable: true })
   nationalite: Prisma.SortOrder | Prisma.SortOrderInput
 
-  @Field(() => Prisma.SortOrder)
+  @Field(() => Prisma.SortOrder, { nullable: true })
   groupeSanguin: Prisma.SortOrder | Prisma.SortOrderInput
 
-  @Field(() => Prisma.SortOrder)
+  @Field(() => Prisma.SortOrder, { nullable: true })
   etablissementId: Prisma.SortOrder | Prisma.SortOrderInput
 
-  @Field(() => Prisma.SortOrder)
+  @Field(() => Prisma.SortOrder, { nullable: true })
   statutCompte: Prisma.SortOrder | Prisma.SortOrderInput
 
-  @Field(() => Prisma.SortOrder)
+  @Field(() => Prisma.SortOrder, { nullable: true })
   roles: Prisma.SortOrder
 
-  @Field(() => Prisma.SortOrder)
+  @Field(() => Prisma.SortOrder, { nullable: true })
   contactId: Prisma.SortOrder | Prisma.SortOrderInput
 
-  @Field(() => Prisma.SortOrder)
+  @Field(() => Prisma.SortOrder, { nullable: true })
   adresseId: Prisma.SortOrder | Prisma.SortOrderInput
+
+  @Field(() => Prisma.SortOrder, { nullable: true })
+  accountId: Prisma.SortOrder | Prisma.SortOrderInput
 
   @Field(() => ContactOrderByWithRelationInput)
   contact: ContactOrderByWithRelationInput
@@ -88,58 +91,61 @@ export class UtilisateurOrderByWithRelationInputStrict
 export class UtilisateurOrderByWithRelationInput extends PartialType(
   UtilisateurOrderByWithRelationInputStrict,
 ) {
-  @Field(() => Prisma.SortOrder)
+  @Field(() => Prisma.SortOrder, { nullable: true })
   id: Prisma.SortOrder
 
-  @Field(() => Prisma.SortOrder)
+  @Field(() => Prisma.SortOrder, { nullable: true })
   matricule: Prisma.SortOrder
 
-  @Field(() => Prisma.SortOrder)
+  @Field(() => Prisma.SortOrder, { nullable: true })
   createdAt: Prisma.SortOrder
 
-  @Field(() => Prisma.SortOrder)
+  @Field(() => Prisma.SortOrder, { nullable: true })
   updatedAt: Prisma.SortOrder
 
-  @Field(() => Prisma.SortOrder)
+  @Field(() => Prisma.SortOrder, { nullable: true })
   prenom: Prisma.SortOrder
 
-  @Field(() => Prisma.SortOrder)
+  @Field(() => Prisma.SortOrder, { nullable: true })
   nom: Prisma.SortOrder
 
-  @Field(() => Prisma.SortOrder)
+  @Field(() => Prisma.SortOrder, { nullable: true })
   dateNaissance: Prisma.SortOrder | Prisma.SortOrderInput
 
-  @Field(() => Prisma.SortOrder)
+  @Field(() => Prisma.SortOrder, { nullable: true })
   lieuNaissance: Prisma.SortOrder | Prisma.SortOrderInput
 
-  @Field(() => Prisma.SortOrder)
+  @Field(() => Prisma.SortOrder, { nullable: true })
   cni: Prisma.SortOrder | Prisma.SortOrderInput
 
-  @Field(() => Prisma.SortOrder)
+  @Field(() => Prisma.SortOrder, { nullable: true })
   genre: Prisma.SortOrder
 
-  @Field(() => Prisma.SortOrder)
+  @Field(() => Prisma.SortOrder, { nullable: true })
   nationalite: Prisma.SortOrder | Prisma.SortOrderInput
 
-  @Field(() => Prisma.SortOrder)
+  @Field(() => Prisma.SortOrder, { nullable: true })
   groupeSanguin: Prisma.SortOrder | Prisma.SortOrderInput
 
-  @Field(() => Prisma.SortOrder)
+  @Field(() => Prisma.SortOrder, { nullable: true })
   etablissementId: Prisma.SortOrder | Prisma.SortOrderInput
 
-  @Field(() => Prisma.SortOrder)
+  @Field(() => Prisma.SortOrder, { nullable: true })
   statutCompte: Prisma.SortOrder | Prisma.SortOrderInput
 
-  @Field(() => Prisma.SortOrder)
+  @Field(() => Prisma.SortOrder, { nullable: true })
   roles: Prisma.SortOrder
 
-  @Field(() => Prisma.SortOrder)
+  @Field(() => Prisma.SortOrder, { nullable: true })
   contactId: Prisma.SortOrder | Prisma.SortOrderInput
 
-  @Field(() => Prisma.SortOrder)
+  @Field(() => Prisma.SortOrder, { nullable: true })
   adresseId: Prisma.SortOrder | Prisma.SortOrderInput
 
-  @Field(() => ContactOrderByWithRelationInput)
+  @Field(() => Prisma.SortOrder, { nullable: true })
+  accountId: Prisma.SortOrder | Prisma.SortOrderInput
+
+  @Field(() => ContactOrderByWithRelationInput, { nullable: true })
   contact: ContactOrderByWithRelationInput
 
   @Field(() => AdresseOrderByWithRelationInput, { nullable: true })
@@ -151,15 +157,15 @@ export class UtilisateurOrderByWithRelationInput extends PartialType(
   @Field(() => EtudiantOrderByWithRelationInput, { nullable: true })
   etudiant: EtudiantOrderByWithRelationInput
 
-  @Field(() => PermissionOrderByRelationAggregateInput)
+  @Field(() => PermissionOrderByRelationAggregateInput, { nullable: true })
   permissions: PermissionOrderByRelationAggregateInput
 
-  @Field(() => ProfesseurOrderByWithRelationInput)
+  @Field(() => ProfesseurOrderByWithRelationInput, { nullable: true })
   Professeur: ProfesseurOrderByWithRelationInput
 }
 
 @InputType()
 export class UtilisateurOrderByRelationAggregateInput {
-  @Field(() => Prisma.SortOrder)
+  @Field(() => Prisma.SortOrder, { nullable: true })
   _count?: Prisma.SortOrder
 }
