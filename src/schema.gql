@@ -1,0 +1,2375 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Utilisateur {
+  id: Float!
+  matricule: String!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  prenom: String!
+  nom: String!
+  dateNaissance: DateTime
+  lieuNaissance: String
+  cni: String
+  genre: String
+  nationalite: String
+  groupeSanguin: String
+  etablissementId: Float
+  statutCompte: String
+  roles: [String!]!
+  contactId: Float
+  accountId: Float!
+  adresseId: Float
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Account {
+  id: ID!
+  uid: String!
+  createdAt: DateTime
+  updatedAt: DateTime
+  username: String!
+  password: String!
+  roles: [String!]!
+  isActive: Boolean!
+  userId: Float
+}
+
+type Adresse {
+  id: Float!
+  pays: String!
+  region: String
+  ville: String
+  codePostal: String
+  geolocalisation: String
+}
+
+type Classe {
+  id: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  nom: String!
+  code: String!
+  etablissementId: Float!
+  specialiteId: Float!
+}
+
+type Contact {
+  id: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  telephone: String!
+  fix: String
+  fax: String
+  email: String!
+  siteWeb: String
+}
+
+type Cours {
+  id: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  nom: String!
+  description: String
+  dateDebut: DateTime!
+  dateFin: DateTime!
+  heureDebut: DateTime!
+  heureFin: DateTime!
+  matiereId: Float!
+  salleId: Float!
+  classeId: Float!
+  professeurId: Float!
+}
+
+type Diplome {
+  id: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  nom: String!
+  finalite: String
+  entite: String
+  habilitation: String
+  partenaires: [String!]
+  dateCreation: DateTime
+  dateHabilitation: DateTime
+  dateEcheance: DateTime
+  duree: Float
+  specialiteId: Float
+}
+
+type Domaine {
+  id: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  nom: String!
+  slug: String!
+}
+
+type EmploiDuTemps {
+  id: Float!
+  coursId: Float!
+  classeId: Float!
+  professeurId: Float!
+  salleId: Float!
+  dateDebut: DateTime!
+  dateFin: DateTime!
+}
+
+type Etablissement {
+  id: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  nom: String!
+  matricule: String
+  sigle: String
+  dateCreation: DateTime
+  logo: String
+  adresseId: Float
+  contactId: Float
+}
+
+type Etudiant {
+  id: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  slug: String!
+  ine: String!
+  baccaleaureat: String
+  anneeBaccaleaureat: Float
+  profileId: Float!
+  feuillePresencesId: Float
+  profile: Utilisateur!
+}
+
+type EvaluationEtudiants {
+  id: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  typeEvaluation: String!
+  duree: Float!
+  document: String!
+  description: String!
+  coursId: Float!
+}
+
+type FeuillePresence {
+  id: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  date: DateTime!
+  heureDebut: DateTime!
+  heureFin: DateTime!
+  coursId: Float!
+  etudiantId: Float!
+}
+
+type Inscription {
+  id: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  reference: String!
+  premiereInscription: Boolean!
+  dernierDiplome: String
+  autreEtablissement: String
+  activiteProfessionnel: String
+  niveau: String
+  statut: String
+  diplomeId: Float
+  etudiantId: Float
+  classeId: Float
+}
+
+type Matiere {
+  id: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  code: String!
+  nom: String!
+  credit: Float
+  nbHeure: Float
+  uniteEnseigmentId: Float
+}
+
+type Mention {
+  id: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  nom: String!
+  slug: String!
+  domaineId: Float!
+}
+
+type NoteEtudiant {
+  id: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  note: Float!
+  typeEvaluation: String!
+  evaluationEtudiantId: Float!
+  etudiantId: Float!
+  coursId: Float!
+}
+
+type Paiement {
+  id: Float!
+  etudiantId: Float!
+  montant: Float!
+  datePaiement: DateTime!
+  methodePaiement: String!
+  referencePaiement: String!
+  typeFrais: String!
+  statutPaiement: String!
+}
+
+type Permission {
+  id: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  role: [String!]!
+  label: String!
+  slug: String!
+}
+
+type Professeur {
+  id: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  profileId: Float!
+  profile: Utilisateur!
+}
+
+type ReseauSocial {
+  id: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  nom: String!
+  username: String
+  url: String
+  contactId: Float!
+}
+
+type Salle {
+  id: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  nom: String!
+  capacite: Float
+  batiment: String
+  etablissementId: Float!
+  estDisponible: Boolean!
+}
+
+type Semestre {
+  id: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  numero: Float!
+  grade: String!
+  dateDebut: DateTime!
+  dateFin: DateTime!
+  nombreSemaine: Float!
+  classeId: Float
+}
+
+type Specialite {
+  id: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  nom: String!
+  slug: String!
+  mentionId: Float
+}
+
+type UniteEnseignement {
+  id: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  code: String!
+  nom: String!
+  credit: Float!
+  semestreId: Float
+}
+
+type LoginResponse {
+  access_token: String!
+}
+
+type Query {
+  accounts(where: AccountWhereInput, orderBy: [AccountOrderByWithRelationInput!], cursor: AccountWhereUniqueInput, take: Float, skip: Float, distinct: [AccountScalarFieldEnum!]): [Account!]!
+  account(where: AccountWhereUniqueInput!): Account!
+  adresses(where: AdresseWhereInput, orderBy: [AdresseOrderByWithRelationInput!], cursor: AdresseWhereUniqueInput, take: Float, skip: Float, distinct: [AdresseScalarFieldEnum!]): [Adresse!]!
+  adresse(where: AdresseWhereUniqueInput!): Adresse!
+  classes(where: ClasseWhereInput, orderBy: [ClasseOrderByWithRelationInput!], cursor: ClasseWhereUniqueInput, take: Float, skip: Float, distinct: [ClasseScalarFieldEnum!]): [Classe!]!
+  classe(where: ClasseWhereUniqueInput!): Classe!
+  contacts(where: ContactWhereInput, orderBy: [ContactOrderByWithRelationInput!], cursor: ContactWhereUniqueInput, take: Float, skip: Float, distinct: [ContactScalarFieldEnum!]): [Contact!]!
+  contact(where: ContactWhereUniqueInput!): Contact!
+  cours(where: CoursWhereUniqueInput!): Cours!
+  diplomes(where: DiplomeWhereInput, orderBy: [DiplomeOrderByWithRelationInput!], cursor: DiplomeWhereUniqueInput, take: Float, skip: Float, distinct: [DiplomeScalarFieldEnum!]): [Diplome!]!
+  diplome(where: DiplomeWhereUniqueInput!): Diplome!
+  domaines(where: DomaineWhereInput, orderBy: [DomaineOrderByWithRelationInput!], cursor: DomaineWhereUniqueInput, take: Float, skip: Float, distinct: [DomaineScalarFieldEnum!]): [Domaine!]!
+  domaine(where: DomaineWhereUniqueInput!): Domaine!
+  emploiDuTemps(where: EmploiDuTempsWhereUniqueInput!): EmploiDuTemps!
+  etablissements(where: EtablissementWhereInput, orderBy: [EtablissementOrderByWithRelationInput!], cursor: EtablissementWhereUniqueInput, take: Float, skip: Float, distinct: [EtablissementScalarFieldEnum!]): [Etablissement!]!
+  etablissement(where: EtablissementWhereUniqueInput!): Etablissement!
+  etudiants(where: EtudiantWhereInput, orderBy: [EtudiantOrderByWithRelationInput!], cursor: EtudiantWhereUniqueInput, take: Float, skip: Float, distinct: [EtudiantScalarFieldEnum!]): [Etudiant!]!
+  etudiant(where: EtudiantWhereUniqueInput!): Etudiant!
+  utilisateurs(where: UtilisateurWhereInput, orderBy: [UtilisateurOrderByWithRelationInput!], cursor: UtilisateurWhereInput, take: Float, skip: Float, distinct: [UtilisateurScalarFieldEnum!]): [Utilisateur!]!
+  utilisateur(where: UtilisateurWhereUniqueInput!): Utilisateur!
+  evaluationEtudiants(where: EvaluationEtudiantsWhereUniqueInput!): EvaluationEtudiants!
+  feuillePresences(where: FeuillePresenceWhereInput, orderBy: [FeuillePresenceOrderByWithRelationInput!], cursor: FeuillePresenceWhereUniqueInput, take: Float, skip: Float, distinct: [FeuillePresenceScalarFieldEnum!]): [FeuillePresence!]!
+  feuillePresence(where: FeuillePresenceWhereUniqueInput!): FeuillePresence!
+  inscriptions(where: InscriptionWhereInput, orderBy: [InscriptionOrderByWithRelationInput!], cursor: InscriptionWhereUniqueInput, take: Float, skip: Float, distinct: [InscriptionScalarFieldEnum!]): [Inscription!]!
+  inscription(where: InscriptionWhereUniqueInput!): Inscription!
+  matieres(where: MatiereWhereInput, orderBy: [MatiereOrderByWithRelationInput!], cursor: MatiereWhereUniqueInput, take: Float, skip: Float, distinct: [MatiereScalarFieldEnum!]): [Matiere!]!
+  matiere(where: MatiereWhereUniqueInput!): Matiere!
+  mentions(where: MentionWhereInput, orderBy: [MentionOrderByWithRelationInput!], cursor: MentionWhereUniqueInput, take: Float, skip: Float, distinct: [MentionScalarFieldEnum!]): [Mention!]!
+  mention(where: MentionWhereUniqueInput!): Mention!
+  noteEtudiants(where: NoteEtudiantWhereInput, orderBy: [NoteEtudiantOrderByWithRelationInput!], cursor: NoteEtudiantWhereUniqueInput, take: Float, skip: Float, distinct: [NoteEtudiantScalarFieldEnum!]): [NoteEtudiant!]!
+  noteEtudiant(where: NoteEtudiantWhereUniqueInput!): NoteEtudiant!
+  paiements(where: PaiementWhereInput, orderBy: [PaiementOrderByWithRelationInput!], cursor: PaiementWhereUniqueInput, take: Float, skip: Float, distinct: [PaiementScalarFieldEnum!]): [Paiement!]!
+  paiement(where: PaiementWhereUniqueInput!): Paiement!
+  permissions(where: PermissionWhereInput, orderBy: [PermissionOrderByWithRelationInput!], cursor: PermissionWhereUniqueInput, take: Float, skip: Float, distinct: [PermissionScalarFieldEnum!]): [Permission!]!
+  permission(where: PermissionWhereUniqueInput!): Permission!
+  professeurs(where: ProfesseurWhereInput, orderBy: [ProfesseurOrderByWithRelationInput!], cursor: ProfesseurWhereUniqueInput, take: Float, skip: Float, distinct: [ProfesseurScalarFieldEnum!]): [Professeur!]!
+  professeur(where: ProfesseurWhereUniqueInput!): Professeur!
+  reseauSocials(where: ReseauSocialWhereInput, orderBy: [ReseauSocialOrderByWithRelationInput!], cursor: ReseauSocialWhereUniqueInput, take: Float, skip: Float, distinct: [ReseauSocialScalarFieldEnum!]): [ReseauSocial!]!
+  reseauSocial(where: ReseauSocialWhereUniqueInput!): ReseauSocial!
+  salles(where: SalleWhereInput, orderBy: [SalleOrderByWithRelationInput!], cursor: SalleWhereUniqueInput, take: Float, skip: Float, distinct: [SalleScalarFieldEnum!]): [Salle!]!
+  salle(where: SalleWhereUniqueInput!): Salle!
+  semestres(where: SemestreWhereInput, orderBy: [SemestreOrderByWithRelationInput!], cursor: SemestreWhereUniqueInput, take: Float, skip: Float, distinct: [SemestreScalarFieldEnum!]): [Semestre!]!
+  semestre(where: SemestreWhereUniqueInput!): Semestre!
+  specialites(where: SpecialiteWhereInput, orderBy: [SpecialiteOrderByWithRelationInput!], cursor: SpecialiteWhereUniqueInput, take: Float, skip: Float, distinct: [SpecialiteScalarFieldEnum!]): [Specialite!]!
+  specialite(where: SpecialiteWhereUniqueInput!): Specialite!
+  uniteEnseignements(where: UniteEnseignementWhereInput, orderBy: [UniteEnseignementOrderByWithRelationInput!], cursor: UniteEnseignementWhereUniqueInput, take: Float, skip: Float, distinct: [UniteEnseignementScalarFieldEnum!]): [UniteEnseignement!]!
+  uniteEnseignement(where: UniteEnseignementWhereUniqueInput!): UniteEnseignement!
+}
+
+input AccountWhereInput {
+  id: IntFilter
+  uid: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  username: StringFilter
+  password: StringFilter
+  roles: StringFilter
+  isActive: BoolFilter
+  userId: IntFilter
+  AND: [AccountWhereInput!]
+  OR: [AccountWhereInput!]
+  NOT: [AccountWhereInput!]
+}
+
+input IntFilter {
+  equals: Float
+  lt: Float
+  lte: Float
+  gt: Float
+  gte: Float
+}
+
+input StringFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: String
+  mode: QueryMode
+}
+
+enum QueryMode {
+  default
+  insensitive
+}
+
+input DateTimeFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+}
+
+input BoolFilter {
+  equals: Boolean
+  not: Boolean
+}
+
+input AccountOrderByWithRelationInput {
+  id: SortOrder!
+  uid: SortOrder!
+  createdAt: SortOrder!
+  updatedAt: SortOrder!
+  username: SortOrder!
+  password: SortOrder!
+  roles: SortOrder!
+  isActive: SortOrder!
+  userId: SortOrder!
+}
+
+enum SortOrder {
+  asc
+  desc
+}
+
+input AccountWhereUniqueInput {
+  id: Float!
+}
+
+enum AccountScalarFieldEnum {
+  id
+  uid
+  createdAt
+  updatedAt
+  username
+  password
+  roles
+  isActive
+  userId
+}
+
+input AdresseWhereInput {
+  id: IntFilter
+  pays: StringFilter
+  region: StringFilter
+  ville: StringFilter
+  codePostal: StringFilter
+  geolocalisation: StringFilter
+  utilisateurs: UtilisateurListRelationFilter
+  etablissements: EtablissementListRelationFilter
+  AND: [AdresseWhereInput!]
+  OR: [AdresseWhereInput!]
+  NOT: [AdresseWhereInput!]
+}
+
+input UtilisateurListRelationFilter {
+  every: UtilisateurWhereInput
+  some: UtilisateurWhereInput
+  none: UtilisateurWhereInput
+}
+
+input UtilisateurWhereInput {
+  id: IntFilter
+  matricule: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  prenom: StringFilter
+  nom: StringFilter
+  dateNaissance: DateTimeFilter
+  lieuNaissance: StringFilter
+  cni: StringFilter
+  genre: StringFilter
+  nationalite: StringFilter
+  groupeSanguin: StringFilter
+  etablissementId: IntFilter
+  statutCompte: StringFilter
+  roles: StringListFilter
+  contactId: IntFilter
+  adresseId: IntFilter
+  accountId: IntFilter
+  contact: ContactRelationFilter
+  adresse: AdresseRelationFilter
+  etudiant: EtudiantRelationFilter
+  permissions: PermissionListRelationFilter
+  Professeur: ProfesseurRelationFilter
+  etablissement: EtablissementRelationFilter
+  AND: [UtilisateurWhereInput!]
+  OR: [UtilisateurWhereInput!]
+  NOT: [UtilisateurWhereInput!]
+}
+
+input StringListFilter {
+  equals: [String!]
+  has: String
+  hasEvery: [String!]
+  hasSome: [String!]
+  isEmpty: Boolean
+}
+
+input ContactRelationFilter {
+  is: ContactWhereInput
+  isNot: ContactWhereInput
+}
+
+input ContactWhereInput {
+  id: IntFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  telephone: StringFilter
+  fix: StringFilter
+  fax: StringFilter
+  email: StringFilter
+  siteWeb: StringFilter
+  reseauxSociaux: ReseauSocialListRelationFilter
+  utilisateurs: UtilisateurListRelationFilter
+  etablissements: EtablissementListRelationFilter
+  AND: [ContactWhereInput!]
+  OR: [ContactWhereInput!]
+  NOT: [ContactWhereInput!]
+}
+
+input ReseauSocialListRelationFilter {
+  every: ReseauSocialWhereInput
+  some: ReseauSocialWhereInput
+  none: ReseauSocialWhereInput
+}
+
+input ReseauSocialWhereInput {
+  id: IntFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  nom: StringFilter
+  username: StringFilter
+  url: StringFilter
+  contactId: IntFilter
+  contact: ContactRelationFilter
+  AND: [ReseauSocialWhereInput!]
+  OR: [ReseauSocialWhereInput!]
+  NOT: [ReseauSocialWhereInput!]
+}
+
+input EtablissementListRelationFilter {
+  every: EtablissementWhereInput
+  some: EtablissementWhereInput
+  none: EtablissementWhereInput
+}
+
+input EtablissementWhereInput {
+  id: IntFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  nom: StringFilter
+  matricule: StringFilter
+  sigle: StringFilter
+  dateCreation: StringFilter
+  logo: StringFilter
+  adresseId: IntFilter
+  contactId: IntFilter
+  adresse: AdresseRelationFilter
+  contact: ContactRelationFilter
+  utilisateurs: UtilisateurListRelationFilter
+  domaines: DomaineListRelationFilter
+  classes: ClasseListRelationFilter
+  salle: SalleListRelationFilter
+  AND: [EtablissementWhereInput!]
+  OR: [EtablissementWhereInput!]
+  NOT: [EtablissementWhereInput!]
+}
+
+input AdresseRelationFilter {
+  is: [AdresseWhereInput!]
+  isNot: [AdresseWhereInput!]
+}
+
+input DomaineListRelationFilter {
+  every: DomaineWhereInput
+  some: DomaineWhereInput
+  none: DomaineWhereInput
+}
+
+input DomaineWhereInput {
+  id: IntFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  nom: StringFilter
+  slug: StringFilter
+  etablissements: EtablissementListRelationFilter
+  mentions: MentionListRelationFilter
+  AND: [DomaineWhereInput!]
+  OR: [DomaineWhereInput!]
+  NOT: [DomaineWhereInput!]
+}
+
+input MentionListRelationFilter {
+  every: MentionWhereInput
+  some: MentionWhereInput
+  none: MentionWhereInput
+}
+
+input MentionWhereInput {
+  id: IntFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  nom: StringFilter
+  slug: StringFilter
+  domaineId: IntFilter
+  domaine: DomaineRelationFilter
+  specialites: SpecialiteListRelationFilter
+  AND: [MentionWhereInput!]
+  OR: [MentionWhereInput!]
+  NOT: [MentionWhereInput!]
+}
+
+input DomaineRelationFilter {
+  is: DomaineWhereInput
+  isNot: DomaineWhereInput
+}
+
+input SpecialiteListRelationFilter {
+  every: SpecialiteWhereInput
+  some: SpecialiteWhereInput
+  none: SpecialiteWhereInput
+}
+
+input SpecialiteWhereInput {
+  id: IntFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  nom: StringFilter
+  slug: StringFilter
+  mentionId: IntFilter
+  mention: MentionRelationFilter
+  Classe: ClasseListRelationFilter
+  Diplome: DiplomeListRelationFilter
+  AND: [SpecialiteWhereInput!]
+  OR: [SpecialiteWhereInput!]
+  NOT: [SpecialiteWhereInput!]
+}
+
+input MentionRelationFilter {
+  is: MentionWhereInput
+  isNot: MentionWhereInput
+}
+
+input ClasseListRelationFilter {
+  every: ClasseWhereInput
+  some: ClasseWhereInput
+  none: ClasseWhereInput
+}
+
+input ClasseWhereInput {
+  id: IntFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  nom: StringFilter
+  code: StringFilter
+  etablissementId: IntFilter
+  specialiteId: IntFilter
+  etablissement: EtablissementRelationFilter
+  semestres: SemestreListRelationFilter
+  inscriptions: InscriptionListRelationFilter
+  specialite: SpecialiteRelationFilter
+  Cours: CoursListRelationFilter
+  EmploiDuTemps: EmploiDuTempsListRelationFilter
+  AND: [ClasseWhereInput!]
+  OR: [ClasseWhereInput!]
+  NOT: [ClasseWhereInput!]
+}
+
+input EtablissementRelationFilter {
+  is: EtablissementWhereInput
+  isNot: EtablissementWhereInput
+}
+
+input SemestreListRelationFilter {
+  every: SemestreWhereInput
+  some: SemestreWhereInput
+  none: SemestreWhereInput
+}
+
+input SemestreWhereInput {
+  id: IntFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  numero: IntFilter
+  grade: StringFilter
+  dateDebut: DateTimeFilter
+  dateFin: DateTimeFilter
+  nombreSemaine: IntFilter
+  classeId: IntFilter
+  uniteEnseignement: UniteEnseignementListRelationFilter
+  Classe: ClasseRelationFilter
+  AND: [SemestreWhereInput!]
+  OR: [SemestreWhereInput!]
+  NOT: [SemestreWhereInput!]
+}
+
+input UniteEnseignementListRelationFilter {
+  every: UniteEnseignementWhereInput
+  some: UniteEnseignementWhereInput
+  none: UniteEnseignementWhereInput
+}
+
+input UniteEnseignementWhereInput {
+  id: IntFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  code: StringFilter
+  nom: StringFilter
+  credit: IntFilter
+  semestreId: IntFilter
+  semestre: SemestreRelationFilter
+  matieres: MatiereListRelationFilter
+  AND: [UniteEnseignementWhereInput!]
+  OR: [UniteEnseignementWhereInput!]
+  NOT: [UniteEnseignementWhereInput!]
+}
+
+input SemestreRelationFilter {
+  is: SemestreWhereInput
+  isNot: SemestreWhereInput
+}
+
+input MatiereListRelationFilter {
+  every: MatiereWhereInput
+  some: MatiereWhereInput
+  none: MatiereWhereInput
+}
+
+input MatiereWhereInput {
+  id: IntFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  code: StringFilter
+  nom: StringFilter
+  credit: IntFilter
+  nbHeure: IntFilter
+  uniteEnseigmentId: IntFilter
+  cours: CoursListRelationFilter
+  uniteEnseigment: UniteEnseignementRelationFilter
+  AND: [MatiereWhereInput!]
+  OR: [MatiereWhereInput!]
+  NOT: [MatiereWhereInput!]
+}
+
+input CoursListRelationFilter {
+  every: CoursWhereInput
+  some: CoursWhereInput
+  none: CoursWhereInput
+}
+
+input CoursWhereInput {
+  id: IntFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  nom: StringFilter
+  description: StringFilter
+  dateDebut: DateTimeFilter
+  dateFin: DateTimeFilter
+  heureDebut: DateTimeFilter
+  heureFin: DateTimeFilter
+  matiereId: IntFilter
+  salleId: IntFilter
+  classeId: IntFilter
+  professeurId: IntFilter
+  matiere: MatiereRelationFilter
+  salle: SalleRelationFilter
+  classe: ClasseRelationFilter
+  evaluationEtudiant: EvaluationEtudiantsListRelationFilter
+  noteEtudiant: NoteEtudiantListRelationFilter
+  feuillePresences: FeuillePresenceListRelationFilter
+  professeur: ProfesseurRelationFilter
+  EmploiDuTemps: EmploiDuTempsListRelationFilter
+  AND: [CoursWhereInput!]
+  OR: [CoursWhereInput!]
+  NOT: [CoursWhereInput!]
+}
+
+input MatiereRelationFilter {
+  is: MatiereWhereInput
+  isNot: MatiereWhereInput
+}
+
+input SalleRelationFilter {
+  is: SalleWhereInput
+  isNot: SalleWhereInput
+}
+
+input SalleWhereInput {
+  id: IntFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  nom: StringFilter
+  capacite: IntFilter
+  batiment: StringFilter
+  etablissementId: IntFilter
+  estDisponible: BoolFilter
+  etablissement: EtablissementRelationFilter
+  cours: CoursListRelationFilter
+  EmploiDuTemps: EmploiDuTempsListRelationFilter
+  AND: [SalleWhereInput!]
+  OR: [SalleWhereInput!]
+  NOT: [SalleWhereInput!]
+}
+
+input EmploiDuTempsListRelationFilter {
+  every: EmploiDuTempsWhereInput
+  some: EmploiDuTempsWhereInput
+  none: EmploiDuTempsWhereInput
+}
+
+input EmploiDuTempsWhereInput {
+  id: IntFilter
+  coursId: IntFilter
+  classeId: IntFilter
+  professeurId: IntFilter
+  salleId: IntFilter
+  dateDebut: DateTimeFilter
+  dateFin: DateTimeFilter
+  cours: CoursRelationFilter
+  classe: ClasseRelationFilter
+  professeur: ProfesseurRelationFilter
+  salle: SalleRelationFilter
+  AND: [EmploiDuTempsWhereInput!]
+  OR: [EmploiDuTempsWhereInput!]
+  NOT: [EmploiDuTempsWhereInput!]
+}
+
+input CoursRelationFilter {
+  is: CoursWhereInput
+  isNot: CoursWhereInput
+}
+
+input ClasseRelationFilter {
+  is: ClasseWhereInput
+  isNot: ClasseWhereInput
+}
+
+input ProfesseurRelationFilter {
+  is: ProfesseurWhereInput
+  isNot: ProfesseurWhereInput
+}
+
+input ProfesseurWhereInput {
+  id: IntFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  profileId: IntFilter
+  profile: UtilisateurRelationFilter
+  cours: CoursListRelationFilter
+  EmploiDuTemps: EmploiDuTempsListRelationFilter
+  AND: [ProfesseurWhereInput!]
+  OR: [ProfesseurWhereInput!]
+  NOT: [ProfesseurWhereInput!]
+}
+
+input UtilisateurRelationFilter {
+  is: UtilisateurWhereInput
+  isNot: UtilisateurWhereInput
+}
+
+input EvaluationEtudiantsListRelationFilter {
+  every: EvaluationEtudiantsWhereInput
+  some: EvaluationEtudiantsWhereInput
+  none: EvaluationEtudiantsWhereInput
+}
+
+input EvaluationEtudiantsWhereInput {
+  id: IntFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  typeEvaluation: StringFilter
+  duree: IntFilter
+  document: StringFilter
+  description: StringFilter
+  coursId: IntFilter
+  cours: CoursRelationFilter
+  NoteEtudiant: NoteEtudiantListRelationFilter
+  AND: [EvaluationEtudiantsWhereInput!]
+  OR: [EvaluationEtudiantsWhereInput!]
+  NOT: [EvaluationEtudiantsWhereInput!]
+}
+
+input NoteEtudiantListRelationFilter {
+  every: NoteEtudiantWhereInput
+  some: NoteEtudiantWhereInput
+  none: NoteEtudiantWhereInput
+}
+
+input NoteEtudiantWhereInput {
+  id: IntFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  note: FloatFilter
+  typeEvaluation: StringFilter
+  evaluationEtudiantId: IntFilter
+  etudiantId: IntFilter
+  coursId: IntFilter
+  evaluationEtudiant: EvaluationEtudiantsRelationFilter
+  etudiant: EtudiantRelationFilter
+  cours: CoursRelationFilter
+  AND: [NoteEtudiantWhereInput!]
+  OR: [NoteEtudiantWhereInput!]
+  NOT: [NoteEtudiantWhereInput!]
+}
+
+input FloatFilter {
+  equals: Float
+  lt: Float
+  lte: Float
+  gt: Float
+  gte: Float
+  not: Float
+}
+
+input EvaluationEtudiantsRelationFilter {
+  is: EvaluationEtudiantsWhereInput
+  isNot: EvaluationEtudiantsWhereInput
+}
+
+input EtudiantRelationFilter {
+  is: EtudiantWhereInput
+  isNot: EtudiantWhereInput
+}
+
+input EtudiantWhereInput {
+  id: IntFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  slug: StringFilter
+  ine: StringFilter
+  baccaleaureat: StringFilter
+  anneeBaccaleaureat: IntFilter
+  profileId: IntFilter
+  feuillePresencesId: IntFilter
+  profile: UtilisateurRelationFilter
+  inscriptions: InscriptionListRelationFilter
+  notes: NoteEtudiantListRelationFilter
+  feuillePresences: FeuillePresenceListRelationFilter
+  Paiement: PaiementListRelationFilter
+  AND: [EtudiantWhereInput!]
+  OR: [EtudiantWhereInput!]
+  NOT: [EtudiantWhereInput!]
+}
+
+input InscriptionListRelationFilter {
+  every: InscriptionWhereInput
+  some: InscriptionWhereInput
+  none: InscriptionWhereInput
+}
+
+input InscriptionWhereInput {
+  id: IntFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  reference: StringFilter
+  premiereInscription: BoolFilter
+  dernierDiplome: StringFilter
+  autreEtablissement: StringFilter
+  activiteProfessionnel: StringFilter
+  niveau: StringFilter
+  statut: StringFilter
+  diplomeId: IntFilter
+  etudiantId: IntFilter
+  classeId: IntFilter
+  diplome: DiplomeRelationFilter
+  etudiant: EtudiantRelationFilter
+  classe: ClasseRelationFilter
+  AND: [InscriptionWhereInput!]
+  OR: [InscriptionWhereInput!]
+  NOT: [InscriptionWhereInput!]
+}
+
+input DiplomeRelationFilter {
+  is: DiplomeWhereInput
+  isNot: DiplomeWhereInput
+}
+
+input DiplomeWhereInput {
+  id: IntFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  nom: StringFilter
+  finalite: StringFilter
+  entite: StringFilter
+  habilitation: StringFilter
+  partenaires: StringListFilter
+  dateCreation: DateTimeFilter
+  dateHabilitation: DateTimeFilter
+  dateEcheance: DateTimeFilter
+  duree: IntFilter
+  specialiteId: IntFilter
+  inscriptions: InscriptionListRelationFilter
+  specialite: SpecialiteRelationFilter
+  AND: [DiplomeWhereInput!]
+  OR: [DiplomeWhereInput!]
+  NOT: [DiplomeWhereInput!]
+}
+
+input SpecialiteRelationFilter {
+  is: SpecialiteWhereInput
+  isNot: SpecialiteWhereInput
+}
+
+input FeuillePresenceListRelationFilter {
+  every: FeuillePresenceWhereInput
+  some: FeuillePresenceWhereInput
+  none: FeuillePresenceWhereInput
+}
+
+input FeuillePresenceWhereInput {
+  id: IntFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  date: DateTimeFilter
+  heureDebut: DateTimeFilter
+  heureFin: DateTimeFilter
+  coursId: IntFilter
+  etudiantId: IntFilter
+  cours: CoursRelationFilter
+  etudiant: EtudiantRelationFilter
+  AND: [FeuillePresenceWhereInput!]
+  OR: [FeuillePresenceWhereInput!]
+  NOT: [FeuillePresenceWhereInput!]
+}
+
+input PaiementListRelationFilter {
+  every: PaiementWhereInput
+  some: PaiementWhereInput
+  none: PaiementWhereInput
+}
+
+input PaiementWhereInput {
+  id: IntFilter
+  etudiantId: IntFilter
+  montant: FloatFilter
+  datePaiement: DateTimeFilter
+  methodePaiement: StringFilter
+  referencePaiement: StringFilter
+  typeFrais: StringFilter
+  statutPaiement: StringFilter
+  etudiant: EtudiantRelationFilter
+  AND: [PaiementWhereInput!]
+  OR: [PaiementWhereInput!]
+  NOT: [PaiementWhereInput!]
+}
+
+input UniteEnseignementRelationFilter {
+  is: UniteEnseignementWhereInput
+  isNot: UniteEnseignementWhereInput
+}
+
+input DiplomeListRelationFilter {
+  every: DiplomeWhereInput
+  some: DiplomeWhereInput
+  none: DiplomeWhereInput
+}
+
+input SalleListRelationFilter {
+  every: SalleWhereInput
+  some: SalleWhereInput
+  none: SalleWhereInput
+}
+
+input PermissionListRelationFilter {
+  every: PermissionWhereInput
+  some: PermissionWhereInput
+  none: PermissionWhereInput
+}
+
+input PermissionWhereInput {
+  id: IntFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  role: StringFilter
+  label: StringFilter
+  slug: StringFilter
+  utilisateurs: UtilisateurListRelationFilter
+  AND: [PermissionWhereInput!]
+  OR: [PermissionWhereInput!]
+  NOT: [PermissionWhereInput!]
+}
+
+input AdresseOrderByWithRelationInput {
+  id: SortOrder
+  pays: SortOrder
+  region: SortOrder
+  ville: SortOrder
+  codePostal: SortOrder
+  geolocalisation: SortOrder
+  utilisateurs: UtilisateurOrderByRelationAggregateInput
+  etablissements: EtablissementOrderByRelationAggregateInput
+}
+
+input UtilisateurOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input EtablissementOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input AdresseWhereUniqueInput {
+  id: Float
+}
+
+enum AdresseScalarFieldEnum {
+  id
+  pays
+  region
+  ville
+  codePostal
+  geolocalisation
+}
+
+input ClasseOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  nom: SortOrder
+  code: SortOrder
+  etablissementId: SortOrder
+  specialiteId: SortOrder
+  etablissement: EtablissementOrderByWithRelationInput
+  semestres: SemestreOrderByRelationAggregateInput
+  inscriptions: InscriptionOrderByRelationAggregateInput
+  specialite: SpecialiteOrderByWithRelationInput
+  Cours: CoursOrderByRelationAggregateInput
+  EmploiDuTemps: EmploiDuTempsOrderByRelationAggregateInput
+}
+
+input EtablissementOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  nom: SortOrder
+  matricule: SortOrder
+  sigle: SortOrder
+  dateCreation: SortOrder
+  logo: SortOrder
+  adresseId: SortOrder
+  contactId: SortOrder
+  adresse: SortOrder
+  contact: SortOrder
+  utilisateurs: SortOrder
+  domaines: SortOrder
+  classes: SortOrder
+  salle: SortOrder
+}
+
+input SemestreOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input InscriptionOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input SpecialiteOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  nom: SortOrder
+  slug: SortOrder
+  mentionId: SortOrder
+  mention: MentionOrderByWithRelationInput
+  Classe: ClasseOrderByRelationAggregateInput
+  Diplome: DiplomeOrderByRelationAggregateInput
+}
+
+input MentionOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  nom: SortOrder
+  slug: SortOrder
+  domaineId: SortOrder
+  domaine: DomaineOrderByWithRelationInput
+  specialites: SpecialiteOrderByRelationAggregateInput
+}
+
+input DomaineOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  nom: SortOrder
+  slug: SortOrder
+  etablissements: EtablissementOrderByRelationAggregateInput
+  mentions: MentionOrderByRelationAggregateInput
+}
+
+input MentionOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input SpecialiteOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input ClasseOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input DiplomeOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input CoursOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input EmploiDuTempsOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input ClasseWhereUniqueInput {
+  id: Float
+}
+
+enum ClasseScalarFieldEnum {
+  id
+  createdAt
+  updatedAt
+  nom
+  code
+  etablissementId
+  specialiteId
+}
+
+input ContactOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  telephone: SortOrder
+  fix: SortOrder
+  fax: SortOrder
+  email: SortOrder
+  siteWeb: SortOrder
+  reseauxSociaux: ReseauSocialOrderByRelationAggregateInput
+  utilisateurs: UtilisateurOrderByRelationAggregateInput
+  etablissements: EtablissementOrderByRelationAggregateInput
+}
+
+input ReseauSocialOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input ContactWhereUniqueInput {
+  id: Float
+}
+
+enum ContactScalarFieldEnum {
+  id
+  createdAt
+  updatedAt
+  telephone
+  fix
+  fax
+  email
+  siteWeb
+}
+
+input CoursWhereUniqueInput {
+  id: Float!
+}
+
+input DiplomeOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  nom: SortOrder
+  finalite: SortOrder
+  entite: SortOrder
+  habilitation: SortOrder
+  partenaires: SortOrder
+  dateCreation: SortOrder
+  dateHabilitation: SortOrder
+  dateEcheance: SortOrder
+  duree: SortOrder
+  specialiteId: SortOrder
+  inscriptions: InscriptionOrderByRelationAggregateInput
+  specialite: SpecialiteOrderByWithRelationInput
+}
+
+input DiplomeWhereUniqueInput {
+  id: Float
+}
+
+enum DiplomeScalarFieldEnum {
+  id
+  createdAt
+  updatedAt
+  nom
+  finalite
+  entite
+  habilitation
+  partenaires
+  dateCreation
+  dateHabilitation
+  dateEcheance
+  duree
+  specialiteId
+}
+
+input DomaineWhereUniqueInput {
+  id: Float
+}
+
+enum DomaineScalarFieldEnum {
+  id
+  createdAt
+  updatedAt
+  nom
+  slug
+}
+
+input EmploiDuTempsWhereUniqueInput {
+  id: Float
+}
+
+input EtablissementWhereUniqueInput {
+  id: Float
+}
+
+enum EtablissementScalarFieldEnum {
+  id
+  createdAt
+  updatedAt
+  nom
+  matricule
+  sigle
+  dateCreation
+  logo
+  adresseId
+  contactId
+}
+
+input EtudiantOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  slug: SortOrder
+  ine: SortOrder
+  baccaleaureat: SortOrder
+  anneeBaccaleaureat: SortOrder
+  profileId: SortOrder
+  feuillePresencesId: SortOrder
+  profile: UtilisateurOrderByWithRelationInput
+  inscriptions: InscriptionOrderByRelationAggregateInput
+  notes: NoteEtudiantOrderByRelationAggregateInput
+  feuillePresences: FeuillePresenceOrderByRelationAggregateInput
+  Paiement: PaiementOrderByRelationAggregateInput
+}
+
+input UtilisateurOrderByWithRelationInput {
+  id: SortOrder
+  matricule: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  prenom: SortOrder
+  nom: SortOrder
+  dateNaissance: SortOrder
+  lieuNaissance: SortOrder
+  cni: SortOrder
+  genre: SortOrder
+  nationalite: SortOrder
+  groupeSanguin: SortOrder
+  etablissementId: SortOrder
+  statutCompte: SortOrder
+  roles: SortOrder
+  contactId: SortOrder
+  adresseId: SortOrder
+  accountId: SortOrder
+  contact: ContactOrderByWithRelationInput
+  adresse: AdresseOrderByWithRelationInput
+  etablissement: EtablissementOrderByWithRelationInput
+  etudiant: EtudiantOrderByWithRelationInput
+  permissions: PermissionOrderByRelationAggregateInput
+  Professeur: ProfesseurOrderByWithRelationInput
+}
+
+input PermissionOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input ProfesseurOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  profileId: SortOrder
+  profile: UtilisateurOrderByWithRelationInput
+  cours: CoursOrderByRelationAggregateInput
+  EmploiDuTemps: EmploiDuTempsOrderByRelationAggregateInput
+}
+
+input NoteEtudiantOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input FeuillePresenceOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input PaiementOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input EtudiantWhereUniqueInput {
+  id: Float
+}
+
+enum EtudiantScalarFieldEnum {
+  id
+  createdAt
+  updatedAt
+  slug
+  ine
+  baccaleaureat
+  anneeBaccaleaureat
+  profileId
+  feuillePresencesId
+}
+
+enum UtilisateurScalarFieldEnum {
+  id
+  matricule
+  createdAt
+  updatedAt
+  prenom
+  nom
+  dateNaissance
+  lieuNaissance
+  cni
+  genre
+  nationalite
+  groupeSanguin
+  etablissementId
+  statutCompte
+  roles
+  contactId
+  adresseId
+  accountId
+}
+
+input UtilisateurWhereUniqueInput {
+  id: Float
+}
+
+input EvaluationEtudiantsWhereUniqueInput {
+  id: Float
+}
+
+input FeuillePresenceOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  date: SortOrder
+  heureDebut: SortOrder
+  heureFin: SortOrder
+  coursId: SortOrder
+  etudiantId: SortOrder
+  cours: CoursOrderByWithRelationInput
+  etudiant: EtudiantOrderByWithRelationInput
+}
+
+input CoursOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  nom: SortOrder
+  description: SortOrder
+  dateDebut: SortOrder
+  dateFin: SortOrder
+  heureDebut: SortOrder
+  heureFin: SortOrder
+  matiereId: SortOrder
+  salleId: SortOrder
+  classeId: SortOrder
+  professeurId: SortOrder
+  matiere: MatiereOrderByWithRelationInput
+  salle: SalleOrderByWithRelationInput
+  classe: ClasseOrderByWithRelationInput
+  evaluationEtudiant: EvaluationEtudiantsOrderByRelationAggregateInput
+  noteEtudiant: NoteEtudiantOrderByRelationAggregateInput
+  feuillePresences: FeuillePresenceOrderByRelationAggregateInput
+  professeur: ProfesseurOrderByWithRelationInput
+  EmploiDuTemps: EmploiDuTempsOrderByRelationAggregateInput
+}
+
+input MatiereOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  code: SortOrder
+  nom: SortOrder
+  credit: SortOrder
+  nbHeure: SortOrder
+  uniteEnseigmentId: SortOrder
+  cours: CoursOrderByRelationAggregateInput
+  uniteEnseigment: UniteEnseignementOrderByWithRelationInput
+}
+
+input UniteEnseignementOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  code: SortOrder
+  nom: SortOrder
+  credit: SortOrder
+  semestreId: SortOrder
+  semestre: SemestreOrderByWithRelationInput
+  matieres: MatiereOrderByRelationAggregateInput
+}
+
+input SemestreOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  numero: SortOrder
+  grade: SortOrder
+  dateDebut: SortOrder
+  dateFin: SortOrder
+  nombreSemaine: SortOrder
+  classeId: SortOrder
+  uniteEnseignement: UniteEnseignementOrderByRelationAggregateInput
+  Classe: ClasseOrderByWithRelationInput
+}
+
+input UniteEnseignementOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input MatiereOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input SalleOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  nom: SortOrder
+  capacite: SortOrder
+  batiment: SortOrder
+  etablissementId: SortOrder
+  estDisponible: SortOrder
+  etablissement: EtablissementOrderByWithRelationInput
+  cours: CoursOrderByRelationAggregateInput
+  EmploiDuTemps: EmploiDuTempsOrderByRelationAggregateInput
+}
+
+input EvaluationEtudiantsOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input FeuillePresenceWhereUniqueInput {
+  id: Float
+}
+
+enum FeuillePresenceScalarFieldEnum {
+  id
+  createdAt
+  updatedAt
+  date
+  heureDebut
+  heureFin
+  coursId
+  etudiantId
+}
+
+input InscriptionOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  reference: SortOrder
+  premiereInscription: SortOrder
+  dernierDiplome: SortOrder
+  autreEtablissement: SortOrder
+  activiteProfessionnel: SortOrder
+  niveau: SortOrder
+  statut: SortOrder
+  diplomeId: SortOrder
+  etudiantId: SortOrder
+  classeId: SortOrder
+  diplome: DiplomeOrderByWithRelationInput
+  etudiant: EtudiantOrderByWithRelationInput
+  classe: ClasseOrderByWithRelationInput
+}
+
+input InscriptionWhereUniqueInput {
+  id: Float
+}
+
+enum InscriptionScalarFieldEnum {
+  id
+  createdAt
+  updatedAt
+  reference
+  premiereInscription
+  dernierDiplome
+  autreEtablissement
+  activiteProfessionnel
+  niveau
+  statut
+  diplomeId
+  etudiantId
+  classeId
+}
+
+input MatiereWhereUniqueInput {
+  id: Float
+}
+
+enum MatiereScalarFieldEnum {
+  id
+  createdAt
+  updatedAt
+  code
+  nom
+  credit
+  nbHeure
+  uniteEnseigmentId
+}
+
+input MentionWhereUniqueInput {
+  id: Float
+}
+
+enum MentionScalarFieldEnum {
+  id
+  createdAt
+  updatedAt
+  nom
+  slug
+  domaineId
+}
+
+input NoteEtudiantOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  note: SortOrder
+  typeEvaluation: SortOrder
+  evaluationEtudiantId: SortOrder
+  etudiantId: SortOrder
+  coursId: SortOrder
+  evaluationEtudiant: EvaluationEtudiantsOrderByWithRelationInput
+  etudiant: EtudiantOrderByWithRelationInput
+  cours: CoursOrderByWithRelationInput
+}
+
+input EvaluationEtudiantsOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  typeEvaluation: SortOrder
+  duree: SortOrder
+  document: SortOrder
+  description: SortOrder
+  coursId: SortOrder
+  cours: CoursOrderByWithRelationInput
+  NoteEtudiant: NoteEtudiantOrderByRelationAggregateInput
+}
+
+input NoteEtudiantWhereUniqueInput {
+  id: Float
+}
+
+enum NoteEtudiantScalarFieldEnum {
+  id
+  createdAt
+  updatedAt
+  note
+  typeEvaluation
+  evaluationEtudiantId
+  etudiantId
+  coursId
+}
+
+input PaiementOrderByWithRelationInput {
+  id: SortOrder
+  etudiantId: SortOrder
+  montant: SortOrder
+  datePaiement: SortOrder
+  methodePaiement: SortOrder
+  referencePaiement: SortOrder
+  typeFrais: SortOrder
+  statutPaiement: SortOrder
+  etudiant: EtudiantOrderByWithRelationInput
+}
+
+input PaiementWhereUniqueInput {
+  id: Float
+}
+
+enum PaiementScalarFieldEnum {
+  id
+  etudiantId
+  montant
+  datePaiement
+  methodePaiement
+  referencePaiement
+  typeFrais
+  statutPaiement
+}
+
+input PermissionOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  role: SortOrder
+  label: SortOrder
+  slug: SortOrder
+  utilisateurs: UtilisateurOrderByRelationAggregateInput
+}
+
+input PermissionWhereUniqueInput {
+  id: Float
+}
+
+enum PermissionScalarFieldEnum {
+  id
+  createdAt
+  updatedAt
+  role
+  label
+  slug
+}
+
+input ProfesseurWhereUniqueInput {
+  id: Float
+}
+
+enum ProfesseurScalarFieldEnum {
+  id
+  createdAt
+  updatedAt
+  profileId
+}
+
+input ReseauSocialOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  nom: SortOrder
+  username: SortOrder
+  url: SortOrder
+  contactId: SortOrder
+  contact: ContactOrderByWithRelationInput
+}
+
+input ReseauSocialWhereUniqueInput {
+  id: Float
+}
+
+enum ReseauSocialScalarFieldEnum {
+  id
+  createdAt
+  updatedAt
+  nom
+  username
+  url
+  contactId
+}
+
+input SalleWhereUniqueInput {
+  id: Float
+}
+
+enum SalleScalarFieldEnum {
+  id
+  createdAt
+  updatedAt
+  nom
+  capacite
+  batiment
+  etablissementId
+  estDisponible
+}
+
+input SemestreWhereUniqueInput {
+  id: Float
+}
+
+enum SemestreScalarFieldEnum {
+  id
+  createdAt
+  updatedAt
+  numero
+  grade
+  dateDebut
+  dateFin
+  nombreSemaine
+  classeId
+}
+
+input SpecialiteWhereUniqueInput {
+  id: Float
+}
+
+enum SpecialiteScalarFieldEnum {
+  id
+  createdAt
+  updatedAt
+  nom
+  slug
+  mentionId
+}
+
+input UniteEnseignementWhereUniqueInput {
+  id: Float
+}
+
+enum UniteEnseignementScalarFieldEnum {
+  id
+  createdAt
+  updatedAt
+  code
+  nom
+  credit
+  semestreId
+}
+
+type Mutation {
+  createAccount(createAccountInput: CreateAccountInput!): Account!
+  updateAccount(updateAccountInput: UpdateAccountInput!): Account!
+  removeAccount(where: AccountWhereUniqueInput!): Account!
+  createAdresse(createAdresseInput: CreateAdresseInput!): Adresse!
+  updateAdresse(updateAdresseInput: UpdateAdresseInput!): Adresse!
+  removeAdresse(where: AdresseWhereUniqueInput!): Adresse!
+  createClasse(createClasseInput: CreateClasseInput!): Classe!
+  updateClasse(updateClasseInput: UpdateClasseInput!): Classe!
+  removeClasse(where: ClasseWhereUniqueInput!): Classe!
+  createContact(createContactInput: CreateContactInput!): Contact!
+  updateContact(updateContactInput: UpdateContactInput!): Contact!
+  removeContact(where: ContactWhereUniqueInput!): Contact!
+  createCours(createCoursInput: CreateCoursInput!): Cours!
+  updateCours(updateCoursInput: UpdateCoursInput!): Cours!
+  removeCours(where: CoursWhereUniqueInput!): Cours!
+  createDiplome(createDiplomeInput: CreateDiplomeInput!): Diplome!
+  updateDiplome(updateDiplomeInput: UpdateDiplomeInput!): Diplome!
+  removeDiplome(where: DiplomeWhereUniqueInput!): Diplome!
+  createDomaine(createDomaineInput: CreateDomaineInput!): Domaine!
+  updateDomaine(updateDomaineInput: UpdateDomaineInput!): Domaine!
+  removeDomaine(where: DomaineWhereUniqueInput!): Domaine!
+  createEmploiDuTemps(createEmploiDuTempsInput: CreateEmploiDuTempsInput!): EmploiDuTemps!
+  updateEmploiDuTemps(updateEmploiDuTempsInput: UpdateEmploiDuTempsInput!): EmploiDuTemps!
+  removeEmploiDuTemps(where: EmploiDuTempsWhereUniqueInput!): EmploiDuTemps!
+  createEtablissement(createEtablissementInput: CreateEtablissementInput!): Etablissement!
+  updateEtablissement(updateEtablissementInput: UpdateEtablissementInput!): Etablissement!
+  removeEtablissement(where: EtablissementWhereUniqueInput!): Etablissement!
+  createEtudiant(createEtudiantInput: CreateEtudiantInput!): Etudiant!
+  updateEtudiant(updateEtudiantInput: UpdateEtudiantInput!): Etudiant!
+  removeEtudiant(where: EtudiantWhereUniqueInput!): Etudiant!
+  createUtilisateur(createUtilisateurInput: CreateUtilisateurInput!): Utilisateur!
+  updateUtilisateur(updateUtilisateurInput: UpdateUtilisateurInput!): Utilisateur!
+  removeUtilisateur(where: UtilisateurWhereUniqueInput!): Utilisateur!
+  createEvaluationEtudiants(createEvaluationEtudiantsInput: CreateEvaluationEtudiantsInput!): EvaluationEtudiants!
+  updateEvaluationEtudiants(updateEvaluationEtudiantsInput: UpdateEvaluationEtudiantsInput!): EvaluationEtudiants!
+  removeEvaluationEtudiants(where: EvaluationEtudiantsWhereUniqueInput!): EvaluationEtudiants!
+  createFeuillePresence(createFeuillePresenceInput: CreateFeuillePresenceInput!): FeuillePresence!
+  updateFeuillePresence(updateFeuillePresenceInput: UpdateFeuillePresenceInput!): FeuillePresence!
+  removeFeuillePresence(where: FeuillePresenceWhereUniqueInput!): FeuillePresence!
+  createInscription(createInscriptionInput: CreateInscriptionInput!): Inscription!
+  updateInscription(updateInscriptionInput: UpdateInscriptionInput!): Inscription!
+  removeInscription(where: InscriptionWhereUniqueInput!): Inscription!
+  createMatiere(createMatiereInput: CreateMatiereInput!): Matiere!
+  updateMatiere(updateMatiereInput: UpdateMatiereInput!): Matiere!
+  removeMatiere(where: MatiereWhereUniqueInput!): Matiere!
+  createMention(createMentionInput: CreateMentionInput!): Mention!
+  updateMention(updateMentionInput: UpdateMentionInput!): Mention!
+  removeMention(where: MentionWhereUniqueInput!): Mention!
+  createNoteEtudiant(createNoteEtudiantInput: CreateNoteEtudiantInput!): NoteEtudiant!
+  updateNoteEtudiant(updateNoteEtudiantInput: UpdateNoteEtudiantInput!): NoteEtudiant!
+  removeNoteEtudiant(where: NoteEtudiantWhereUniqueInput!): NoteEtudiant!
+  createPaiement(createPaiementInput: CreatePaiementInput!): Paiement!
+  updatePaiement(updatePaiementInput: UpdatePaiementInput!): Paiement!
+  removePaiement(where: PaiementWhereUniqueInput!): Paiement!
+  createPermission(createPermissionInput: CreatePermissionInput!): Permission!
+  updatePermission(updatePermissionInput: UpdatePermissionInput!): Permission!
+  removePermission(where: PermissionWhereUniqueInput!): Permission!
+  createProfesseur(createProfesseurInput: CreateProfesseurInput!): Professeur!
+  updateProfesseur(updateProfesseurInput: UpdateProfesseurInput!): Professeur!
+  removeProfesseur(where: ProfesseurWhereUniqueInput!): Professeur!
+  createReseauSocial(createReseauSocialInput: CreateReseauSocialInput!): ReseauSocial!
+  updateReseauSocial(updateReseauSocialInput: UpdateReseauSocialInput!): ReseauSocial!
+  removeReseauSocial(where: ReseauSocialWhereUniqueInput!): ReseauSocial!
+  createSalle(createSalleInput: CreateSalleInput!): Salle!
+  updateSalle(updateSalleInput: UpdateSalleInput!): Salle!
+  removeSalle(where: SalleWhereUniqueInput!): Salle!
+  createSemestre(createSemestreInput: CreateSemestreInput!): Semestre!
+  updateSemestre(updateSemestreInput: UpdateSemestreInput!): Semestre!
+  removeSemestre(where: SemestreWhereUniqueInput!): Semestre!
+  createSpecialite(createSpecialiteInput: CreateSpecialiteInput!): Specialite!
+  updateSpecialite(updateSpecialiteInput: UpdateSpecialiteInput!): Specialite!
+  removeSpecialite(where: SpecialiteWhereUniqueInput!): Specialite!
+  createUniteEnseignement(createUniteEnseignementInput: CreateUniteEnseignementInput!): UniteEnseignement!
+  updateUniteEnseignement(updateUniteEnseignementInput: UpdateUniteEnseignementInput!): UniteEnseignement!
+  removeUniteEnseignement(where: UniteEnseignementWhereUniqueInput!): UniteEnseignement!
+  login(loginInput: LoginInput!): LoginResponse!
+}
+
+input CreateAccountInput {
+  username: String!
+  password: String!
+  roles: [String!]! = ["UTILISATEUR"]
+  userId: Float
+}
+
+input UpdateAccountInput {
+  username: String
+  password: String
+  roles: [String!] = ["UTILISATEUR"]
+  userId: Float
+  id: Float!
+}
+
+input CreateAdresseInput {
+  pays: String!
+  region: String
+  ville: String
+  codePostal: String
+  geolocalisation: String
+}
+
+input UpdateAdresseInput {
+  pays: String
+  region: String
+  ville: String
+  codePostal: String
+  geolocalisation: String
+  id: Float!
+}
+
+input CreateClasseInput {
+  nom: String!
+  code: String!
+  etablissementId: Float!
+  specialiteId: Float!
+}
+
+input UpdateClasseInput {
+  nom: String
+  code: String
+  etablissementId: Float
+  specialiteId: Float
+  id: Float!
+}
+
+input CreateContactInput {
+  telephone: String!
+  fix: String
+  fax: String
+  email: String!
+  siteWeb: String
+}
+
+input UpdateContactInput {
+  telephone: String
+  fix: String
+  fax: String
+  email: String
+  siteWeb: String
+  id: Float!
+}
+
+input CreateCoursInput {
+  nom: String!
+  description: String
+  dateDebut: DateTime!
+  dateFin: DateTime!
+  heureDebut: DateTime!
+  heureFin: DateTime!
+  matiereId: Float!
+  salleId: Float!
+  classeId: Float!
+  professeurId: Float!
+}
+
+input UpdateCoursInput {
+  nom: String
+  description: String
+  dateDebut: DateTime
+  dateFin: DateTime
+  heureDebut: DateTime
+  heureFin: DateTime
+  matiereId: Float
+  salleId: Float
+  classeId: Float
+  professeurId: Float
+  id: Float!
+}
+
+input CreateDiplomeInput {
+  nom: String!
+  finalite: String
+  entite: String
+  habilitation: String
+  partenaires: [String!]
+  dateCreation: DateTime
+  dateHabilitation: DateTime
+  dateEcheance: DateTime
+  duree: Float
+  specialiteId: Float
+}
+
+input UpdateDiplomeInput {
+  nom: String
+  finalite: String
+  entite: String
+  habilitation: String
+  partenaires: [String!]
+  dateCreation: DateTime
+  dateHabilitation: DateTime
+  dateEcheance: DateTime
+  duree: Float
+  specialiteId: Float
+  id: Float!
+}
+
+input CreateDomaineInput {
+  nom: String!
+}
+
+input UpdateDomaineInput {
+  nom: String
+  id: Float!
+}
+
+input CreateEmploiDuTempsInput {
+  coursId: Float!
+  classeId: Float!
+  professeurId: Float!
+  salleId: Float!
+  dateDebut: DateTime!
+  dateFin: DateTime!
+}
+
+input UpdateEmploiDuTempsInput {
+  coursId: Float
+  classeId: Float
+  professeurId: Float
+  salleId: Float
+  dateDebut: DateTime
+  dateFin: DateTime
+  id: Float!
+}
+
+input CreateEtablissementInput {
+  nom: String!
+  matricule: String
+  sigle: String
+  dateCreation: DateTime
+  logo: String
+  adresseId: Float
+  contactId: Float
+}
+
+input UpdateEtablissementInput {
+  nom: String
+  matricule: String
+  sigle: String
+  dateCreation: DateTime
+  logo: String
+  adresseId: Float
+  contactId: Float
+  id: Float!
+}
+
+input CreateEtudiantInput {
+  ine: String!
+  baccaleaureat: String
+  anneeBaccaleaureat: Float
+  profileId: Float!
+  feuillePresencesId: Float
+  profile: UtilisateurWithAccount!
+}
+
+input UtilisateurWithAccount {
+  id: Float
+  matricule: String!
+  createdAt: DateTime
+  updatedAt: DateTime
+  prenom: String!
+  nom: String!
+  dateNaissance: DateTime
+  lieuNaissance: String
+  cni: String
+  genre: String
+  nationalite: String
+  groupeSanguin: String
+  etablissementId: Float
+  statutCompte: String
+  roles: [String!]
+  contactId: Float
+  accountId: Float
+  adresseId: Float
+  account: CreateAccountInput!
+}
+
+input UpdateEtudiantInput {
+  ine: String
+  baccaleaureat: String
+  anneeBaccaleaureat: Float
+  profileId: Float
+  feuillePresencesId: Float
+  profile: UtilisateurWithAccount
+  id: Float!
+}
+
+input CreateUtilisateurInput {
+  matricule: String!
+  prenom: String!
+  nom: String!
+  dateNaissance: DateTime
+  lieuNaissance: String
+  cni: String
+  genre: String
+  nationalite: String
+  groupeSanguin: String
+  etablissementId: Float
+  statutCompte: String
+  roles: [String!]
+  contactId: Float
+  adresseId: Float
+  account: CreateAccountInput!
+}
+
+input UpdateUtilisateurInput {
+  matricule: String
+  prenom: String
+  nom: String
+  dateNaissance: DateTime
+  lieuNaissance: String
+  cni: String
+  genre: String
+  nationalite: String
+  groupeSanguin: String
+  etablissementId: Float
+  statutCompte: String
+  roles: [String!]
+  contactId: Float
+  adresseId: Float
+  account: CreateAccountInput
+  id: Float!
+}
+
+input CreateEvaluationEtudiantsInput {
+  typeEvaluation: String!
+  duree: Float!
+  document: String!
+  description: String!
+  coursId: Float!
+}
+
+input UpdateEvaluationEtudiantsInput {
+  typeEvaluation: String
+  duree: Float
+  document: String
+  description: String
+  coursId: Float
+  id: Float!
+}
+
+input CreateFeuillePresenceInput {
+  date: DateTime!
+  heureDebut: DateTime!
+  heureFin: DateTime!
+  coursId: Float!
+  etudiantId: Float!
+}
+
+input UpdateFeuillePresenceInput {
+  date: DateTime
+  heureDebut: DateTime
+  heureFin: DateTime
+  coursId: Float
+  etudiantId: Float
+  id: Float!
+}
+
+input CreateInscriptionInput {
+  reference: String!
+  premiereInscription: Boolean! = false
+  dernierDiplome: String
+  autreEtablissement: String
+  activiteProfessionnel: String
+  niveau: String
+  statut: String
+  diplomeId: Float
+  etudiantId: Float
+  classeId: Float
+}
+
+input UpdateInscriptionInput {
+  reference: String
+  premiereInscription: Boolean = false
+  dernierDiplome: String
+  autreEtablissement: String
+  activiteProfessionnel: String
+  niveau: String
+  statut: String
+  diplomeId: Float
+  etudiantId: Float
+  classeId: Float
+  id: Float!
+}
+
+input CreateMatiereInput {
+  code: String!
+  nom: String!
+  credit: Float
+  nbHeure: Float
+  uniteEnseigmentId: Float
+}
+
+input UpdateMatiereInput {
+  code: String
+  nom: String
+  credit: Float
+  nbHeure: Float
+  uniteEnseigmentId: Float
+  id: Float!
+}
+
+input CreateMentionInput {
+  nom: String!
+  domaineId: Float!
+}
+
+input UpdateMentionInput {
+  nom: String
+  domaineId: Float
+  id: Float!
+}
+
+input CreateNoteEtudiantInput {
+  note: Float!
+  typeEvaluation: String!
+  evaluationEtudiantId: Float!
+  etudiantId: Float!
+  coursId: Float!
+}
+
+input UpdateNoteEtudiantInput {
+  note: Float
+  typeEvaluation: String
+  evaluationEtudiantId: Float
+  etudiantId: Float
+  coursId: Float
+  id: Float!
+}
+
+input CreatePaiementInput {
+  etudiantId: Float!
+  montant: Float!
+  datePaiement: DateTime!
+  methodePaiement: String!
+  referencePaiement: String!
+  typeFrais: String!
+  statutPaiement: String!
+}
+
+input UpdatePaiementInput {
+  etudiantId: Float
+  montant: Float
+  datePaiement: DateTime
+  methodePaiement: String
+  referencePaiement: String
+  typeFrais: String
+  statutPaiement: String
+  id: Float!
+}
+
+input CreatePermissionInput {
+  role: [String!]!
+  label: String!
+}
+
+input UpdatePermissionInput {
+  role: [String!]
+  label: String
+  id: Float!
+}
+
+input CreateProfesseurInput {
+  profile: UtilisateurWithAccount!
+}
+
+input UpdateProfesseurInput {
+  profile: UtilisateurWithAccount
+  id: Float!
+}
+
+input CreateReseauSocialInput {
+  nom: String!
+  username: String
+  url: String
+  contactId: Float!
+}
+
+input UpdateReseauSocialInput {
+  nom: String
+  username: String
+  url: String
+  contactId: Float
+  id: Float!
+}
+
+input CreateSalleInput {
+  nom: String!
+  capacite: Float
+  batiment: String
+  etablissementId: Float!
+  estDisponible: Boolean!
+}
+
+input UpdateSalleInput {
+  nom: String
+  capacite: Float
+  batiment: String
+  etablissementId: Float
+  estDisponible: Boolean
+  id: Float!
+}
+
+input CreateSemestreInput {
+  numero: Float!
+  grade: String!
+  dateDebut: DateTime!
+  dateFin: DateTime!
+  nombreSemaine: Float!
+  classeId: Float
+}
+
+input UpdateSemestreInput {
+  numero: Float
+  grade: String
+  dateDebut: DateTime
+  dateFin: DateTime
+  nombreSemaine: Float
+  classeId: Float
+  id: Float!
+}
+
+input CreateSpecialiteInput {
+  nom: String!
+  mentionId: Float
+}
+
+input UpdateSpecialiteInput {
+  nom: String
+  mentionId: Float
+  id: Float!
+}
+
+input CreateUniteEnseignementInput {
+  code: String!
+  nom: String!
+  credit: Float!
+  semestreId: Float
+}
+
+input UpdateUniteEnseignementInput {
+  code: String
+  nom: String
+  credit: Float
+  semestreId: Float
+  id: Float!
+}
+
+input LoginInput {
+  username: String!
+  password: String!
+}
