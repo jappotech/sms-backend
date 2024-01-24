@@ -43,6 +43,19 @@ export class UtilisateursService {
     return this.prisma.utilisateur.findUnique(args)
   }
 
+  async findMe(uid: string) {
+    const account = await this.prisma.account.findUnique({
+      where: {
+        uid: uid
+      }
+    })
+    return this.prisma.utilisateur.findUnique({
+      where: {
+        id: account.userId
+      }
+    })
+  }
+
   update(updateUtilisateurInput: UpdateUtilisateurInput) {
     const { id, ...data } = updateUtilisateurInput
     return this.prisma.utilisateur.update({

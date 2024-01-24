@@ -35,6 +35,13 @@ export class UtilisateursResolver {
   }
 
   @AllowAuthenticated()
+  @Query(() => Utilisateur, { name: 'me' })
+  findMe(@GetUser() user: GetUserType) {
+    // checkRowLevelPermission(user, args.uid)
+    return this.utilisateursService.findMe(user.uid)
+  }
+
+  @AllowAuthenticated()
   @Mutation(() => Utilisateur)
   async updateUtilisateur(@Args('updateUtilisateurInput') args: UpdateUtilisateurInput, @GetUser() user: GetUserType) {
     const utilisateur = await this.prisma.utilisateur.findUnique({ where: { id: args.id } })

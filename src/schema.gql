@@ -320,6 +320,7 @@ type Query {
   etudiant(where: EtudiantWhereUniqueInput!): Etudiant!
   utilisateurs(where: UtilisateurWhereInput, orderBy: [UtilisateurOrderByWithRelationInput!], cursor: UtilisateurWhereInput, take: Float, skip: Float, distinct: [UtilisateurScalarFieldEnum!]): [Utilisateur!]!
   utilisateur(where: UtilisateurWhereUniqueInput!): Utilisateur!
+  me: Utilisateur!
   evaluationEtudiants(where: EvaluationEtudiantsWhereUniqueInput!): EvaluationEtudiants!
   feuillePresences(where: FeuillePresenceWhereInput, orderBy: [FeuillePresenceOrderByWithRelationInput!], cursor: FeuillePresenceWhereUniqueInput, take: Float, skip: Float, distinct: [FeuillePresenceScalarFieldEnum!]): [FeuillePresence!]!
   feuillePresence(where: FeuillePresenceWhereUniqueInput!): FeuillePresence!

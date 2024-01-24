@@ -75,7 +75,7 @@ model Utilisateur {
   etudiant        Etudiant?
   permissions     Permission[]
   Professeur      Professeur?
-  accountId       Int?
+  accountId       Int?           @unique
 }
 
 model Permission {
