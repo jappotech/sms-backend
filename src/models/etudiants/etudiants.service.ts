@@ -31,7 +31,7 @@ export class EtudiantsService {
 
   async update(updateEtudiantInput: UpdateEtudiantInput) {
     const { id, profile, ...data } = updateEtudiantInput
-    const user = await this.utilisateurService.update({ id: profile.id, ...profile })
+    if (profile.id) await this.utilisateurService.update({ id: profile.id, ...profile })
     return this.prisma.etudiant.update({
       where: { id },
       data: { ...data, profileId: profile.id },
