@@ -23,13 +23,13 @@ export class EtudiantsResolver {
     return this.etudiantsService.create(args)
   }
 
-  // @AllowAuthenticated()
+  @AllowAuthenticated()
   @Query(() => [Etudiant], { name: 'etudiants' })
   findAll(@Args() args: FindManyEtudiantArgs) {
     return this.etudiantsService.findAll(args)
   }
 
-  // @AllowAuthenticated()
+  @AllowAuthenticated()
   @Query(() => Etudiant, { name: 'etudiant' })
   findOne(@Args() args: FindUniqueEtudiantArgs) {
     return this.etudiantsService.findOne(args)

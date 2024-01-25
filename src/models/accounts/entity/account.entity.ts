@@ -7,7 +7,7 @@ export class Account implements RestrictProperties<Account, AccountType> {
     @Field(() => ID)
     id: number
 
-    @Field()
+    @Field({ nullable: true })
     uid: string
 
     @Field({ nullable: true })
@@ -16,10 +16,10 @@ export class Account implements RestrictProperties<Account, AccountType> {
     @Field({ nullable: true })
     updatedAt: Date
 
-    @Field()
+    @Field({ nullable: true })
     username: string
 
-    @Field()
+    @Field({ nullable: true })
     password: string
 
     @Field(() => [String], { defaultValue: [$Enums.Role.UTILISATEUR] })

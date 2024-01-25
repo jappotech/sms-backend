@@ -3,12 +3,12 @@
 # ------------------------------------------------------
 
 type Utilisateur {
-  id: Float!
-  matricule: String!
-  createdAt: DateTime!
+  id: Float
+  matricule: String
+  createdAt: DateTime
   updatedAt: DateTime
-  prenom: String!
-  nom: String!
+  prenom: String
+  nom: String
   dateNaissance: DateTime
   lieuNaissance: String
   cni: String
@@ -19,7 +19,7 @@ type Utilisateur {
   statutCompte: String
   roles: [String!]!
   contactId: Float
-  accountId: Float!
+  accountId: Float
   adresseId: Float
 }
 
@@ -30,11 +30,11 @@ scalar DateTime
 
 type Account {
   id: ID!
-  uid: String!
+  uid: String
   createdAt: DateTime
   updatedAt: DateTime
-  username: String!
-  password: String!
+  username: String
+  password: String
   roles: [String!]!
   isActive: Boolean!
   userId: Float
@@ -141,7 +141,7 @@ type Etudiant {
   ine: String!
   baccaleaureat: String
   anneeBaccaleaureat: Float
-  profileId: Float!
+  profileId: Float
   feuillePresencesId: Float
   profile: Utilisateur!
 }
@@ -1902,8 +1902,8 @@ type Mutation {
 }
 
 input CreateAccountInput {
-  username: String!
-  password: String!
+  username: String
+  password: String
   roles: [String!]! = ["UTILISATEUR"]
   userId: Float
 }
@@ -2072,22 +2072,21 @@ input CreateEtudiantInput {
   ine: String!
   baccaleaureat: String
   anneeBaccaleaureat: Float
-  profileId: Float!
   feuillePresencesId: Float
   profile: UtilisateurWithAccount!
 }
 
 input UtilisateurWithAccount {
   id: Float
-  matricule: String!
+  matricule: String
   createdAt: DateTime
   updatedAt: DateTime
-  prenom: String!
-  nom: String!
+  prenom: String
+  nom: String
   dateNaissance: DateTime
   lieuNaissance: String
   cni: String
-  genre: String
+  genre: String! = "Masculin"
   nationalite: String
   groupeSanguin: String
   etablissementId: Float
@@ -2096,27 +2095,26 @@ input UtilisateurWithAccount {
   contactId: Float
   accountId: Float
   adresseId: Float
-  account: CreateAccountInput!
+  account: CreateAccountInput
 }
 
 input UpdateEtudiantInput {
   ine: String
   baccaleaureat: String
   anneeBaccaleaureat: Float
-  profileId: Float
   feuillePresencesId: Float
   profile: UtilisateurWithAccount
   id: Float!
 }
 
 input CreateUtilisateurInput {
-  matricule: String!
-  prenom: String!
-  nom: String!
+  matricule: String
+  prenom: String
+  nom: String
   dateNaissance: DateTime
   lieuNaissance: String
   cni: String
-  genre: String
+  genre: String! = "Masculin"
   nationalite: String
   groupeSanguin: String
   etablissementId: Float
@@ -2124,7 +2122,7 @@ input CreateUtilisateurInput {
   roles: [String!]
   contactId: Float
   adresseId: Float
-  account: CreateAccountInput!
+  account: CreateAccountInput
 }
 
 input UpdateUtilisateurInput {
@@ -2134,7 +2132,7 @@ input UpdateUtilisateurInput {
   dateNaissance: DateTime
   lieuNaissance: String
   cni: String
-  genre: String
+  genre: String = "Masculin"
   nationalite: String
   groupeSanguin: String
   etablissementId: Float

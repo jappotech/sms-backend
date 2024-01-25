@@ -8,7 +8,7 @@ export class UtilisateurWithAccount implements Utilisateur {
   @Field({ nullable: true })
   id: number
 
-  @Field()
+  @Field({ nullable: true })
   matricule: string
 
   @Field({ nullable: true })
@@ -17,10 +17,10 @@ export class UtilisateurWithAccount implements Utilisateur {
   @Field({ nullable: true })
   updatedAt: Date
 
-  @Field()
+  @Field({ nullable: true })
   prenom: string
 
-  @Field()
+  @Field({ nullable: true })
   nom: string
 
   @Field({ nullable: true })
@@ -32,7 +32,7 @@ export class UtilisateurWithAccount implements Utilisateur {
   @Field({ nullable: true })
   cni: string
 
-  @Field(() => String, { nullable: true })
+  @Field(() => String, { nullable: false, defaultValue: $Enums.Genre.Masculin })
   genre: $Enums.Genre
 
   @Field({ nullable: true })
@@ -59,7 +59,7 @@ export class UtilisateurWithAccount implements Utilisateur {
   @Field({ nullable: true })
   adresseId: number
 
-  @Field()
+  @Field({ nullable: true })
   account: CreateAccountInput
 }
 

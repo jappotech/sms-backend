@@ -14,7 +14,7 @@ export class AccountsResolver {
   constructor(private readonly accountsService: AccountsService,
     private readonly prisma: PrismaService) { }
 
-  // @AllowAuthenticated()
+  @AllowAuthenticated()
   @Mutation(() => Account)
   createAccount(@Args('createAccountInput') args: CreateAccountInput, @GetUser() user: GetUserType) {
     // checkRowLevelPermission(user, args.uid)

@@ -25,7 +25,7 @@ export class Etudiant implements RestrictProperties<Etudiant, EtudiantType> {
     @Field({ nullable: true })
     anneeBaccaleaureat: number
 
-    @Field()
+    @Field({ nullable: true })
     profileId: number
 
     @Field({ nullable: true })

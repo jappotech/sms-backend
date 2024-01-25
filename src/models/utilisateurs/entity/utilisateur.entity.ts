@@ -5,22 +5,22 @@ import { RestrictProperties } from 'src/common/dtos/common.input'
 @ObjectType()
 export class Utilisateur implements RestrictProperties<Utilisateur, UtilisateurType> {
 
-    @Field()
+    @Field({ nullable: true })
     id: number
 
-    @Field()
+    @Field({ nullable: true })
     matricule: string
 
-    @Field()
+    @Field({ nullable: true })
     createdAt: Date
 
     @Field({ nullable: true })
     updatedAt: Date
 
-    @Field()
+    @Field({ nullable: true })
     prenom: string
 
-    @Field()
+    @Field({ nullable: true })
     nom: string
 
     @Field({ nullable: true })
@@ -33,7 +33,7 @@ export class Utilisateur implements RestrictProperties<Utilisateur, UtilisateurT
     cni: string
 
     @Field(() => String, { nullable: true })
-    genre: $Enums.Genre
+    genre: $Enums.Genre | null
 
     @Field({ nullable: true })
     nationalite: string
@@ -53,7 +53,7 @@ export class Utilisateur implements RestrictProperties<Utilisateur, UtilisateurT
     @Field({ nullable: true })
     contactId: number
 
-    @Field({ nullable: false })
+    @Field({ nullable: true })
     accountId: number
 
     @Field({ nullable: true })
