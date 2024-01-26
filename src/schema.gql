@@ -186,6 +186,7 @@ type Etablissement {
   logo: String
   adresseId: Float
   contactId: Float
+  domaines: [Domaine!]!
 }
 
 type Etudiant {
@@ -2036,6 +2037,7 @@ input CreateDomaineInput {
 
 input CreateMentionInput {
   nom: String
+  domaineId: Float
 }
 
 input UpdateDomaineInput {
@@ -2240,6 +2242,7 @@ input UpdateMatiereInput {
 
 input UpdateMentionInput {
   nom: String
+  domaineId: Float
   id: Float!
 }
 

@@ -17,7 +17,7 @@ export class MentionsResolver {
   constructor(private readonly mentionsService: MentionsService,
     private readonly prisma: PrismaService) { }
 
-  @AllowAuthenticated()
+  // @AllowAuthenticated()
   @Mutation(() => Mention)
   createMention(@Args('createMentionInput') args: CreateMentionInput, @GetUser() user: GetUserType) {
     // // checkRowLevelPermission(user, args.uid)
