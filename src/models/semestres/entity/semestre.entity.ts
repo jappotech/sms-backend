@@ -4,28 +4,28 @@ import { RestrictProperties } from 'src/common/dtos/common.input'
 
 @ObjectType()
 export class Semestre implements RestrictProperties<Semestre, SemestreType> {
-    @Field()
+    @Field({ nullable: true })
     id: number
 
-    @Field()
+    @Field({ nullable: true })
     createdAt: Date
 
     @Field({ nullable: true })
     updatedAt: Date
 
-    @Field()
+    @Field({ nullable: true })
     numero: number
 
     @Field(type => String)
     grade: $Enums.TypeDiplome
 
-    @Field()
+    @Field({ nullable: true })
     dateDebut: Date
 
-    @Field()
+    @Field({ nullable: true })
     dateFin: Date
 
-    @Field()
+    @Field({ nullable: true })
     nombreSemaine: number
 
     @Field({ nullable: true })

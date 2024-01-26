@@ -4,16 +4,16 @@ import { RestrictProperties } from 'src/common/dtos/common.input'
 
 @ObjectType()
 export class ReseauSocial implements RestrictProperties<ReseauSocial, ReseauSocialType> {
-    @Field()
+    @Field({ nullable: true })
     id: number
 
-    @Field()
+    @Field({ nullable: true })
     createdAt: Date
 
     @Field({ nullable: true })
     updatedAt: Date
 
-    @Field()
+    @Field({ nullable: true })
     nom: string
 
     @Field({ nullable: true })
@@ -22,6 +22,6 @@ export class ReseauSocial implements RestrictProperties<ReseauSocial, ReseauSoci
     @Field({ nullable: true })
     url: string
 
-    @Field()
+    @Field({ nullable: true })
     contactId: number
 }

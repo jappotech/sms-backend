@@ -5,10 +5,10 @@ import { RestrictProperties } from 'src/common/dtos/common.input'
 @ObjectType()
 export class Adresse implements RestrictProperties<Adresse, AdresseType> {
 
-    @Field()
+    @Field({ nullable: true })
     id: number
 
-    @Field()
+    @Field({ nullable: true })
     pays: string
 
     @Field({ nullable: true })

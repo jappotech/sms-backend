@@ -41,8 +41,8 @@ type Account {
 }
 
 type Adresse {
-  id: Float!
-  pays: String!
+  id: Float
+  pays: String
   region: String
   ville: String
   codePostal: String
@@ -50,47 +50,91 @@ type Adresse {
 }
 
 type Classe {
-  id: Float!
+  id: Float
+  createdAt: DateTime
+  updatedAt: DateTime
+  nom: String
+  code: String
+  etablissementId: Float
+  specialiteId: Float
+  semestres: [Semestre!]!
+  inscriptions: [Inscription!]!
+  evaluations: [EvaluationEtudiants!]!
+}
+
+type Semestre {
+  id: Float
+  createdAt: DateTime
+  updatedAt: DateTime
+  numero: Float
+  grade: String!
+  dateDebut: DateTime
+  dateFin: DateTime
+  nombreSemaine: Float
+  classeId: Float
+  uniteEnseignements: [UniteEnseignement!]!
+}
+
+type Inscription {
+  id: Float
   createdAt: DateTime!
   updatedAt: DateTime
-  nom: String!
-  code: String!
-  etablissementId: Float!
-  specialiteId: Float!
+  reference: String
+  premiereInscription: Boolean!
+  dernierDiplome: String
+  autreEtablissement: String
+  activiteProfessionnel: String
+  niveau: String
+  statut: String
+  diplomeId: Float
+  etudiantId: Float
+  classeId: Float
+}
+
+type EvaluationEtudiants {
+  id: Float
+  createdAt: DateTime
+  updatedAt: DateTime
+  typeEvaluation: String!
+  duree: Float
+  document: String
+  description: String
+  coursId: Float
+  NoteEtudiant: [NoteEtudiant!]!
 }
 
 type Contact {
-  id: Float!
-  createdAt: DateTime!
+  id: Float
+  createdAt: DateTime
   updatedAt: DateTime
-  telephone: String!
+  telephone: String
   fix: String
   fax: String
-  email: String!
+  email: String
   siteWeb: String
 }
 
 type Cours {
-  id: Float!
-  createdAt: DateTime!
+  id: Float
+  createdAt: DateTime
   updatedAt: DateTime
-  nom: String!
+  nom: String
   description: String
-  dateDebut: DateTime!
-  dateFin: DateTime!
-  heureDebut: DateTime!
-  heureFin: DateTime!
-  matiereId: Float!
-  salleId: Float!
-  classeId: Float!
-  professeurId: Float!
+  dateDebut: DateTime
+  dateFin: DateTime
+  heureDebut: DateTime
+  heureFin: DateTime
+  matiereId: Float
+  salleId: Float
+  classeId: Float
+  professeurId: Float
 }
 
 type Diplome {
-  id: Float!
-  createdAt: DateTime!
+  id: Float
+  createdAt: DateTime
   updatedAt: DateTime
-  nom: String!
+  nom: String
   finalite: String
   entite: String
   habilitation: String
@@ -103,28 +147,39 @@ type Diplome {
 }
 
 type Domaine {
-  id: Float!
-  createdAt: DateTime!
+  id: Float
+  createdAt: DateTime
   updatedAt: DateTime
-  nom: String!
-  slug: String!
+  nom: String
+  slug: String
+  mentions: [Mention!]!
+}
+
+type Mention {
+  id: Float
+  createdAt: DateTime
+  updatedAt: DateTime
+  nom: String
+  slug: String
+  domaineId: Float
+  specialites: [Specialite!]!
 }
 
 type EmploiDuTemps {
-  id: Float!
-  coursId: Float!
-  classeId: Float!
-  professeurId: Float!
-  salleId: Float!
-  dateDebut: DateTime!
-  dateFin: DateTime!
+  id: Float
+  coursId: Float
+  classeId: Float
+  professeurId: Float
+  salleId: Float
+  dateDebut: DateTime
+  dateFin: DateTime
 }
 
 type Etablissement {
-  id: Float!
-  createdAt: DateTime!
+  id: Float
+  createdAt: DateTime
   updatedAt: DateTime
-  nom: String!
+  nom: String
   matricule: String
   sigle: String
   dateCreation: DateTime
@@ -134,165 +189,120 @@ type Etablissement {
 }
 
 type Etudiant {
-  id: Float!
-  createdAt: DateTime!
+  id: Float
+  createdAt: DateTime
   updatedAt: DateTime
-  slug: String!
-  ine: String!
+  slug: String
+  ine: String
   baccaleaureat: String
   anneeBaccaleaureat: Float
   profileId: Float
   feuillePresencesId: Float
   profile: Utilisateur!
+  notes: [NoteEtudiant!]!
 }
 
-type EvaluationEtudiants {
-  id: Float!
-  createdAt: DateTime!
+type NoteEtudiant {
+  id: Float
+  createdAt: DateTime
   updatedAt: DateTime
+  note: Float
   typeEvaluation: String!
-  duree: Float!
-  document: String!
-  description: String!
-  coursId: Float!
+  evaluationEtudiantId: Float
+  etudiantId: Float
+  coursId: Float
 }
 
 type FeuillePresence {
-  id: Float!
-  createdAt: DateTime!
+  id: Float
+  createdAt: DateTime
   updatedAt: DateTime
-  date: DateTime!
-  heureDebut: DateTime!
-  heureFin: DateTime!
-  coursId: Float!
-  etudiantId: Float!
-}
-
-type Inscription {
-  id: Float!
-  createdAt: DateTime!
-  updatedAt: DateTime
-  reference: String!
-  premiereInscription: Boolean!
-  dernierDiplome: String
-  autreEtablissement: String
-  activiteProfessionnel: String
-  niveau: String
-  statut: String
-  diplomeId: Float
+  date: DateTime
+  heureDebut: DateTime
+  heureFin: DateTime
+  coursId: Float
   etudiantId: Float
-  classeId: Float
 }
 
 type Matiere {
-  id: Float!
-  createdAt: DateTime!
+  id: Float
+  createdAt: DateTime
   updatedAt: DateTime
-  code: String!
-  nom: String!
+  code: String
+  nom: String
   credit: Float
   nbHeure: Float
   uniteEnseigmentId: Float
 }
 
-type Mention {
-  id: Float!
-  createdAt: DateTime!
+type Specialite {
+  id: Float
+  createdAt: DateTime
   updatedAt: DateTime
-  nom: String!
-  slug: String!
-  domaineId: Float!
-}
-
-type NoteEtudiant {
-  id: Float!
-  createdAt: DateTime!
-  updatedAt: DateTime
-  note: Float!
-  typeEvaluation: String!
-  evaluationEtudiantId: Float!
-  etudiantId: Float!
-  coursId: Float!
+  nom: String
+  slug: String
+  mentionId: Float
+  classes: [Classe!]!
 }
 
 type Paiement {
-  id: Float!
-  etudiantId: Float!
-  montant: Float!
-  datePaiement: DateTime!
-  methodePaiement: String!
-  referencePaiement: String!
-  typeFrais: String!
-  statutPaiement: String!
+  id: Float
+  etudiantId: Float
+  montant: Float
+  datePaiement: DateTime
+  methodePaiement: String
+  referencePaiement: String
+  typeFrais: String
+  statutPaiement: String
 }
 
 type Permission {
-  id: Float!
-  createdAt: DateTime!
+  id: Float
+  createdAt: DateTime
   updatedAt: DateTime
   role: [String!]!
-  label: String!
-  slug: String!
+  label: String
+  slug: String
 }
 
 type Professeur {
-  id: Float!
-  createdAt: DateTime!
+  id: Float
+  createdAt: DateTime
   updatedAt: DateTime
-  profileId: Float!
+  profileId: Float
   profile: Utilisateur!
 }
 
 type ReseauSocial {
-  id: Float!
-  createdAt: DateTime!
+  id: Float
+  createdAt: DateTime
   updatedAt: DateTime
-  nom: String!
+  nom: String
   username: String
   url: String
-  contactId: Float!
+  contactId: Float
 }
 
 type Salle {
-  id: Float!
-  createdAt: DateTime!
+  id: Float
+  createdAt: DateTime
   updatedAt: DateTime
-  nom: String!
+  nom: String
   capacite: Float
   batiment: String
-  etablissementId: Float!
-  estDisponible: Boolean!
-}
-
-type Semestre {
-  id: Float!
-  createdAt: DateTime!
-  updatedAt: DateTime
-  numero: Float!
-  grade: String!
-  dateDebut: DateTime!
-  dateFin: DateTime!
-  nombreSemaine: Float!
-  classeId: Float
-}
-
-type Specialite {
-  id: Float!
-  createdAt: DateTime!
-  updatedAt: DateTime
-  nom: String!
-  slug: String!
-  mentionId: Float
+  etablissementId: Float
+  estDisponible: Boolean
 }
 
 type UniteEnseignement {
-  id: Float!
-  createdAt: DateTime!
+  id: Float
+  createdAt: DateTime
   updatedAt: DateTime
-  code: String!
-  nom: String!
-  credit: Float!
+  code: String
+  nom: String
+  credit: Float
   semestreId: Float
+  matieres: [Matiere!]!
 }
 
 type LoginResponse {
@@ -1917,7 +1927,7 @@ input UpdateAccountInput {
 }
 
 input CreateAdresseInput {
-  pays: String!
+  pays: String
   region: String
   ville: String
   codePostal: String
@@ -1934,10 +1944,10 @@ input UpdateAdresseInput {
 }
 
 input CreateClasseInput {
-  nom: String!
-  code: String!
-  etablissementId: Float!
-  specialiteId: Float!
+  nom: String
+  code: String
+  etablissementId: Float
+  specialiteId: Float
 }
 
 input UpdateClasseInput {
@@ -1949,10 +1959,10 @@ input UpdateClasseInput {
 }
 
 input CreateContactInput {
-  telephone: String!
+  telephone: String
   fix: String
   fax: String
-  email: String!
+  email: String
   siteWeb: String
 }
 
@@ -1966,16 +1976,16 @@ input UpdateContactInput {
 }
 
 input CreateCoursInput {
-  nom: String!
+  nom: String
   description: String
-  dateDebut: DateTime!
-  dateFin: DateTime!
-  heureDebut: DateTime!
-  heureFin: DateTime!
-  matiereId: Float!
-  salleId: Float!
-  classeId: Float!
-  professeurId: Float!
+  dateDebut: DateTime
+  dateFin: DateTime
+  heureDebut: DateTime
+  heureFin: DateTime
+  matiereId: Float
+  salleId: Float
+  classeId: Float
+  professeurId: Float
 }
 
 input UpdateCoursInput {
@@ -1993,7 +2003,7 @@ input UpdateCoursInput {
 }
 
 input CreateDiplomeInput {
-  nom: String!
+  nom: String
   finalite: String
   entite: String
   habilitation: String
@@ -2020,21 +2030,27 @@ input UpdateDiplomeInput {
 }
 
 input CreateDomaineInput {
-  nom: String!
+  nom: String
+  mentions: [CreateMentionInput!]
+}
+
+input CreateMentionInput {
+  nom: String
 }
 
 input UpdateDomaineInput {
   nom: String
+  mentions: [CreateMentionInput!]
   id: Float!
 }
 
 input CreateEmploiDuTempsInput {
-  coursId: Float!
-  classeId: Float!
-  professeurId: Float!
-  salleId: Float!
-  dateDebut: DateTime!
-  dateFin: DateTime!
+  coursId: Float
+  classeId: Float
+  professeurId: Float
+  salleId: Float
+  dateDebut: DateTime
+  dateFin: DateTime
 }
 
 input UpdateEmploiDuTempsInput {
@@ -2048,7 +2064,7 @@ input UpdateEmploiDuTempsInput {
 }
 
 input CreateEtablissementInput {
-  nom: String!
+  nom: String
   matricule: String
   sigle: String
   dateCreation: DateTime
@@ -2069,7 +2085,7 @@ input UpdateEtablissementInput {
 }
 
 input CreateEtudiantInput {
-  ine: String!
+  ine: String
   baccaleaureat: String
   anneeBaccaleaureat: Float
   feuillePresencesId: Float
@@ -2146,10 +2162,10 @@ input UpdateUtilisateurInput {
 
 input CreateEvaluationEtudiantsInput {
   typeEvaluation: String!
-  duree: Float!
-  document: String!
-  description: String!
-  coursId: Float!
+  duree: Float
+  document: String
+  description: String
+  coursId: Float
 }
 
 input UpdateEvaluationEtudiantsInput {
@@ -2162,11 +2178,11 @@ input UpdateEvaluationEtudiantsInput {
 }
 
 input CreateFeuillePresenceInput {
-  date: DateTime!
-  heureDebut: DateTime!
-  heureFin: DateTime!
-  coursId: Float!
-  etudiantId: Float!
+  date: DateTime
+  heureDebut: DateTime
+  heureFin: DateTime
+  coursId: Float
+  etudiantId: Float
 }
 
 input UpdateFeuillePresenceInput {
@@ -2179,7 +2195,7 @@ input UpdateFeuillePresenceInput {
 }
 
 input CreateInscriptionInput {
-  reference: String!
+  reference: String
   premiereInscription: Boolean! = false
   dernierDiplome: String
   autreEtablissement: String
@@ -2206,8 +2222,8 @@ input UpdateInscriptionInput {
 }
 
 input CreateMatiereInput {
-  code: String!
-  nom: String!
+  code: String
+  nom: String
   credit: Float
   nbHeure: Float
   uniteEnseigmentId: Float
@@ -2222,23 +2238,17 @@ input UpdateMatiereInput {
   id: Float!
 }
 
-input CreateMentionInput {
-  nom: String!
-  domaineId: Float!
-}
-
 input UpdateMentionInput {
   nom: String
-  domaineId: Float
   id: Float!
 }
 
 input CreateNoteEtudiantInput {
-  note: Float!
+  note: Float
   typeEvaluation: String!
-  evaluationEtudiantId: Float!
-  etudiantId: Float!
-  coursId: Float!
+  evaluationEtudiantId: Float
+  etudiantId: Float
+  coursId: Float
 }
 
 input UpdateNoteEtudiantInput {
@@ -2251,13 +2261,13 @@ input UpdateNoteEtudiantInput {
 }
 
 input CreatePaiementInput {
-  etudiantId: Float!
-  montant: Float!
-  datePaiement: DateTime!
-  methodePaiement: String!
-  referencePaiement: String!
-  typeFrais: String!
-  statutPaiement: String!
+  etudiantId: Float
+  montant: Float
+  datePaiement: DateTime
+  methodePaiement: String
+  referencePaiement: String
+  typeFrais: String
+  statutPaiement: String
 }
 
 input UpdatePaiementInput {
@@ -2273,7 +2283,7 @@ input UpdatePaiementInput {
 
 input CreatePermissionInput {
   role: [String!]!
-  label: String!
+  label: String
 }
 
 input UpdatePermissionInput {
@@ -2292,10 +2302,10 @@ input UpdateProfesseurInput {
 }
 
 input CreateReseauSocialInput {
-  nom: String!
+  nom: String
   username: String
   url: String
-  contactId: Float!
+  contactId: Float
 }
 
 input UpdateReseauSocialInput {
@@ -2307,11 +2317,11 @@ input UpdateReseauSocialInput {
 }
 
 input CreateSalleInput {
-  nom: String!
+  nom: String
   capacite: Float
   batiment: String
-  etablissementId: Float!
-  estDisponible: Boolean!
+  etablissementId: Float
+  estDisponible: Boolean
 }
 
 input UpdateSalleInput {
@@ -2324,11 +2334,11 @@ input UpdateSalleInput {
 }
 
 input CreateSemestreInput {
-  numero: Float!
+  numero: Float
   grade: String!
-  dateDebut: DateTime!
-  dateFin: DateTime!
-  nombreSemaine: Float!
+  dateDebut: DateTime
+  dateFin: DateTime
+  nombreSemaine: Float
   classeId: Float
 }
 
@@ -2343,7 +2353,7 @@ input UpdateSemestreInput {
 }
 
 input CreateSpecialiteInput {
-  nom: String!
+  nom: String
   mentionId: Float
 }
 
@@ -2354,9 +2364,9 @@ input UpdateSpecialiteInput {
 }
 
 input CreateUniteEnseignementInput {
-  code: String!
-  nom: String!
-  credit: Float!
+  code: String
+  nom: String
+  credit: Float
   semestreId: Float
 }
 

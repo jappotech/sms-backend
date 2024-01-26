@@ -4,16 +4,16 @@ import { RestrictProperties } from 'src/common/dtos/common.input'
 
 @ObjectType()
 export class Salle implements RestrictProperties<Salle, SalleType> {
-    @Field()
+    @Field({ nullable: true })
     id: number
 
-    @Field()
+    @Field({ nullable: true })
     createdAt: Date
 
     @Field({ nullable: true })
     updatedAt: Date
 
-    @Field()
+    @Field({ nullable: true })
     nom: string
 
     @Field({ nullable: true })
@@ -22,9 +22,9 @@ export class Salle implements RestrictProperties<Salle, SalleType> {
     @Field({ nullable: true })
     batiment: string
 
-    @Field()
+    @Field({ nullable: true })
     etablissementId: number
 
-    @Field()
+    @Field({ nullable: true })
     estDisponible: boolean
 }

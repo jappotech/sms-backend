@@ -4,10 +4,10 @@ import { RestrictProperties } from 'src/common/dtos/common.input'
 
 @ObjectType()
 export class Permission implements RestrictProperties<Permission, PermissionType> {
-    @Field()
+    @Field({ nullable: true })
     id: number
 
-    @Field()
+    @Field({ nullable: true })
     createdAt: Date
 
     @Field({ nullable: true })
@@ -16,9 +16,9 @@ export class Permission implements RestrictProperties<Permission, PermissionType
     @Field(() => [String])
     role: $Enums.Role[]
 
-    @Field()
+    @Field({ nullable: true })
     label: string
 
-    @Field()
+    @Field({ nullable: true })
     slug: string
 }

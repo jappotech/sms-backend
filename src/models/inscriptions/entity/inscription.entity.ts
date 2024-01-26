@@ -4,7 +4,7 @@ import { RestrictProperties } from 'src/common/dtos/common.input'
 
 @ObjectType()
 export class Inscription implements RestrictProperties<Inscription, InscriptionType> {
-    @Field()
+    @Field({ nullable: true })
     id: number
 
     @Field({ defaultValue: new Date() })
@@ -13,7 +13,7 @@ export class Inscription implements RestrictProperties<Inscription, InscriptionT
     @Field({ nullable: true })
     updatedAt: Date
 
-    @Field()
+    @Field({ nullable: true })
     reference: string
 
     @Field({ defaultValue: false })

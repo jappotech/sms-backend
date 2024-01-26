@@ -4,27 +4,27 @@ import { RestrictProperties } from 'src/common/dtos/common.input'
 
 @ObjectType()
 export class NoteEtudiant implements RestrictProperties<NoteEtudiant, NoteEtudiantType> {
-    @Field()
+    @Field({ nullable: true })
     id: number
 
-    @Field()
+    @Field({ nullable: true })
     createdAt: Date
 
     @Field({ nullable: true })
     updatedAt: Date
 
-    @Field()
+    @Field({ nullable: true })
     note: number
 
     @Field(type => String)
     typeEvaluation: $Enums.TypeEvaluation
 
-    @Field()
+    @Field({ nullable: true })
     evaluationEtudiantId: number
 
-    @Field()
+    @Field({ nullable: true })
     etudiantId: number
 
-    @Field()
+    @Field({ nullable: true })
     coursId: number
 }

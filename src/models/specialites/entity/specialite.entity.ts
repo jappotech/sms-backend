@@ -4,19 +4,19 @@ import { RestrictProperties } from 'src/common/dtos/common.input'
 
 @ObjectType()
 export class Specialite implements RestrictProperties<Specialite, SpecialiteType> {
-    @Field()
+    @Field({ nullable: true })
     id: number
 
-    @Field()
+    @Field({ nullable: true })
     createdAt: Date
 
     @Field({ nullable: true })
     updatedAt: Date
 
-    @Field()
+    @Field({ nullable: true })
     nom: string
 
-    @Field()
+    @Field({ nullable: true })
     slug: string
 
     @Field({ nullable: true })

@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql'
+import { Resolver, Query, Mutation, Args, ResolveField, Parent } from '@nestjs/graphql'
 import { DomainesService } from './domaines.service'
 import { Domaine } from './entity/domaine.entity'
 import { FindManyDomaineArgs, FindUniqueDomaineArgs } from './dtos/find.args'
@@ -9,13 +9,15 @@ import { GetUserType } from 'src/common/types'
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { Prisma } from '@prisma/client'
+import { Res } from '@nestjs/common'
+import { Mention } from '../mentions/entity/mention.entity'
 
 @Resolver(() => Domaine)
 export class DomainesResolver {
   constructor(private readonly domainesService: DomainesService,
     private readonly prisma: PrismaService) { }
 
-  @AllowAuthenticated()
+  // @AllowAuthenticated()
   @Mutation(() => Domaine)
   createDomaine(@Args('createDomaineInput') args: CreateDomaineInput, @GetUser() user: GetUserType) {
     // // checkRowLevelPermission(user, args.uid)
@@ -46,5 +48,12 @@ export class DomainesResolver {
     const domaine = await this.prisma.domaine.findUnique(args)
     // checkRowLevelPermission(user, domaine.uid)
     return this.domainesService.remove(args)
+  }
+
+  @ResolveField(() => [Mention])
+  async mentions(@Parent() parent: Domaine) {
+    return this.prisma.mention.findMany({
+      where: { domaineId: parent.id }
+    })
   }
 }

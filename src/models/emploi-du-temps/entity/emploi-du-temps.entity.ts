@@ -5,24 +5,24 @@ import { RestrictProperties } from 'src/common/dtos/common.input'
 @ObjectType()
 export class EmploiDuTemps implements RestrictProperties<EmploiDuTemps, EmploiDuTempsType> {
 
-    @Field()
+    @Field({ nullable: true })
     id: number
 
-    @Field()
+    @Field({ nullable: true })
     coursId: number
 
-    @Field()
+    @Field({ nullable: true })
     classeId: number
 
-    @Field()
+    @Field({ nullable: true })
     professeurId: number
 
-    @Field()
+    @Field({ nullable: true })
     salleId: number
 
-    @Field()
+    @Field({ nullable: true })
     dateDebut: Date
 
-    @Field()
+    @Field({ nullable: true })
     dateFin: Date
 }

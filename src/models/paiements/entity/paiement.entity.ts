@@ -4,27 +4,27 @@ import { RestrictProperties } from 'src/common/dtos/common.input'
 
 @ObjectType()
 export class Paiement implements RestrictProperties<Paiement, PaiementType> {
-    @Field()
+    @Field({ nullable: true })
     id: number
 
-    @Field()
+    @Field({ nullable: true })
     etudiantId: number
 
-    @Field()
+    @Field({ nullable: true })
     montant: number
 
-    @Field()
+    @Field({ nullable: true })
     datePaiement: Date
 
-    @Field()
+    @Field({ nullable: true })
     methodePaiement: string
 
-    @Field()
+    @Field({ nullable: true })
     referencePaiement: string
 
-    @Field()
+    @Field({ nullable: true })
     typeFrais: string
 
-    @Field()
+    @Field({ nullable: true })
     statutPaiement: string
 }

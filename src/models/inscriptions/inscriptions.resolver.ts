@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql'
+import { Resolver, Query, Mutation, Args, ResolveField } from '@nestjs/graphql'
 import { InscriptionsService } from './inscriptions.service'
 import { Inscription } from './entity/inscription.entity'
 import { FindManyInscriptionArgs, FindUniqueInscriptionArgs } from './dtos/find.args'
@@ -9,6 +9,7 @@ import { GetUserType } from 'src/common/types'
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { Prisma } from '@prisma/client'
+import { Etudiant } from '../etudiants/entity/etudiant.entity'
 
 @Resolver(() => Inscription)
 export class InscriptionsResolver {
@@ -47,4 +48,5 @@ export class InscriptionsResolver {
     // checkRowLevelPermission(user, inscription.uid)
     return this.inscriptionsService.remove(args)
   }
+
 }

@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql'
+import { Resolver, Query, Mutation, Args, ResolveField, Parent } from '@nestjs/graphql'
 import { MentionsService } from './mentions.service'
 import { Mention } from './entity/mention.entity'
 import { FindManyMentionArgs, FindUniqueMentionArgs } from './dtos/find.args'
@@ -9,6 +9,8 @@ import { GetUserType } from 'src/common/types'
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { Prisma } from '@prisma/client'
+import { Res } from '@nestjs/common'
+import { Specialite } from '../specialites/entity/specialite.entity'
 
 @Resolver(() => Mention)
 export class MentionsResolver {
@@ -46,5 +48,12 @@ export class MentionsResolver {
     const mention = await this.prisma.mention.findUnique(args)
     // checkRowLevelPermission(user, mention.uid)
     return this.mentionsService.remove(args)
+  }
+
+  @ResolveField(() => [Specialite])
+  async specialites(@Parent() parent: Mention) {
+    return this.prisma.specialite.findMany({
+      where: { mentionId: parent.id }
+    })
   }
 }

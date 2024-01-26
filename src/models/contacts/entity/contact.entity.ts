@@ -5,16 +5,16 @@ import { RestrictProperties } from 'src/common/dtos/common.input'
 @ObjectType()
 export class Contact implements RestrictProperties<Contact, ContactType> {
 
-    @Field()
+    @Field({ nullable: true })
     id: number
 
-    @Field()
+    @Field({ nullable: true })
     createdAt: Date
 
     @Field({ nullable: true })
     updatedAt: Date
 
-    @Field()
+    @Field({ nullable: true })
     telephone: string
 
     @Field({ nullable: true })
@@ -23,7 +23,7 @@ export class Contact implements RestrictProperties<Contact, ContactType> {
     @Field({ nullable: true })
     fax: string
 
-    @Field()
+    @Field({ nullable: true })
     email: string
 
     @Field({ nullable: true })

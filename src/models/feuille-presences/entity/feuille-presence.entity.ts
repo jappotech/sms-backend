@@ -4,27 +4,27 @@ import { RestrictProperties } from 'src/common/dtos/common.input'
 
 @ObjectType()
 export class FeuillePresence implements RestrictProperties<FeuillePresence, FeuillePresenceType> {
-    @Field()
+    @Field({ nullable: true })
     id: number
 
-    @Field()
+    @Field({ nullable: true })
     createdAt: Date
 
     @Field({ nullable: true })
     updatedAt: Date
 
-    @Field()
+    @Field({ nullable: true })
     date: Date
 
-    @Field()
+    @Field({ nullable: true })
     heureDebut: Date
 
-    @Field()
+    @Field({ nullable: true })
     heureFin: Date
 
-    @Field()
+    @Field({ nullable: true })
     coursId: number
 
-    @Field()
+    @Field({ nullable: true })
     etudiantId: number
 }

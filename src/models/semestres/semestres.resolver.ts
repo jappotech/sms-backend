@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql'
+import { Resolver, Query, Mutation, Args, ResolveField, Parent } from '@nestjs/graphql'
 import { SemestresService } from './semestres.service'
 import { Semestre } from './entity/semestre.entity'
 import { FindManySemestreArgs, FindUniqueSemestreArgs } from './dtos/find.args'
@@ -9,6 +9,8 @@ import { GetUserType } from 'src/common/types'
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { Prisma } from '@prisma/client'
+import { UniteEnseignement } from '../unite-enseignements/entity/unite-enseignement.entity'
+import { Matiere } from '../matieres/entity/matiere.entity'
 
 @Resolver(() => Semestre)
 export class SemestresResolver {
@@ -47,4 +49,15 @@ export class SemestresResolver {
     // checkRowLevelPermission(user, semestre.uid)
     return this.semestresService.remove(args)
   }
+
+  @ResolveField(() => [UniteEnseignement])
+  async uniteEnseignements(@Parent() parent: Semestre) {
+    return this.prisma.uniteEnseignement.findMany({
+      where: { semestreId: parent.id },
+      include: {
+        matieres: true
+      }
+    })
+  }
+
 }

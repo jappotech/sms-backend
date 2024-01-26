@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql'
+import { Resolver, Query, Mutation, Args, ResolveField, Parent } from '@nestjs/graphql'
 import { SpecialitesService } from './specialites.service'
 import { Specialite } from './entity/specialite.entity'
 import { FindManySpecialiteArgs, FindUniqueSpecialiteArgs } from './dtos/find.args'
@@ -9,13 +9,14 @@ import { GetUserType } from 'src/common/types'
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { Prisma } from '@prisma/client'
+import { Classe } from '../classes/entity/classe.entity'
 
 @Resolver(() => Specialite)
 export class SpecialitesResolver {
   constructor(private readonly specialitesService: SpecialitesService,
     private readonly prisma: PrismaService) { }
 
-  @AllowAuthenticated()
+  // @AllowAuthenticated()
   @Mutation(() => Specialite)
   createSpecialite(@Args('createSpecialiteInput') args: CreateSpecialiteInput, @GetUser() user: GetUserType) {
     // // checkRowLevelPermission(user, args.uid)
@@ -46,5 +47,12 @@ export class SpecialitesResolver {
     const specialite = await this.prisma.specialite.findUnique(args)
     // checkRowLevelPermission(user, specialite.uid)
     return this.specialitesService.remove(args)
+  }
+
+  @ResolveField(() => [Classe])
+  async classes(@Parent() parent: Specialite) {
+    return this.prisma.classe.findMany({
+      where: { specialiteId: parent.id }
+    })
   }
 }

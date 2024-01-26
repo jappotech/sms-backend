@@ -15,7 +15,7 @@ export class EtudiantsService {
 
     // create etudiant without profile
     const { profile, ...studentData } = createEtudiantInput
-    const slug = slugify(`${profile.nom} ${utilisateur.accountId} ${profile.prenom}`)
+    const slug = slugify(`${profile.nom.toLowerCase()} ${utilisateur.accountId} ${profile.prenom.toLowerCase()}`)
     return this.prisma.etudiant.create({
       data: { ...studentData, profileId: utilisateur.id, slug },
     })

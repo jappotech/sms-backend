@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql'
+import { Resolver, Query, Mutation, Args, ResolveField, Parent } from '@nestjs/graphql'
 import { UniteEnseignementsService } from './unite-enseignements.service'
 import { UniteEnseignement } from './entity/unite-enseignement.entity'
 import { FindManyUniteEnseignementArgs, FindUniqueUniteEnseignementArgs } from './dtos/find.args'
@@ -9,6 +9,7 @@ import { GetUserType } from 'src/common/types'
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { Prisma } from '@prisma/client'
+import { Matiere } from '../matieres/entity/matiere.entity'
 
 @Resolver(() => UniteEnseignement)
 export class UniteEnseignementsResolver {
@@ -46,5 +47,12 @@ export class UniteEnseignementsResolver {
     const uniteEnseignement = await this.prisma.uniteEnseignement.findUnique(args)
     // checkRowLevelPermission(user, uniteEnseignement.uid)
     return this.uniteEnseignementsService.remove(args)
+  }
+
+  @ResolveField(() => [Matiere])
+  async matieres(@Parent() parent: UniteEnseignement) {
+    return this.prisma.matiere.findMany({
+      where: { uniteEnseigmentId: parent.id }
+    })
   }
 }
