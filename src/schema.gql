@@ -2073,6 +2073,12 @@ input CreateEtablissementInput {
   logo: String
   adresseId: Float
   contactId: Float
+  domaines: [CreateDomaineInputWithId!]
+}
+
+input CreateDomaineInputWithId {
+  id: Float
+  nom: String
 }
 
 input UpdateEtablissementInput {
@@ -2083,6 +2089,7 @@ input UpdateEtablissementInput {
   logo: String
   adresseId: Float
   contactId: Float
+  domaines: [CreateDomaineInputWithId!]
   id: Float!
 }
 

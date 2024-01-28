@@ -12,3 +12,5 @@ export class CreateDomaineWithMentionsInput extends Domaine {
 @InputType()
 export class CreateDomaineInput extends PickType(CreateDomaineWithMentionsInput, ['nom', 'mentions'], InputType) { }
 
+@InputType()
+export class CreateDomaineInputWithId extends PickType(CreateDomaineWithMentionsInput, ['nom', 'id'], InputType) { }

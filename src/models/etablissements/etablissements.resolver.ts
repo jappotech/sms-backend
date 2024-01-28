@@ -16,7 +16,7 @@ export class EtablissementsResolver {
   constructor(private readonly etablissementsService: EtablissementsService,
     private readonly prisma: PrismaService) { }
 
-  @AllowAuthenticated()
+  // @AllowAuthenticated()
   @Mutation(() => Etablissement)
   createEtablissement(@Args('createEtablissementInput') args: CreateEtablissementInput, @GetUser() user: GetUserType) {
     // // checkRowLevelPermission(user, args.uid)
@@ -33,7 +33,7 @@ export class EtablissementsResolver {
     return this.etablissementsService.findOne(args)
   }
 
-  @AllowAuthenticated()
+  // @AllowAuthenticated()
   @Mutation(() => Etablissement)
   async updateEtablissement(@Args('updateEtablissementInput') args: UpdateEtablissementInput, @GetUser() user: GetUserType) {
     const etablissement = await this.prisma.etablissement.findUnique({ where: { id: args.id } })

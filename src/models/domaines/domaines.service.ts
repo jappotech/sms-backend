@@ -27,7 +27,6 @@ export class DomainesService {
       createMentions = await this.prisma.mention.createMany({
         data: mentionsData
       })
-      console.log("🚀 ~ DomainesService ~ create ~ createMentions:", createMentions)
     }
 
     return domaine
