@@ -9,11 +9,27 @@ import slugify from 'slugify'
 @Injectable()
 export class MentionsService {
   constructor(private readonly prisma: PrismaService) { }
-  create(createMentionInput: CreateMentionInput) {
+  async create(createMentionInput: CreateMentionInput) {
+    const { specialites, ...data } = createMentionInput
     const slug = slugify(`${createMentionInput.nom.toLowerCase()}`)
-    return this.prisma.mention.create({
-      data: { ...createMentionInput, slug },
+    const createMention = this.prisma.mention.create({
+      data: { ...data, slug },
     })
+
+    const mention = await createMention
+    if (specialites && specialites.length > 0) {
+      const specialitesData = specialites.map(specialite => ({
+        ...specialite,
+        slug: slugify(`${specialite.nom.toLowerCase()}`),
+        mentionId: mention.id
+      }))
+      const createSpecialites = await this.prisma.specialite.createMany({
+        data: specialitesData
+      })
+      console.log("🚀 ~ MentionsService ~ create ~ createSpecialites:", createSpecialites)
+    }
+
+    return createMention
   }
 
   findAll(args: FindManyMentionArgs) {
@@ -25,7 +41,7 @@ export class MentionsService {
   }
 
   update(updateMentionInput: UpdateMentionInput) {
-    const { id, ...data } = updateMentionInput
+    const { id, specialites, ...data } = updateMentionInput
     return this.prisma.mention.update({
       where: { id },
       data: data,

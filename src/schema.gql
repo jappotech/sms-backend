@@ -155,6 +155,16 @@ type Domaine {
   mentions: [Mention!]!
 }
 
+type Specialite {
+  id: Float
+  createdAt: DateTime
+  updatedAt: DateTime
+  nom: String
+  slug: String
+  mentionId: Float
+  classes: [Classe!]!
+}
+
 type Mention {
   id: Float
   createdAt: DateTime
@@ -234,16 +244,6 @@ type Matiere {
   credit: Float
   nbHeure: Float
   uniteEnseigmentId: Float
-}
-
-type Specialite {
-  id: Float
-  createdAt: DateTime
-  updatedAt: DateTime
-  nom: String
-  slug: String
-  mentionId: Float
-  classes: [Classe!]!
 }
 
 type Paiement {
@@ -2038,6 +2038,12 @@ input CreateDomaineInput {
 input CreateMentionInput {
   nom: String
   domaineId: Float
+  specialites: [CreateSpecialiteInput!]
+}
+
+input CreateSpecialiteInput {
+  nom: String
+  mentionId: Float
 }
 
 input UpdateDomaineInput {
@@ -2250,6 +2256,7 @@ input UpdateMatiereInput {
 input UpdateMentionInput {
   nom: String
   domaineId: Float
+  specialites: [CreateSpecialiteInput!]
   id: Float!
 }
 
@@ -2360,11 +2367,6 @@ input UpdateSemestreInput {
   nombreSemaine: Float
   classeId: Float
   id: Float!
-}
-
-input CreateSpecialiteInput {
-  nom: String
-  mentionId: Float
 }
 
 input UpdateSpecialiteInput {
