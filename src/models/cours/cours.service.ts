@@ -8,10 +8,15 @@ import { Prisma } from '@prisma/client'
 @Injectable()
 export class CoursService {
   constructor(private readonly prisma: PrismaService) { }
-  create(createCoursInput: CreateCoursInput) {
-    return this.prisma.cours.create({
-      data: createCoursInput,
+  async create(createCoursInput: CreateCoursInput) {
+
+    const cours = await this.prisma.cours.create({
+      data: createCoursInput
     })
+
+    console.log("🚀 ~ CoursService ~ create ~ createCoursInput:", cours)
+
+    return cours
   }
 
   findAll(args: FindManyCoursArgs) {

@@ -371,18 +371,18 @@ model Cours {
   dateFin            DateTime
   heureDebut         DateTime
   heureFin           DateTime
-  matiere            Matiere               @relation(fields: [matiereId], references: [id])
-  matiereId          Int
-  salle              Salle                 @relation(fields: [salleId], references: [id])
-  salleId            Int
-  classe             Classe                @relation(fields: [classeId], references: [id])
-  classeId           Int
+  matiereId          Int?
+  salleId            Int?
+  classeId           Int?
+  professeurId       Int?
+  matiere            Matiere?              @relation(fields: [matiereId], references: [id])
+  salle              Salle?                @relation(fields: [salleId], references: [id])
+  classe             Classe?               @relation(fields: [classeId], references: [id])
+  professeur         Professeur?           @relation(fields: [professeurId], references: [id])
   evaluationEtudiant EvaluationEtudiants[]
   noteEtudiant       NoteEtudiant[]
   feuillePresences   FeuillePresence[]
-  professeur         Professeur?           @relation(fields: [professeurId], references: [id])
-  professeurId       Int?
-  EmploiDuTemps      EmploiDuTemps[]
+  emploiDuTemps      EmploiDuTemps[]
 }
 
 model Salle {

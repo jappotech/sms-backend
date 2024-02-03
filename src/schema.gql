@@ -128,6 +128,40 @@ type Cours {
   salleId: Float
   classeId: Float
   professeurId: Float
+  matiere: Matiere!
+  classe: Classe!
+  salle: Salle!
+  professeur: Professeur!
+}
+
+type Matiere {
+  id: Float
+  createdAt: DateTime
+  updatedAt: DateTime
+  code: String
+  nom: String
+  credit: Float
+  nbHeure: Float
+  uniteEnseigmentId: Float
+}
+
+type Salle {
+  id: Float
+  createdAt: DateTime
+  updatedAt: DateTime
+  nom: String
+  capacite: Float
+  batiment: String
+  etablissementId: Float
+  estDisponible: Boolean
+}
+
+type Professeur {
+  id: Float
+  createdAt: DateTime
+  updatedAt: DateTime
+  profileId: Float
+  profile: Utilisateur!
 }
 
 type Diplome {
@@ -235,17 +269,6 @@ type FeuillePresence {
   etudiantId: Float
 }
 
-type Matiere {
-  id: Float
-  createdAt: DateTime
-  updatedAt: DateTime
-  code: String
-  nom: String
-  credit: Float
-  nbHeure: Float
-  uniteEnseigmentId: Float
-}
-
 type Paiement {
   id: Float
   etudiantId: Float
@@ -266,14 +289,6 @@ type Permission {
   slug: String
 }
 
-type Professeur {
-  id: Float
-  createdAt: DateTime
-  updatedAt: DateTime
-  profileId: Float
-  profile: Utilisateur!
-}
-
 type ReseauSocial {
   id: Float
   createdAt: DateTime
@@ -282,17 +297,6 @@ type ReseauSocial {
   username: String
   url: String
   contactId: Float
-}
-
-type Salle {
-  id: Float
-  createdAt: DateTime
-  updatedAt: DateTime
-  nom: String
-  capacite: Float
-  batiment: String
-  etablissementId: Float
-  estDisponible: Boolean
 }
 
 type UniteEnseignement {
@@ -319,6 +323,7 @@ type Query {
   classe(where: ClasseWhereUniqueInput!): Classe!
   contacts(where: ContactWhereInput, orderBy: [ContactOrderByWithRelationInput!], cursor: ContactWhereUniqueInput, take: Float, skip: Float, distinct: [ContactScalarFieldEnum!]): [Contact!]!
   contact(where: ContactWhereUniqueInput!): Contact!
+  all_cours(where: CoursWhereInput, orderBy: [CoursOrderByWithRelationInput!], cursor: CoursWhereUniqueInput, take: Float, skip: Float, distinct: [CoursScalarFieldEnum!]): [Cours!]!
   cours(where: CoursWhereUniqueInput!): Cours!
   diplomes(where: DiplomeWhereInput, orderBy: [DiplomeOrderByWithRelationInput!], cursor: DiplomeWhereUniqueInput, take: Float, skip: Float, distinct: [DiplomeScalarFieldEnum!]): [Diplome!]!
   diplome(where: DiplomeWhereUniqueInput!): Diplome!
@@ -783,7 +788,7 @@ input CoursWhereInput {
   noteEtudiant: NoteEtudiantListRelationFilter
   feuillePresences: FeuillePresenceListRelationFilter
   professeur: ProfesseurRelationFilter
-  EmploiDuTemps: EmploiDuTempsListRelationFilter
+  emploiDuTemps: EmploiDuTempsListRelationFilter
   AND: [CoursWhereInput!]
   OR: [CoursWhereInput!]
   NOT: [CoursWhereInput!]
@@ -1273,8 +1278,183 @@ enum ContactScalarFieldEnum {
   siteWeb
 }
 
+input CoursOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  nom: SortOrder
+  description: SortOrder
+  dateDebut: SortOrder
+  dateFin: SortOrder
+  heureDebut: SortOrder
+  heureFin: SortOrder
+  matiereId: SortOrder
+  salleId: SortOrder
+  classeId: SortOrder
+  professeurId: SortOrder
+  matiere: MatiereOrderByWithRelationInput
+  salle: SalleOrderByWithRelationInput
+  classe: ClasseOrderByWithRelationInput
+  evaluationEtudiant: EvaluationEtudiantsOrderByRelationAggregateInput
+  noteEtudiant: NoteEtudiantOrderByRelationAggregateInput
+  feuillePresences: FeuillePresenceOrderByRelationAggregateInput
+  professeur: ProfesseurOrderByWithRelationInput
+  emploiDuTemps: EmploiDuTempsOrderByRelationAggregateInput
+}
+
+input MatiereOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  code: SortOrder
+  nom: SortOrder
+  credit: SortOrder
+  nbHeure: SortOrder
+  uniteEnseigmentId: SortOrder
+  cours: CoursOrderByRelationAggregateInput
+  uniteEnseigment: UniteEnseignementOrderByWithRelationInput
+}
+
+input UniteEnseignementOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  code: SortOrder
+  nom: SortOrder
+  credit: SortOrder
+  semestreId: SortOrder
+  semestre: SemestreOrderByWithRelationInput
+  matieres: MatiereOrderByRelationAggregateInput
+}
+
+input SemestreOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  numero: SortOrder
+  grade: SortOrder
+  dateDebut: SortOrder
+  dateFin: SortOrder
+  nombreSemaine: SortOrder
+  classeId: SortOrder
+  uniteEnseignement: UniteEnseignementOrderByRelationAggregateInput
+  Classe: ClasseOrderByWithRelationInput
+}
+
+input UniteEnseignementOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input MatiereOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input SalleOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  nom: SortOrder
+  capacite: SortOrder
+  batiment: SortOrder
+  etablissementId: SortOrder
+  estDisponible: SortOrder
+  etablissement: EtablissementOrderByWithRelationInput
+  cours: CoursOrderByRelationAggregateInput
+  EmploiDuTemps: EmploiDuTempsOrderByRelationAggregateInput
+}
+
+input EvaluationEtudiantsOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input NoteEtudiantOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input FeuillePresenceOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input ProfesseurOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  profileId: SortOrder
+  profile: UtilisateurOrderByWithRelationInput
+  cours: CoursOrderByRelationAggregateInput
+  EmploiDuTemps: EmploiDuTempsOrderByRelationAggregateInput
+}
+
+input UtilisateurOrderByWithRelationInput {
+  id: SortOrder
+  matricule: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  prenom: SortOrder
+  nom: SortOrder
+  dateNaissance: SortOrder
+  lieuNaissance: SortOrder
+  cni: SortOrder
+  genre: SortOrder
+  nationalite: SortOrder
+  groupeSanguin: SortOrder
+  etablissementId: SortOrder
+  statutCompte: SortOrder
+  roles: SortOrder
+  contactId: SortOrder
+  adresseId: SortOrder
+  accountId: SortOrder
+  contact: ContactOrderByWithRelationInput
+  adresse: AdresseOrderByWithRelationInput
+  etablissement: EtablissementOrderByWithRelationInput
+  etudiant: EtudiantOrderByWithRelationInput
+  permissions: PermissionOrderByRelationAggregateInput
+  Professeur: ProfesseurOrderByWithRelationInput
+}
+
+input EtudiantOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  slug: SortOrder
+  ine: SortOrder
+  baccaleaureat: SortOrder
+  anneeBaccaleaureat: SortOrder
+  profileId: SortOrder
+  feuillePresencesId: SortOrder
+  profile: UtilisateurOrderByWithRelationInput
+  inscriptions: InscriptionOrderByRelationAggregateInput
+  notes: NoteEtudiantOrderByRelationAggregateInput
+  feuillePresences: FeuillePresenceOrderByRelationAggregateInput
+  Paiement: PaiementOrderByRelationAggregateInput
+}
+
+input PaiementOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input PermissionOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
 input CoursWhereUniqueInput {
   id: Float!
+}
+
+enum CoursScalarFieldEnum {
+  id
+  createdAt
+  updatedAt
+  nom
+  description
+  dateDebut
+  dateFin
+  heureDebut
+  heureFin
+  matiereId
+  salleId
+  classeId
+  professeurId
 }
 
 input DiplomeOrderByWithRelationInput {
@@ -1348,76 +1528,6 @@ enum EtablissementScalarFieldEnum {
   contactId
 }
 
-input EtudiantOrderByWithRelationInput {
-  id: SortOrder
-  createdAt: SortOrder
-  updatedAt: SortOrder
-  slug: SortOrder
-  ine: SortOrder
-  baccaleaureat: SortOrder
-  anneeBaccaleaureat: SortOrder
-  profileId: SortOrder
-  feuillePresencesId: SortOrder
-  profile: UtilisateurOrderByWithRelationInput
-  inscriptions: InscriptionOrderByRelationAggregateInput
-  notes: NoteEtudiantOrderByRelationAggregateInput
-  feuillePresences: FeuillePresenceOrderByRelationAggregateInput
-  Paiement: PaiementOrderByRelationAggregateInput
-}
-
-input UtilisateurOrderByWithRelationInput {
-  id: SortOrder
-  matricule: SortOrder
-  createdAt: SortOrder
-  updatedAt: SortOrder
-  prenom: SortOrder
-  nom: SortOrder
-  dateNaissance: SortOrder
-  lieuNaissance: SortOrder
-  cni: SortOrder
-  genre: SortOrder
-  nationalite: SortOrder
-  groupeSanguin: SortOrder
-  etablissementId: SortOrder
-  statutCompte: SortOrder
-  roles: SortOrder
-  contactId: SortOrder
-  adresseId: SortOrder
-  accountId: SortOrder
-  contact: ContactOrderByWithRelationInput
-  adresse: AdresseOrderByWithRelationInput
-  etablissement: EtablissementOrderByWithRelationInput
-  etudiant: EtudiantOrderByWithRelationInput
-  permissions: PermissionOrderByRelationAggregateInput
-  Professeur: ProfesseurOrderByWithRelationInput
-}
-
-input PermissionOrderByRelationAggregateInput {
-  _count: SortOrder
-}
-
-input ProfesseurOrderByWithRelationInput {
-  id: SortOrder
-  createdAt: SortOrder
-  updatedAt: SortOrder
-  profileId: SortOrder
-  profile: UtilisateurOrderByWithRelationInput
-  cours: CoursOrderByRelationAggregateInput
-  EmploiDuTemps: EmploiDuTempsOrderByRelationAggregateInput
-}
-
-input NoteEtudiantOrderByRelationAggregateInput {
-  _count: SortOrder
-}
-
-input FeuillePresenceOrderByRelationAggregateInput {
-  _count: SortOrder
-}
-
-input PaiementOrderByRelationAggregateInput {
-  _count: SortOrder
-}
-
 input EtudiantWhereUniqueInput {
   id: Float
 }
@@ -1474,95 +1584,6 @@ input FeuillePresenceOrderByWithRelationInput {
   etudiantId: SortOrder
   cours: CoursOrderByWithRelationInput
   etudiant: EtudiantOrderByWithRelationInput
-}
-
-input CoursOrderByWithRelationInput {
-  id: SortOrder
-  createdAt: SortOrder
-  updatedAt: SortOrder
-  nom: SortOrder
-  description: SortOrder
-  dateDebut: SortOrder
-  dateFin: SortOrder
-  heureDebut: SortOrder
-  heureFin: SortOrder
-  matiereId: SortOrder
-  salleId: SortOrder
-  classeId: SortOrder
-  professeurId: SortOrder
-  matiere: MatiereOrderByWithRelationInput
-  salle: SalleOrderByWithRelationInput
-  classe: ClasseOrderByWithRelationInput
-  evaluationEtudiant: EvaluationEtudiantsOrderByRelationAggregateInput
-  noteEtudiant: NoteEtudiantOrderByRelationAggregateInput
-  feuillePresences: FeuillePresenceOrderByRelationAggregateInput
-  professeur: ProfesseurOrderByWithRelationInput
-  EmploiDuTemps: EmploiDuTempsOrderByRelationAggregateInput
-}
-
-input MatiereOrderByWithRelationInput {
-  id: SortOrder
-  createdAt: SortOrder
-  updatedAt: SortOrder
-  code: SortOrder
-  nom: SortOrder
-  credit: SortOrder
-  nbHeure: SortOrder
-  uniteEnseigmentId: SortOrder
-  cours: CoursOrderByRelationAggregateInput
-  uniteEnseigment: UniteEnseignementOrderByWithRelationInput
-}
-
-input UniteEnseignementOrderByWithRelationInput {
-  id: SortOrder
-  createdAt: SortOrder
-  updatedAt: SortOrder
-  code: SortOrder
-  nom: SortOrder
-  credit: SortOrder
-  semestreId: SortOrder
-  semestre: SemestreOrderByWithRelationInput
-  matieres: MatiereOrderByRelationAggregateInput
-}
-
-input SemestreOrderByWithRelationInput {
-  id: SortOrder
-  createdAt: SortOrder
-  updatedAt: SortOrder
-  numero: SortOrder
-  grade: SortOrder
-  dateDebut: SortOrder
-  dateFin: SortOrder
-  nombreSemaine: SortOrder
-  classeId: SortOrder
-  uniteEnseignement: UniteEnseignementOrderByRelationAggregateInput
-  Classe: ClasseOrderByWithRelationInput
-}
-
-input UniteEnseignementOrderByRelationAggregateInput {
-  _count: SortOrder
-}
-
-input MatiereOrderByRelationAggregateInput {
-  _count: SortOrder
-}
-
-input SalleOrderByWithRelationInput {
-  id: SortOrder
-  createdAt: SortOrder
-  updatedAt: SortOrder
-  nom: SortOrder
-  capacite: SortOrder
-  batiment: SortOrder
-  etablissementId: SortOrder
-  estDisponible: SortOrder
-  etablissement: EtablissementOrderByWithRelationInput
-  cours: CoursOrderByRelationAggregateInput
-  EmploiDuTemps: EmploiDuTempsOrderByRelationAggregateInput
-}
-
-input EvaluationEtudiantsOrderByRelationAggregateInput {
-  _count: SortOrder
 }
 
 input FeuillePresenceWhereUniqueInput {

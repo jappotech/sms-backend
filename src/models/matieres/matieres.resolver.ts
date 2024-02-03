@@ -15,7 +15,7 @@ export class MatieresResolver {
   constructor(private readonly matieresService: MatieresService,
     private readonly prisma: PrismaService) { }
 
-  @AllowAuthenticated()
+  // @AllowAuthenticated()
   @Mutation(() => Matiere)
   createMatiere(@Args('createMatiereInput') args: CreateMatiereInput, @GetUser() user: GetUserType) {
     // // checkRowLevelPermission(user, args.uid)

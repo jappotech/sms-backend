@@ -75,7 +75,7 @@ export class CoursOrderByWithRelationInputStrict
   professeur: ProfesseurOrderByWithRelationInput
 
   @Field(() => EmploiDuTempsOrderByRelationAggregateInput, { nullable: true })
-  EmploiDuTemps: EmploiDuTempsOrderByRelationAggregateInput
+  emploiDuTemps: EmploiDuTempsOrderByRelationAggregateInput
 }
 
 

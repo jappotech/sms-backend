@@ -16,7 +16,7 @@ export class UniteEnseignementsResolver {
   constructor(private readonly uniteEnseignementsService: UniteEnseignementsService,
     private readonly prisma: PrismaService) { }
 
-  @AllowAuthenticated()
+  // @AllowAuthenticated()
   @Mutation(() => UniteEnseignement)
   createUniteEnseignement(@Args('createUniteEnseignementInput') args: CreateUniteEnseignementInput, @GetUser() user: GetUserType) {
     // // checkRowLevelPermission(user, args.uid)

@@ -78,7 +78,7 @@ export class CoursWhereInputStrict implements RestrictProperties<CoursWhereInput
   professeur: ProfesseurRelationFilter
 
   @Field(() => EmploiDuTempsListRelationFilter, { nullable: true })
-  EmploiDuTemps: EmploiDuTempsListRelationFilter
+  emploiDuTemps: EmploiDuTempsListRelationFilter
 
   @Field(() => [CoursWhereInputStrict], { nullable: true })
   AND: CoursWhereInputStrict[]
@@ -155,7 +155,7 @@ export class CoursWhereInput extends PartialType(
   professeur: ProfesseurRelationFilter
 
   @Field(() => EmploiDuTempsListRelationFilter, { nullable: true })
-  EmploiDuTemps: EmploiDuTempsListRelationFilter
+  emploiDuTemps: EmploiDuTempsListRelationFilter
 
   @Field(() => [CoursWhereInput], { nullable: true })
   AND: CoursWhereInput[]

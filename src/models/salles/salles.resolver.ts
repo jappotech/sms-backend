@@ -15,7 +15,7 @@ export class SallesResolver {
   constructor(private readonly sallesService: SallesService,
     private readonly prisma: PrismaService) { }
 
-  @AllowAuthenticated()
+  // @AllowAuthenticated()
   @Mutation(() => Salle)
   createSalle(@Args('createSalleInput') args: CreateSalleInput, @GetUser() user: GetUserType) {
     // // checkRowLevelPermission(user, args.uid)
