@@ -22,7 +22,7 @@ export class FeuillePresencesResolver {
     return this.feuillePresencesService.create(args)
   }
 
-  @Query(() => [FeuillePresence], { name: 'feuillePresences' })
+  @Query(() => [FeuillePresence], { name: 'feuillesPresences' })
   findAll(@Args() args: FindManyFeuillePresenceArgs) {
     return this.feuillePresencesService.findAll(args)
   }

@@ -23,7 +23,7 @@ export class EvaluationEtudiantsResolver {
     return this.evaluationEtudiantsService.create(args)
   }
 
-  @Query(() => [EvaluationEtudiants], { name: 'evaluationEtudiants' })
+  @Query(() => [EvaluationEtudiants], { name: 'evaluationsEtudiants' })
   findAll(@Args() args: FindManyEvaluationEtudiantsArgs) {
     return this.evaluationEtudiantsService.findAll(args)
   }

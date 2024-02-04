@@ -22,7 +22,7 @@ export class EmploiDuTempsResolver {
     return this.emploiDuTempsService.create(args)
   }
 
-  @Query(() => [EmploiDuTemps], { name: 'emploiDuTemps' })
+  @Query(() => [EmploiDuTemps], { name: 'emploisDuTemps' })
   findAll(@Args() args: FindManyEmploiDuTempsArgs) {
     return this.emploiDuTempsService.findAll(args)
   }

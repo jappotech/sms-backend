@@ -22,7 +22,7 @@ export class ReseauSocialsResolver {
     return this.reseauSocialsService.create(args)
   }
 
-  @Query(() => [ReseauSocial], { name: 'reseauSocials' })
+  @Query(() => [ReseauSocial], { name: 'reseauSociaux' })
   findAll(@Args() args: FindManyReseauSocialArgs) {
     return this.reseauSocialsService.findAll(args)
   }
