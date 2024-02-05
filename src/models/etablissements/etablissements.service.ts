@@ -4,6 +4,7 @@ import { PrismaService } from 'src/common/prisma/prisma.service'
 import { CreateEtablissementInput } from './dtos/create-etablissement.input'
 import { UpdateEtablissementInput } from './dtos/update-etablissement.input'
 import { Prisma } from '@prisma/client'
+import slugify from 'slugify'
 
 @Injectable()
 export class EtablissementsService {
@@ -11,8 +12,10 @@ export class EtablissementsService {
   async create(createEtablissementInput: CreateEtablissementInput) {
     const { domaines, ...data } = createEtablissementInput
 
+    const matricule = slugify(`${data.nom}`).toUpperCase()
+
     const etablissement = await this.prisma.etablissement.create({
-      data: { ...data },
+      data: { ...data, matricule },
     })
 
     if (domaines && domaines.length > 0) {

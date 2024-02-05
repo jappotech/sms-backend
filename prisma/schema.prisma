@@ -37,6 +37,12 @@ enum Role {
   SUPERVISEUR // Read Only
 }
 
+enum Niveau {
+  LICENCE
+  MASTER
+  DOCTORAT
+}
+
 model Account {
   id        Int      @id @default(autoincrement())
   uid       String   @unique @default(uuid())
@@ -283,22 +289,29 @@ model Matiere {
 }
 
 model Etablissement {
-  id           Int           @id @default(autoincrement())
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  nom          String
-  matricule    String?
-  sigle        String?
-  dateCreation DateTime?
-  logo         String?
-  adresse      Adresse?      @relation(fields: [adresseId], references: [id])
-  contact      Contact?      @relation(fields: [contactId], references: [id])
-  utilisateurs Utilisateur[]
-  adresseId    Int?
-  contactId    Int?
-  domaines     Domaine[]
-  classes      Classe[]
-  salle        Salle[]
+  id               Int           @id @default(autoincrement())
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  nom              String
+  matricule        String?
+  sigle            String?
+  dateCreation     DateTime?
+  logo             String?
+  adresse          Adresse?      @relation(fields: [adresseId], references: [id])
+  contact          Contact?      @relation(fields: [contactId], references: [id])
+  utilisateurs     Utilisateur[]
+  adresseId        Int?
+  contactId        Int?
+  anneeScolaire    String        @default("2023/2024")
+  domaines         Domaine[]
+  classes          Classe[]
+  salle            Salle[]
+  anneeScolaireNom String?
+}
+
+model AnneeScolaire {
+  nom     String   @id @unique @default("2023/2024")
+  classes Classe[]
 }
 
 model Classe {
@@ -308,6 +321,9 @@ model Classe {
 
   nom             String
   code            String
+  niveau          String
+  anneeScolaire   String
+  AnneeScolaire   AnneeScolaire   @relation(fields: [anneeScolaire], references: [nom])
   etablissement   Etablissement   @relation(fields: [etablissementId], references: [id])
   etablissementId Int
   semestres       Semestre[]

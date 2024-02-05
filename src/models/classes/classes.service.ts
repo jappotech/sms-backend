@@ -8,10 +8,14 @@ import { Prisma } from '@prisma/client'
 @Injectable()
 export class ClassesService {
   constructor(private readonly prisma: PrismaService) { }
-  create(createClasseInput: CreateClasseInput) {
-    return this.prisma.classe.create({
+  async create(createClasseInput: CreateClasseInput) {
+    const classe = await this.prisma.classe.create({
       data: createClasseInput,
     })
+
+    const code = classe.
+
+    return classe
   }
 
   findAll(args: FindManyClasseArgs) {
