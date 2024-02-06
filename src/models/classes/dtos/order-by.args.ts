@@ -28,11 +28,11 @@ export class ClasseOrderByWithRelationInputStrict
   @Field(() => Prisma.SortOrder, { nullable: true })
   code: Prisma.SortOrder
 
-  @Field(() => Prisma.SortOrder, { nullable: true })
+  /* @Field(() => Prisma.SortOrder, { nullable: true })
   anneeScolaire: Prisma.SortOrder
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  AnneeScolaire: AnneeScolaireOrderByWithRelationInput
+  AnneeScolaire: AnneeScolaireOrderByWithRelationInput */
 
   @Field(() => Prisma.SortOrder, { nullable: true })
   etablissementId: Prisma.SortOrder
