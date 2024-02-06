@@ -1,48 +1,79 @@
 import { Field, InputType, PartialType } from '@nestjs/graphql'
 import { Prisma } from '@prisma/client'
-import { RestrictProperties } from 'src/common/dtos/common.input'
-import { ClasseListRelationFilter } from 'src/models/classes/dtos/where.args'
+import { DateTimeFilter, IntFilter, RestrictProperties, StringFilter } from 'src/common/dtos/common.input'
+import { CoursListRelationFilter } from 'src/models/cours/dtos/where.args'
 
 @InputType()
 export class AnneeScolaireWhereUniqueInput {
-  nom: string
+  id: number
 }
 
 @InputType()
-export class AnneeScolaireWhereInputStrict {
-  @Field(() => String, { nullable: true })
-  nom: string | Prisma.StringFilter<'AnneeScolaire'>
+export class AnneeScolaireWhereInputStrict implements RestrictProperties<AnneeScolaireWhereInputStrict, Prisma.AnneeScolaireWhereInput> {
 
-  @Field(() => ClasseListRelationFilter, { nullable: true })
-  classes: ClasseListRelationFilter
+  @Field(() => IntFilter, { nullable: true })
+  id: IntFilter
+
+  @Field(() => DateTimeFilter, { nullable: true })
+  createdAt: DateTimeFilter
+
+  @Field(() => DateTimeFilter, { nullable: true })
+  updatedAt: DateTimeFilter
+
+  @Field(() => IntFilter, { nullable: true })
+  dateDebut: IntFilter
+
+  @Field(() => IntFilter, { nullable: true })
+  dateFin: IntFilter
+
+  @Field(() => StringFilter, { nullable: true })
+  nom: StringFilter
+
+  @Field(() => CoursListRelationFilter, { nullable: true })
+  cours: CoursListRelationFilter
 
   @Field(() => [AnneeScolaireWhereInputStrict], { nullable: true })
-  AND: AnneeScolaireWhereInput[]
+  AND: AnneeScolaireWhereInputStrict[]
 
   @Field(() => [AnneeScolaireWhereInputStrict], { nullable: true })
-  OR: AnneeScolaireWhereInput[]
+  OR: AnneeScolaireWhereInputStrict[]
 
   @Field(() => [AnneeScolaireWhereInputStrict], { nullable: true })
-  NOT: AnneeScolaireWhereInput[]
+  NOT: AnneeScolaireWhereInputStrict[]
 }
 
 @InputType()
 export class AnneeScolaireWhereInput extends PartialType(
   AnneeScolaireWhereInputStrict,
 ) {
-  @Field(() => String, { nullable: true })
-  nom: string | Prisma.StringFilter<'AnneeScolaire'>
+  @Field(() => IntFilter, { nullable: true })
+  id: IntFilter
 
-  @Field(() => ClasseListRelationFilter, { nullable: true })
-  classes: ClasseListRelationFilter
+  @Field(() => DateTimeFilter, { nullable: true })
+  createdAt: DateTimeFilter
 
-  @Field(() => [AnneeScolaireWhereInputStrict], { nullable: true })
+  @Field(() => DateTimeFilter, { nullable: true })
+  updatedAt: DateTimeFilter
+
+  @Field(() => IntFilter, { nullable: true })
+  dateDebut: IntFilter
+
+  @Field(() => IntFilter, { nullable: true })
+  dateFin: IntFilter
+
+  @Field(() => StringFilter, { nullable: true })
+  nom: StringFilter
+
+  @Field(() => CoursListRelationFilter, { nullable: true })
+  cours: CoursListRelationFilter
+
+  @Field(() => [AnneeScolaireWhereInput], { nullable: true })
   AND: AnneeScolaireWhereInput[]
 
-  @Field(() => [AnneeScolaireWhereInputStrict], { nullable: true })
+  @Field(() => [AnneeScolaireWhereInput], { nullable: true })
   OR: AnneeScolaireWhereInput[]
 
-  @Field(() => [AnneeScolaireWhereInputStrict], { nullable: true })
+  @Field(() => [AnneeScolaireWhereInput], { nullable: true })
   NOT: AnneeScolaireWhereInput[]
 }
 

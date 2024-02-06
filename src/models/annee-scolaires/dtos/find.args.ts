@@ -15,16 +15,16 @@ class FindManyAnneeScolaireArgsStrict
   @Field(() => AnneeScolaireWhereInput, { nullable: true })
   where: AnneeScolaireWhereInput
 
-  @Field(() => [AnneeScolaireWhereInput], { nullable: true })
+  @Field(() => [AnneeScolaireOrderByWithRelationInput], { nullable: true })
   orderBy: AnneeScolaireOrderByWithRelationInput[]
 
   @Field(() => AnneeScolaireWhereUniqueInput, { nullable: true })
-  cursor: AnneeScolaireWhereUniqueInput & { nom: string }
+  cursor: AnneeScolaireWhereUniqueInput
 
-  @Field({ nullable: true })
+  @Field(() => Number, { nullable: true })
   take: number
 
-  @Field({ nullable: true })
+  @Field(() => Number, { nullable: true })
   skip: number
 
   @Field(() => [Prisma.AnneeScolaireScalarFieldEnum])

@@ -13,6 +13,9 @@ export class EvaluationEtudiants implements RestrictProperties<EvaluationEtudian
     @Field({ nullable: true })
     updatedAt: Date
 
+    @Field({ nullable: true })
+    dateEvaluation: Date
+
     @Field(type => String)
     typeEvaluation: $Enums.TypeEvaluation
 

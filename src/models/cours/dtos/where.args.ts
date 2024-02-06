@@ -1,6 +1,8 @@
 import { Field, InputType, PartialType } from '@nestjs/graphql'
 import { Prisma } from '@prisma/client'
 import { DateTimeFilter, IntFilter, RestrictProperties, StringFilter } from 'src/common/dtos/common.input'
+import { AnneeScolaireRelationFilter } from 'src/models/annee-scolaires/dtos/where.args'
+import { AnneeScolaire } from 'src/models/annee-scolaires/entity/annee-scolaire.entity'
 import { ClasseRelationFilter } from 'src/models/classes/dtos/where.args'
 import { EmploiDuTempsListRelationFilter } from 'src/models/emploi-du-temps/dtos/where.args'
 import { EvaluationEtudiantsListRelationFilter } from 'src/models/evaluation-etudiants/dtos/where.args'
@@ -56,6 +58,12 @@ export class CoursWhereInputStrict implements RestrictProperties<CoursWhereInput
   @Field(() => IntFilter, { nullable: true })
   professeurId: IntFilter
 
+  @Field(() => IntFilter, { nullable: true })
+  anneeScolaireId: IntFilter
+
+  @Field(() => AnneeScolaireRelationFilter, { nullable: true })
+  AnneeScolaire: AnneeScolaireRelationFilter
+
   @Field(() => MatiereRelationFilter, { nullable: true })
   matiere: MatiereRelationFilter
 
@@ -67,9 +75,6 @@ export class CoursWhereInputStrict implements RestrictProperties<CoursWhereInput
 
   @Field(() => EvaluationEtudiantsListRelationFilter, { nullable: true })
   evaluationEtudiant: EvaluationEtudiantsListRelationFilter
-
-  @Field(() => NoteEtudiantListRelationFilter, { nullable: true })
-  noteEtudiant: NoteEtudiantListRelationFilter
 
   @Field(() => FeuillePresenceListRelationFilter, { nullable: true })
   feuillePresences: FeuillePresenceListRelationFilter
@@ -142,11 +147,14 @@ export class CoursWhereInput extends PartialType(
   @Field(() => ClasseRelationFilter, { nullable: true })
   classe: ClasseRelationFilter
 
+  @Field(() => IntFilter, { nullable: true })
+  anneeScolaireId: IntFilter
+
+  @Field(() => AnneeScolaireRelationFilter, { nullable: true })
+  AnneeScolaire: AnneeScolaireRelationFilter
+
   @Field(() => EvaluationEtudiantsListRelationFilter, { nullable: true })
   evaluationEtudiant: EvaluationEtudiantsListRelationFilter
-
-  @Field(() => NoteEtudiantListRelationFilter, { nullable: true })
-  noteEtudiant: NoteEtudiantListRelationFilter
 
   @Field(() => FeuillePresenceListRelationFilter, { nullable: true })
   feuillePresences: FeuillePresenceListRelationFilter

@@ -34,7 +34,7 @@ export class AnneeScolairesResolver {
   @AllowAuthenticated()
   @Mutation(() => AnneeScolaire)
   async updateAnneeScolaire(@Args('updateAnneeScolaireInput') args: UpdateAnneeScolaireInput, @GetUser() user: GetUserType) {
-    const anneeScolaire = await this.prisma.anneeScolaire.findUnique({ where: { nom: args.nom } })
+    const anneeScolaire = await this.prisma.anneeScolaire.findUnique({ where: { id: args.id } })
     // checkRowLevelPermission(user, anneeScolaire.uid)
     return this.anneeScolairesService.update(args)
   }

@@ -17,6 +17,21 @@ CREATE TYPE "TypeDiplome" AS ENUM ('LICENCE_GENERALE', 'LICENCE_PROFESSIONNELLE'
 CREATE TYPE "TypeEvaluation" AS ENUM ('Controle Continu', 'EXAMEN', 'TEST', 'TP', 'TD', 'PROJET', 'RAPPORT', 'MEMOIRE', 'STAGE', 'AUTRE');
 
 -- CreateTable
+CREATE TABLE "Account" (
+    "id" SERIAL NOT NULL,
+    "uid" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "username" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "roles" "Role"[] DEFAULT ARRAY['UTILISATEUR']::"Role"[],
+    "isActive" BOOLEAN NOT NULL DEFAULT false,
+    "userId" INTEGER NOT NULL,
+
+    CONSTRAINT "Account_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Utilisateur" (
     "id" SERIAL NOT NULL,
     "matricule" TEXT NOT NULL,
@@ -35,6 +50,7 @@ CREATE TABLE "Utilisateur" (
     "roles" "Role"[] DEFAULT ARRAY['UTILISATEUR']::"Role"[],
     "contactId" INTEGER,
     "adresseId" INTEGER,
+    "accountId" INTEGER,
 
     CONSTRAINT "Utilisateur_pkey" PRIMARY KEY ("id")
 );
@@ -298,9 +314,9 @@ CREATE TABLE "Cours" (
     "dateFin" TIMESTAMP(3) NOT NULL,
     "heureDebut" TIMESTAMP(3) NOT NULL,
     "heureFin" TIMESTAMP(3) NOT NULL,
-    "matiereId" INTEGER NOT NULL,
-    "salleId" INTEGER NOT NULL,
-    "classeId" INTEGER NOT NULL,
+    "matiereId" INTEGER,
+    "salleId" INTEGER,
+    "classeId" INTEGER,
     "professeurId" INTEGER,
 
     CONSTRAINT "Cours_pkey" PRIMARY KEY ("id")
@@ -372,6 +388,18 @@ CREATE TABLE "_DomaineToEtablissement" (
     "A" INTEGER NOT NULL,
     "B" INTEGER NOT NULL
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Account_uid_key" ON "Account"("uid");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Account_username_key" ON "Account"("username");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Utilisateur_matricule_key" ON "Utilisateur"("matricule");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Utilisateur_accountId_key" ON "Utilisateur"("accountId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Permission_label_key" ON "Permission"("label");
@@ -500,13 +528,13 @@ ALTER TABLE "NoteEtudiant" ADD CONSTRAINT "NoteEtudiant_etudiantId_fkey" FOREIGN
 ALTER TABLE "NoteEtudiant" ADD CONSTRAINT "NoteEtudiant_coursId_fkey" FOREIGN KEY ("coursId") REFERENCES "Cours"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Cours" ADD CONSTRAINT "Cours_matiereId_fkey" FOREIGN KEY ("matiereId") REFERENCES "Matiere"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Cours" ADD CONSTRAINT "Cours_matiereId_fkey" FOREIGN KEY ("matiereId") REFERENCES "Matiere"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Cours" ADD CONSTRAINT "Cours_salleId_fkey" FOREIGN KEY ("salleId") REFERENCES "Salle"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Cours" ADD CONSTRAINT "Cours_salleId_fkey" FOREIGN KEY ("salleId") REFERENCES "Salle"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Cours" ADD CONSTRAINT "Cours_classeId_fkey" FOREIGN KEY ("classeId") REFERENCES "Classe"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Cours" ADD CONSTRAINT "Cours_classeId_fkey" FOREIGN KEY ("classeId") REFERENCES "Classe"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Cours" ADD CONSTRAINT "Cours_professeurId_fkey" FOREIGN KEY ("professeurId") REFERENCES "Professeur"("id") ON DELETE SET NULL ON UPDATE CASCADE;

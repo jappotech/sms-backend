@@ -4,14 +4,13 @@ import { PrismaService } from 'src/common/prisma/prisma.service'
 import { CreateInscriptionInput } from './dtos/create-inscription.input'
 import { UpdateInscriptionInput } from './dtos/update-inscription.input'
 import { Prisma } from '@prisma/client'
-import { uniqueId } from 'lodash'
-import slugify from 'slugify'
+import { randomUUID } from 'crypto'
 
 @Injectable()
 export class InscriptionsService {
   constructor(private readonly prisma: PrismaService) { }
   create(createInscriptionInput: CreateInscriptionInput) {
-    createInscriptionInput.reference = uniqueId(slugify(createInscriptionInput.niveau));
+    createInscriptionInput.reference = `${createInscriptionInput.etudiantId}-${randomUUID().split('-')[0]}`.toUpperCase()
     return this.prisma.inscription.create({
       data: createInscriptionInput,
     })

@@ -16,15 +16,10 @@ export class NoteEtudiant implements RestrictProperties<NoteEtudiant, NoteEtudia
     @Field({ nullable: true })
     note: number
 
-    @Field(type => String)
-    typeEvaluation: $Enums.TypeEvaluation
-
     @Field({ nullable: true })
     evaluationEtudiantId: number
 
     @Field({ nullable: true })
     etudiantId: number
 
-    @Field({ nullable: true })
-    coursId: number
 }

@@ -40,6 +40,9 @@ export class EtablissementWhereInputStrict implements RestrictProperties<Etablis
   @Field(() => StringFilter, { nullable: true })
   logo: StringFilter
 
+  @Field(() => StringFilter, { nullable: true })
+  anneeEnCours: StringFilter
+
   @Field(() => IntFilter, { nullable: true })
   adresseId: IntFilter
 
@@ -101,6 +104,9 @@ export class EtablissementWhereInput extends PartialType(
 
   @Field(() => StringFilter, { nullable: true })
   logo: StringFilter
+
+  @Field(() => StringFilter, { nullable: true })
+  anneeEnCours: StringFilter
 
   @Field(() => IntFilter, { nullable: true })
   adresseId: IntFilter

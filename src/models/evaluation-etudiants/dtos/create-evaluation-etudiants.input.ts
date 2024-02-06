@@ -4,7 +4,7 @@ import { EvaluationEtudiants } from '../entity/evaluation-etudiants.entity'
 @InputType()
 export class CreateEvaluationEtudiantsInput extends PickType(
   EvaluationEtudiants,
-  ['coursId', 'description', 'document', 'duree', 'typeEvaluation'],
+  ['coursId', 'description', 'document', 'duree', 'typeEvaluation', 'dateEvaluation'],
   InputType
 ) { }
 

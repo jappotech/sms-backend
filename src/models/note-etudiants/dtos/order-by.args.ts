@@ -22,25 +22,16 @@ export class NoteEtudiantOrderByWithRelationInputStrict
   note: Prisma.SortOrder
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  typeEvaluation: Prisma.SortOrder
-
-  @Field(() => Prisma.SortOrder, { nullable: true })
   evaluationEtudiantId: Prisma.SortOrder | Prisma.SortOrderInput
 
   @Field(() => Prisma.SortOrder, { nullable: true })
   etudiantId: Prisma.SortOrder
-
-  @Field(() => Prisma.SortOrder, { nullable: true })
-  coursId: Prisma.SortOrder
 
   @Field(() => EvaluationEtudiantsOrderByWithRelationInput, { nullable: true })
   evaluationEtudiant: EvaluationEtudiantsOrderByWithRelationInput
 
   @Field(() => EtudiantOrderByWithRelationInput, { nullable: true })
   etudiant: EtudiantOrderByWithRelationInput
-
-  @Field(() => CoursOrderByWithRelationInput, { nullable: true })
-  cours: CoursOrderByWithRelationInput
 }
 
 

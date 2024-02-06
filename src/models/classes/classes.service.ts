@@ -13,8 +13,6 @@ export class ClassesService {
       data: createClasseInput,
     })
 
-    const code = classe.
-
     return classe
   }
 
