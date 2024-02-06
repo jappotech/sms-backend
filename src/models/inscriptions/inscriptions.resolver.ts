@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, ResolveField } from '@nestjs/graphql'
+import { Resolver, Query, Mutation, Args, ResolveField, Parent } from '@nestjs/graphql'
 import { InscriptionsService } from './inscriptions.service'
 import { Inscription } from './entity/inscription.entity'
 import { FindManyInscriptionArgs, FindUniqueInscriptionArgs } from './dtos/find.args'
@@ -10,6 +10,7 @@ import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { Prisma } from '@prisma/client'
 import { Etudiant } from '../etudiants/entity/etudiant.entity'
+import { Utilisateur } from '../utilisateurs/entity/utilisateur.entity'
 
 @Resolver(() => Inscription)
 export class InscriptionsResolver {
@@ -47,6 +48,14 @@ export class InscriptionsResolver {
     const inscription = await this.prisma.inscription.findUnique(args)
     // checkRowLevelPermission(user, inscription.uid)
     return this.inscriptionsService.remove(args)
+  }
+
+  @ResolveField(() => Etudiant)
+  async etudiant(@Parent() parent: Inscription) {
+    return this.prisma.etudiant.findMany({
+      where: { id: parent.etudiantId },
+      include: { profile: true }
+    })
   }
 
 }

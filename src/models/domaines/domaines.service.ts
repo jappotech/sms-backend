@@ -18,7 +18,7 @@ export class DomainesService {
     })
 
     let createMentions;
-    if (mentions.length > 0) {
+    if (mentions && mentions.length > 0) {
       const mentionsData = mentions.map(mention => ({
         ...mention,
         slug: slugify(`${mention.nom.toLowerCase()}`),

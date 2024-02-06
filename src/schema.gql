@@ -89,6 +89,7 @@ type Inscription {
   diplomeId: Float
   etudiantId: Float
   classeId: Float
+  etudiant: Etudiant!
 }
 
 type EvaluationEtudiants {
@@ -101,6 +102,7 @@ type EvaluationEtudiants {
   description: String
   coursId: Float
   NoteEtudiant: [NoteEtudiant!]!
+  Cours: Cours!
 }
 
 type Contact {
@@ -256,6 +258,7 @@ type NoteEtudiant {
   evaluationEtudiantId: Float
   etudiantId: Float
   coursId: Float
+  etudiant: Etudiant!
 }
 
 type FeuillePresence {
@@ -329,6 +332,7 @@ type Query {
   diplome(where: DiplomeWhereUniqueInput!): Diplome!
   domaines(where: DomaineWhereInput, orderBy: [DomaineOrderByWithRelationInput!], cursor: DomaineWhereUniqueInput, take: Float, skip: Float, distinct: [DomaineScalarFieldEnum!]): [Domaine!]!
   domaine(where: DomaineWhereUniqueInput!): Domaine!
+  emploisDuTemps(where: EmploiDuTempsWhereInput, orderBy: [EmploiDuTempsOrderByWithRelationInput!], cursor: EmploiDuTempsWhereUniqueInput, take: Float, skip: Float, distinct: [EmploiDuTempsScalarFieldEnum!]): [EmploiDuTemps!]!
   emploiDuTemps(where: EmploiDuTempsWhereUniqueInput!): EmploiDuTemps!
   etablissements(where: EtablissementWhereInput, orderBy: [EtablissementOrderByWithRelationInput!], cursor: EtablissementWhereUniqueInput, take: Float, skip: Float, distinct: [EtablissementScalarFieldEnum!]): [Etablissement!]!
   etablissement(where: EtablissementWhereUniqueInput!): Etablissement!
@@ -337,8 +341,9 @@ type Query {
   utilisateurs(where: UtilisateurWhereInput, orderBy: [UtilisateurOrderByWithRelationInput!], cursor: UtilisateurWhereInput, take: Float, skip: Float, distinct: [UtilisateurScalarFieldEnum!]): [Utilisateur!]!
   utilisateur(where: UtilisateurWhereUniqueInput!): Utilisateur!
   me: Utilisateur!
+  evaluationsEtudiants(where: EvaluationEtudiantsWhereInput, orderBy: [EvaluationEtudiantsOrderByWithRelationInput!], cursor: EvaluationEtudiantsWhereUniqueInput, take: Float, skip: Float, distinct: [EvaluationEtudiantsScalarFieldEnum!]): [EvaluationEtudiants!]!
   evaluationEtudiants(where: EvaluationEtudiantsWhereUniqueInput!): EvaluationEtudiants!
-  feuillePresences(where: FeuillePresenceWhereInput, orderBy: [FeuillePresenceOrderByWithRelationInput!], cursor: FeuillePresenceWhereUniqueInput, take: Float, skip: Float, distinct: [FeuillePresenceScalarFieldEnum!]): [FeuillePresence!]!
+  feuillesPresences(where: FeuillePresenceWhereInput, orderBy: [FeuillePresenceOrderByWithRelationInput!], cursor: FeuillePresenceWhereUniqueInput, take: Float, skip: Float, distinct: [FeuillePresenceScalarFieldEnum!]): [FeuillePresence!]!
   feuillePresence(where: FeuillePresenceWhereUniqueInput!): FeuillePresence!
   inscriptions(where: InscriptionWhereInput, orderBy: [InscriptionOrderByWithRelationInput!], cursor: InscriptionWhereUniqueInput, take: Float, skip: Float, distinct: [InscriptionScalarFieldEnum!]): [Inscription!]!
   inscription(where: InscriptionWhereUniqueInput!): Inscription!
@@ -354,7 +359,7 @@ type Query {
   permission(where: PermissionWhereUniqueInput!): Permission!
   professeurs(where: ProfesseurWhereInput, orderBy: [ProfesseurOrderByWithRelationInput!], cursor: ProfesseurWhereUniqueInput, take: Float, skip: Float, distinct: [ProfesseurScalarFieldEnum!]): [Professeur!]!
   professeur(where: ProfesseurWhereUniqueInput!): Professeur!
-  reseauSocials(where: ReseauSocialWhereInput, orderBy: [ReseauSocialOrderByWithRelationInput!], cursor: ReseauSocialWhereUniqueInput, take: Float, skip: Float, distinct: [ReseauSocialScalarFieldEnum!]): [ReseauSocial!]!
+  reseauSociaux(where: ReseauSocialWhereInput, orderBy: [ReseauSocialOrderByWithRelationInput!], cursor: ReseauSocialWhereUniqueInput, take: Float, skip: Float, distinct: [ReseauSocialScalarFieldEnum!]): [ReseauSocial!]!
   reseauSocial(where: ReseauSocialWhereUniqueInput!): ReseauSocial!
   salles(where: SalleWhereInput, orderBy: [SalleOrderByWithRelationInput!], cursor: SalleWhereUniqueInput, take: Float, skip: Float, distinct: [SalleScalarFieldEnum!]): [Salle!]!
   salle(where: SalleWhereUniqueInput!): Salle!
@@ -1507,8 +1512,32 @@ enum DomaineScalarFieldEnum {
   slug
 }
 
+input EmploiDuTempsOrderByWithRelationInput {
+  id: SortOrder
+  coursId: SortOrder
+  classeId: SortOrder
+  professeurId: SortOrder
+  salleId: SortOrder
+  dateDebut: SortOrder
+  dateFin: SortOrder
+  cours: CoursOrderByWithRelationInput
+  classe: ClasseOrderByWithRelationInput
+  professeur: ProfesseurOrderByWithRelationInput
+  salle: SalleOrderByWithRelationInput
+}
+
 input EmploiDuTempsWhereUniqueInput {
   id: Float
+}
+
+enum EmploiDuTempsScalarFieldEnum {
+  id
+  coursId
+  classeId
+  professeurId
+  salleId
+  dateDebut
+  dateFin
 }
 
 input EtablissementWhereUniqueInput {
@@ -1569,8 +1598,32 @@ input UtilisateurWhereUniqueInput {
   id: Float
 }
 
+input EvaluationEtudiantsOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  typeEvaluation: SortOrder
+  duree: SortOrder
+  document: SortOrder
+  description: SortOrder
+  coursId: SortOrder
+  cours: CoursOrderByWithRelationInput
+  NoteEtudiant: NoteEtudiantOrderByRelationAggregateInput
+}
+
 input EvaluationEtudiantsWhereUniqueInput {
   id: Float
+}
+
+enum EvaluationEtudiantsScalarFieldEnum {
+  id
+  createdAt
+  updatedAt
+  typeEvaluation
+  duree
+  document
+  description
+  coursId
 }
 
 input FeuillePresenceOrderByWithRelationInput {
@@ -1680,19 +1733,6 @@ input NoteEtudiantOrderByWithRelationInput {
   evaluationEtudiant: EvaluationEtudiantsOrderByWithRelationInput
   etudiant: EtudiantOrderByWithRelationInput
   cours: CoursOrderByWithRelationInput
-}
-
-input EvaluationEtudiantsOrderByWithRelationInput {
-  id: SortOrder
-  createdAt: SortOrder
-  updatedAt: SortOrder
-  typeEvaluation: SortOrder
-  duree: SortOrder
-  document: SortOrder
-  description: SortOrder
-  coursId: SortOrder
-  cours: CoursOrderByWithRelationInput
-  NoteEtudiant: NoteEtudiantOrderByRelationAggregateInput
 }
 
 input NoteEtudiantWhereUniqueInput {
