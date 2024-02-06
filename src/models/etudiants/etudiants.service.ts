@@ -17,7 +17,7 @@ export class EtudiantsService {
     const { profile, ...studentData } = createEtudiantInput
     const slug = slugify(`${profile.nom.toLowerCase()} ${utilisateur.accountId} ${profile.prenom.toLowerCase()}`)
     return this.prisma.etudiant.create({
-      data: { ...studentData, profileId: utilisateur.id, slug },
+      data: { ...studentData, profileId: utilisateur.id, slug, ine: studentData.ine || slug },
     })
   }
 

@@ -37,6 +37,12 @@ enum Role {
   SUPERVISEUR // Read Only
 }
 
+enum Niveau {
+  LICENCE
+  MASTER
+  DOCTORAT
+}
+
 model Account {
   id        Int      @id @default(autoincrement())
   uid       String   @unique @default(uuid())
@@ -309,6 +315,7 @@ model Classe {
 
   nom             String
   code            String
+  niveau          String
   etablissement   Etablissement   @relation(fields: [etablissementId], references: [id])
   etablissementId Int
   semestres       Semestre[]
