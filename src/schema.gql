@@ -55,6 +55,7 @@ type Classe {
   updatedAt: DateTime
   nom: String
   code: String
+  niveau: String
   etablissementId: Float
   specialiteId: Float
   semestres: [Semestre!]!
@@ -679,6 +680,7 @@ input ClasseWhereInput {
   updatedAt: DateTimeFilter
   nom: StringFilter
   code: StringFilter
+  niveau: StringFilter
   etablissementId: IntFilter
   specialiteId: IntFilter
   etablissement: EtablissementRelationFilter
@@ -1161,6 +1163,7 @@ input ClasseOrderByWithRelationInput {
   updatedAt: SortOrder
   nom: SortOrder
   code: SortOrder
+  niveau: SortOrder
   etablissementId: SortOrder
   specialiteId: SortOrder
   etablissement: EtablissementOrderByWithRelationInput
@@ -1266,6 +1269,7 @@ enum ClasseScalarFieldEnum {
   updatedAt
   nom
   code
+  niveau
   etablissementId
   specialiteId
 }
@@ -2038,6 +2042,7 @@ input UpdateAdresseInput {
 input CreateClasseInput {
   nom: String
   code: String
+  niveau: String
   etablissementId: Float
   specialiteId: Float
 }
@@ -2045,6 +2050,7 @@ input CreateClasseInput {
 input UpdateClasseInput {
   nom: String
   code: String
+  niveau: String
   etablissementId: Float
   specialiteId: Float
   id: Float!

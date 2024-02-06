@@ -8,6 +8,9 @@ CREATE TYPE "GroupeSanguin" AS ENUM ('A+', 'B+', 'AB+', 'O+', 'O-', 'A-', 'B-', 
 CREATE TYPE "Role" AS ENUM ('ADMIN', 'UTILISATEUR', 'ETUDIANT', 'PROFESSEUR', 'COMPTABLE', 'SURVEILLANT', 'SUPERVISEUR');
 
 -- CreateEnum
+CREATE TYPE "Niveau" AS ENUM ('LICENCE', 'MASTER', 'DOCTORAT');
+
+-- CreateEnum
 CREATE TYPE "Cursus" AS ENUM ('LMD', 'INTERNE', 'EXTERNE');
 
 -- CreateEnum
@@ -256,6 +259,7 @@ CREATE TABLE "Etablissement" (
     "sigle" TEXT,
     "dateCreation" TIMESTAMP(3),
     "logo" TEXT,
+    "anneeEnCours" TEXT,
     "adresseId" INTEGER,
     "contactId" INTEGER,
 
@@ -269,10 +273,23 @@ CREATE TABLE "Classe" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "nom" TEXT NOT NULL,
     "code" TEXT NOT NULL,
+    "niveau" TEXT NOT NULL,
     "etablissementId" INTEGER NOT NULL,
     "specialiteId" INTEGER NOT NULL,
 
     CONSTRAINT "Classe_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "AnneeScolaire" (
+    "id" SERIAL NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "dateDebut" INTEGER NOT NULL,
+    "dateFin" INTEGER NOT NULL,
+    "nom" TEXT NOT NULL,
+
+    CONSTRAINT "AnneeScolaire_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -281,6 +298,7 @@ CREATE TABLE "EvaluationEtudiants" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "typeEvaluation" "TypeEvaluation" NOT NULL,
+    "dateEvaluation" TIMESTAMP(3) NOT NULL,
     "duree" INTEGER NOT NULL,
     "document" TEXT NOT NULL,
     "description" TEXT,
@@ -295,10 +313,8 @@ CREATE TABLE "NoteEtudiant" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "note" DOUBLE PRECISION NOT NULL,
-    "typeEvaluation" "TypeEvaluation" NOT NULL,
     "evaluationEtudiantId" INTEGER,
     "etudiantId" INTEGER NOT NULL,
-    "coursId" INTEGER NOT NULL,
 
     CONSTRAINT "NoteEtudiant_pkey" PRIMARY KEY ("id")
 );
@@ -318,6 +334,7 @@ CREATE TABLE "Cours" (
     "salleId" INTEGER,
     "classeId" INTEGER,
     "professeurId" INTEGER,
+    "anneeScolaireId" INTEGER,
 
     CONSTRAINT "Cours_pkey" PRIMARY KEY ("id")
 );
@@ -525,9 +542,6 @@ ALTER TABLE "NoteEtudiant" ADD CONSTRAINT "NoteEtudiant_evaluationEtudiantId_fke
 ALTER TABLE "NoteEtudiant" ADD CONSTRAINT "NoteEtudiant_etudiantId_fkey" FOREIGN KEY ("etudiantId") REFERENCES "Etudiant"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "NoteEtudiant" ADD CONSTRAINT "NoteEtudiant_coursId_fkey" FOREIGN KEY ("coursId") REFERENCES "Cours"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "Cours" ADD CONSTRAINT "Cours_matiereId_fkey" FOREIGN KEY ("matiereId") REFERENCES "Matiere"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -538,6 +552,9 @@ ALTER TABLE "Cours" ADD CONSTRAINT "Cours_classeId_fkey" FOREIGN KEY ("classeId"
 
 -- AddForeignKey
 ALTER TABLE "Cours" ADD CONSTRAINT "Cours_professeurId_fkey" FOREIGN KEY ("professeurId") REFERENCES "Professeur"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Cours" ADD CONSTRAINT "Cours_anneeScolaireId_fkey" FOREIGN KEY ("anneeScolaireId") REFERENCES "AnneeScolaire"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Salle" ADD CONSTRAINT "Salle_etablissementId_fkey" FOREIGN KEY ("etablissementId") REFERENCES "Etablissement"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
