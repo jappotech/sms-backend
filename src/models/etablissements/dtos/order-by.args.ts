@@ -37,6 +37,9 @@ export class EtablissementOrderByWithRelationInputStrict
   logo: Prisma.SortOrder | Prisma.SortOrderInput
 
   @Field(() => Prisma.SortOrder, { nullable: true })
+  anneeEnCours: Prisma.SortOrder | Prisma.SortOrderInput
+
+  @Field(() => Prisma.SortOrder, { nullable: true })
   adresseId: Prisma.SortOrder | Prisma.SortOrderInput
 
   @Field(() => Prisma.SortOrder, { nullable: true })

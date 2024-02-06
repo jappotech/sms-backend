@@ -29,6 +29,9 @@ export class Etablissement implements RestrictProperties<Etablissement, Etabliss
     logo: string
 
     @Field({ nullable: true })
+    anneeEnCours: string
+
+    @Field({ nullable: true })
     adresseId: number
 
     @Field({ nullable: true })

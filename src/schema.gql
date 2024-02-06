@@ -96,6 +96,7 @@ type EvaluationEtudiants {
   id: Float
   createdAt: DateTime
   updatedAt: DateTime
+  dateEvaluation: DateTime
   typeEvaluation: String!
   duree: Float
   document: String
@@ -130,6 +131,7 @@ type Cours {
   salleId: Float
   classeId: Float
   professeurId: Float
+  anneeScolaireId: Float
   matiere: Matiere!
   classe: Classe!
   salle: Salle!
@@ -230,6 +232,7 @@ type Etablissement {
   sigle: String
   dateCreation: DateTime
   logo: String
+  anneeEnCours: String
   adresseId: Float
   contactId: Float
   domaines: [Domaine!]!
@@ -254,10 +257,8 @@ type NoteEtudiant {
   createdAt: DateTime
   updatedAt: DateTime
   note: Float
-  typeEvaluation: String!
   evaluationEtudiantId: Float
   etudiantId: Float
-  coursId: Float
   etudiant: Etudiant!
 }
 
@@ -577,6 +578,7 @@ input EtablissementWhereInput {
   sigle: StringFilter
   dateCreation: StringFilter
   logo: StringFilter
+  anneeEnCours: StringFilter
   adresseId: IntFilter
   contactId: IntFilter
   adresse: AdresseRelationFilter
@@ -786,17 +788,36 @@ input CoursWhereInput {
   salleId: IntFilter
   classeId: IntFilter
   professeurId: IntFilter
+  anneeScolaireId: IntFilter
+  AnneeScolaire: AnneeScolaireRelationFilter
   matiere: MatiereRelationFilter
   salle: SalleRelationFilter
   classe: ClasseRelationFilter
   evaluationEtudiant: EvaluationEtudiantsListRelationFilter
-  noteEtudiant: NoteEtudiantListRelationFilter
   feuillePresences: FeuillePresenceListRelationFilter
   professeur: ProfesseurRelationFilter
   emploiDuTemps: EmploiDuTempsListRelationFilter
   AND: [CoursWhereInput!]
   OR: [CoursWhereInput!]
   NOT: [CoursWhereInput!]
+}
+
+input AnneeScolaireRelationFilter {
+  is: AnneeScolaireWhereInput
+  isNot: AnneeScolaireWhereInput
+}
+
+input AnneeScolaireWhereInput {
+  id: IntFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  dateDebut: IntFilter
+  dateFin: IntFilter
+  nom: StringFilter
+  cours: CoursListRelationFilter
+  AND: [AnneeScolaireWhereInput!]
+  OR: [AnneeScolaireWhereInput!]
+  NOT: [AnneeScolaireWhereInput!]
 }
 
 input MatiereRelationFilter {
@@ -892,6 +913,7 @@ input EvaluationEtudiantsWhereInput {
   id: IntFilter
   createdAt: DateTimeFilter
   updatedAt: DateTimeFilter
+  dateEvaluation: DateTimeFilter
   typeEvaluation: StringFilter
   duree: IntFilter
   document: StringFilter
@@ -915,13 +937,10 @@ input NoteEtudiantWhereInput {
   createdAt: DateTimeFilter
   updatedAt: DateTimeFilter
   note: FloatFilter
-  typeEvaluation: StringFilter
   evaluationEtudiantId: IntFilter
   etudiantId: IntFilter
-  coursId: IntFilter
   evaluationEtudiant: EvaluationEtudiantsRelationFilter
   etudiant: EtudiantRelationFilter
-  cours: CoursRelationFilter
   AND: [NoteEtudiantWhereInput!]
   OR: [NoteEtudiantWhereInput!]
   NOT: [NoteEtudiantWhereInput!]
@@ -1161,6 +1180,7 @@ input EtablissementOrderByWithRelationInput {
   sigle: SortOrder
   dateCreation: SortOrder
   logo: SortOrder
+  anneeEnCours: SortOrder
   adresseId: SortOrder
   contactId: SortOrder
   adresse: SortOrder
@@ -1296,12 +1316,13 @@ input CoursOrderByWithRelationInput {
   matiereId: SortOrder
   salleId: SortOrder
   classeId: SortOrder
+  anneeScolaireId: SortOrder
   professeurId: SortOrder
   matiere: MatiereOrderByWithRelationInput
   salle: SalleOrderByWithRelationInput
   classe: ClasseOrderByWithRelationInput
   evaluationEtudiant: EvaluationEtudiantsOrderByRelationAggregateInput
-  noteEtudiant: NoteEtudiantOrderByRelationAggregateInput
+  AnneeScolaire: AnneeScolaireOrderByWithRelationInput
   feuillePresences: FeuillePresenceOrderByRelationAggregateInput
   professeur: ProfesseurOrderByWithRelationInput
   emploiDuTemps: EmploiDuTempsOrderByRelationAggregateInput
@@ -1372,8 +1393,14 @@ input EvaluationEtudiantsOrderByRelationAggregateInput {
   _count: SortOrder
 }
 
-input NoteEtudiantOrderByRelationAggregateInput {
-  _count: SortOrder
+input AnneeScolaireOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  dateDebut: SortOrder
+  dateFin: SortOrder
+  nom: SortOrder
+  cours: CoursOrderByRelationAggregateInput
 }
 
 input FeuillePresenceOrderByRelationAggregateInput {
@@ -1434,6 +1461,10 @@ input EtudiantOrderByWithRelationInput {
   Paiement: PaiementOrderByRelationAggregateInput
 }
 
+input NoteEtudiantOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
 input PaiementOrderByRelationAggregateInput {
   _count: SortOrder
 }
@@ -1460,6 +1491,7 @@ enum CoursScalarFieldEnum {
   salleId
   classeId
   professeurId
+  anneeScolaireId
 }
 
 input DiplomeOrderByWithRelationInput {
@@ -1553,6 +1585,7 @@ enum EtablissementScalarFieldEnum {
   sigle
   dateCreation
   logo
+  anneeEnCours
   adresseId
   contactId
 }
@@ -1602,6 +1635,7 @@ input EvaluationEtudiantsOrderByWithRelationInput {
   id: SortOrder
   createdAt: SortOrder
   updatedAt: SortOrder
+  dateEvaluation: SortOrder
   typeEvaluation: SortOrder
   duree: SortOrder
   document: SortOrder
@@ -1620,6 +1654,7 @@ enum EvaluationEtudiantsScalarFieldEnum {
   createdAt
   updatedAt
   typeEvaluation
+  dateEvaluation
   duree
   document
   description
@@ -1726,13 +1761,10 @@ input NoteEtudiantOrderByWithRelationInput {
   createdAt: SortOrder
   updatedAt: SortOrder
   note: SortOrder
-  typeEvaluation: SortOrder
   evaluationEtudiantId: SortOrder
   etudiantId: SortOrder
-  coursId: SortOrder
   evaluationEtudiant: EvaluationEtudiantsOrderByWithRelationInput
   etudiant: EtudiantOrderByWithRelationInput
-  cours: CoursOrderByWithRelationInput
 }
 
 input NoteEtudiantWhereUniqueInput {
@@ -1744,10 +1776,8 @@ enum NoteEtudiantScalarFieldEnum {
   createdAt
   updatedAt
   note
-  typeEvaluation
   evaluationEtudiantId
   etudiantId
-  coursId
 }
 
 input PaiementOrderByWithRelationInput {
@@ -2048,6 +2078,7 @@ input CreateCoursInput {
   salleId: Float
   classeId: Float
   professeurId: Float
+  anneeScolaireId: Float
 }
 
 input UpdateCoursInput {
@@ -2061,6 +2092,7 @@ input UpdateCoursInput {
   salleId: Float
   classeId: Float
   professeurId: Float
+  anneeScolaireId: Float
   id: Float!
 }
 
@@ -2237,6 +2269,7 @@ input UpdateUtilisateurInput {
 }
 
 input CreateEvaluationEtudiantsInput {
+  dateEvaluation: DateTime
   typeEvaluation: String!
   duree: Float
   document: String
@@ -2245,6 +2278,7 @@ input CreateEvaluationEtudiantsInput {
 }
 
 input UpdateEvaluationEtudiantsInput {
+  dateEvaluation: DateTime
   typeEvaluation: String
   duree: Float
   document: String
@@ -2323,18 +2357,14 @@ input UpdateMentionInput {
 
 input CreateNoteEtudiantInput {
   note: Float
-  typeEvaluation: String!
   evaluationEtudiantId: Float
   etudiantId: Float
-  coursId: Float
 }
 
 input UpdateNoteEtudiantInput {
   note: Float
-  typeEvaluation: String
   evaluationEtudiantId: Float
   etudiantId: Float
-  coursId: Float
   id: Float!
 }
 

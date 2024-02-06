@@ -25,26 +25,17 @@ export class NoteEtudiantWhereInputStrict implements RestrictProperties<NoteEtud
   @Field(() => FloatFilter, { nullable: true })
   note: FloatFilter
 
-  @Field(() => StringFilter, { nullable: true })
-  typeEvaluation: $Enums.TypeEvaluation
-
   @Field(() => IntFilter, { nullable: true })
   evaluationEtudiantId: IntFilter
 
   @Field(() => IntFilter, { nullable: true })
   etudiantId: IntFilter
 
-  @Field(() => IntFilter, { nullable: true })
-  coursId: IntFilter
-
   @Field(() => EvaluationEtudiantsRelationFilter, { nullable: true })
   evaluationEtudiant: EvaluationEtudiantsRelationFilter
 
   @Field(() => EtudiantRelationFilter, { nullable: true })
   etudiant: EtudiantRelationFilter
-
-  @Field(() => CoursRelationFilter, { nullable: true })
-  cours: CoursRelationFilter
 
   @Field(() => [NoteEtudiantWhereInputStrict], { nullable: true })
   AND: NoteEtudiantWhereInputStrict[]
@@ -72,26 +63,17 @@ export class NoteEtudiantWhereInput extends PartialType(
   @Field(() => FloatFilter, { nullable: true })
   note: FloatFilter
 
-  @Field(() => StringFilter, { nullable: true })
-  typeEvaluation: $Enums.TypeEvaluation
-
   @Field(() => IntFilter, { nullable: true })
   evaluationEtudiantId: IntFilter
 
   @Field(() => IntFilter, { nullable: true })
   etudiantId: IntFilter
 
-  @Field(() => IntFilter, { nullable: true })
-  coursId: IntFilter
-
   @Field(() => EvaluationEtudiantsRelationFilter, { nullable: true })
   evaluationEtudiant: EvaluationEtudiantsRelationFilter
 
   @Field(() => EtudiantRelationFilter, { nullable: true })
   etudiant: EtudiantRelationFilter
-
-  @Field(() => CoursRelationFilter, { nullable: true })
-  cours: CoursRelationFilter
 
   @Field(() => [NoteEtudiantWhereInput], { nullable: true })
   AND: NoteEtudiantWhereInput[]

@@ -21,6 +21,9 @@ export class EvaluationEtudiantsWhereInputStrict implements RestrictProperties<E
   @Field(() => DateTimeFilter, { nullable: true })
   updatedAt: DateTimeFilter
 
+  @Field(() => DateTimeFilter, { nullable: true })
+  dateEvaluation: DateTimeFilter
+
   @Field(() => StringFilter, { nullable: true })
   typeEvaluation: $Enums.TypeEvaluation
 
@@ -64,6 +67,9 @@ export class EvaluationEtudiantsWhereInput extends PartialType(
 
   @Field(() => DateTimeFilter, { nullable: true })
   updatedAt: DateTimeFilter
+
+  @Field(() => DateTimeFilter, { nullable: true })
+  dateEvaluation: DateTimeFilter
 
   @Field(() => StringFilter, { nullable: true })
   typeEvaluation: $Enums.TypeEvaluation

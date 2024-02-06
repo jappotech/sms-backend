@@ -1,9 +1,9 @@
 import { Field, ObjectType } from '@nestjs/graphql'
-import { $Enums, NoteEtudiant as NoteEtudiantType } from '@prisma/client'
+import { AnneeScolaire as AnneeScolaireType } from '@prisma/client'
 import { RestrictProperties } from 'src/common/dtos/common.input'
 
 @ObjectType()
-export class NoteEtudiant implements RestrictProperties<NoteEtudiant, NoteEtudiantType> {
+export class AnneeScolaire implements RestrictProperties<AnneeScolaire, AnneeScolaireType> {
     @Field({ nullable: true })
     id: number
 
@@ -14,12 +14,11 @@ export class NoteEtudiant implements RestrictProperties<NoteEtudiant, NoteEtudia
     updatedAt: Date
 
     @Field({ nullable: true })
-    note: number
+    dateDebut: number
 
     @Field({ nullable: true })
-    evaluationEtudiantId: number
+    dateFin: number
 
     @Field({ nullable: true })
-    etudiantId: number
-
+    nom: string
 }

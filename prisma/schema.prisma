@@ -291,6 +291,7 @@ model Etablissement {
   sigle        String?
   dateCreation DateTime?
   logo         String?
+  anneeEnCours String?
   adresse      Adresse?      @relation(fields: [adresseId], references: [id])
   contact      Contact?      @relation(fields: [contactId], references: [id])
   utilisateurs Utilisateur[]
@@ -331,12 +332,24 @@ enum TypeEvaluation {
   AUTRE
 }
 
+model AnneeScolaire {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  dateDebut Int
+  dateFin   Int
+  nom       String
+  cours     Cours[]
+}
+
 model EvaluationEtudiants {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   typeEvaluation TypeEvaluation
+  dateEvaluation DateTime
   duree          Int // en heures
   document       String // url document
   description    String?
@@ -351,13 +364,10 @@ model NoteEtudiant {
   updatedAt DateTime @updatedAt
 
   note                 Float
-  typeEvaluation       TypeEvaluation
   evaluationEtudiant   EvaluationEtudiants? @relation(fields: [evaluationEtudiantId], references: [id])
   evaluationEtudiantId Int?
   etudiant             Etudiant             @relation(fields: [etudiantId], references: [id])
   etudiantId           Int
-  cours                Cours                @relation(fields: [coursId], references: [id])
-  coursId              Int
 }
 
 model Cours {
@@ -380,9 +390,10 @@ model Cours {
   classe             Classe?               @relation(fields: [classeId], references: [id])
   professeur         Professeur?           @relation(fields: [professeurId], references: [id])
   evaluationEtudiant EvaluationEtudiants[]
-  noteEtudiant       NoteEtudiant[]
   feuillePresences   FeuillePresence[]
   emploiDuTemps      EmploiDuTemps[]
+  AnneeScolaire      AnneeScolaire?        @relation(fields: [anneeScolaireId], references: [id])
+  anneeScolaireId    Int?
 }
 
 model Salle {

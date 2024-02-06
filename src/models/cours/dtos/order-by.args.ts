@@ -1,6 +1,7 @@
 import { Field, InputType, PartialType } from '@nestjs/graphql'
 import { Prisma } from '@prisma/client'
 import { RestrictProperties } from 'src/common/dtos/common.input'
+import { AnneeScolaireOrderByRelationAggregateInput, AnneeScolaireOrderByWithRelationInput } from 'src/models/annee-scolaires/dtos/order-by.args'
 import { ClasseOrderByWithRelationInput } from 'src/models/classes/dtos/order-by.args'
 import { EmploiDuTempsOrderByRelationAggregateInput } from 'src/models/emploi-du-temps/dtos/order-by.args'
 import { EvaluationEtudiantsOrderByRelationAggregateInput } from 'src/models/evaluation-etudiants/dtos/order-by.args'
@@ -51,6 +52,9 @@ export class CoursOrderByWithRelationInputStrict
   classeId: Prisma.SortOrder
 
   @Field(() => Prisma.SortOrder, { nullable: true })
+  anneeScolaireId: Prisma.SortOrder
+
+  @Field(() => Prisma.SortOrder, { nullable: true })
   professeurId: Prisma.SortOrder | Prisma.SortOrderInput
 
   @Field(() => MatiereOrderByWithRelationInput, { nullable: true })
@@ -65,8 +69,8 @@ export class CoursOrderByWithRelationInputStrict
   @Field(() => EvaluationEtudiantsOrderByRelationAggregateInput, { nullable: true })
   evaluationEtudiant: EvaluationEtudiantsOrderByRelationAggregateInput
 
-  @Field(() => NoteEtudiantOrderByRelationAggregateInput, { nullable: true })
-  noteEtudiant: NoteEtudiantOrderByRelationAggregateInput
+  @Field(() => AnneeScolaireOrderByWithRelationInput, { nullable: true })
+  AnneeScolaire: AnneeScolaireOrderByWithRelationInput
 
   @Field(() => FeuillePresenceOrderByRelationAggregateInput, { nullable: true })
   feuillePresences: FeuillePresenceOrderByRelationAggregateInput

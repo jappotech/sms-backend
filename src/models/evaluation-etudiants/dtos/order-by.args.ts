@@ -18,6 +18,9 @@ export class EvaluationEtudiantsOrderByWithRelationInputStrict
   updatedAt: Prisma.SortOrder
 
   @Field(() => Prisma.SortOrder, { nullable: true })
+  dateEvaluation: Prisma.SortOrder
+
+  @Field(() => Prisma.SortOrder, { nullable: true })
   typeEvaluation: Prisma.SortOrder
 
   @Field(() => Prisma.SortOrder, { nullable: true })
