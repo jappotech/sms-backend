@@ -1,6 +1,7 @@
 import { Field, InputType, PartialType } from '@nestjs/graphql'
 import { Prisma } from '@prisma/client'
 import { RestrictProperties } from 'src/common/dtos/common.input'
+import { ClasseOrderByRelationAggregateInput } from 'src/models/classes/dtos/order-by.args'
 import { CoursOrderByRelationAggregateInput } from 'src/models/cours/dtos/order-by.args'
 
 @InputType()
@@ -26,7 +27,7 @@ export class AnneeScolaireOrderByWithRelationInputStrict
   nom: Prisma.SortOrder
 
   @Field(() => CoursOrderByRelationAggregateInput)
-  cours: CoursOrderByRelationAggregateInput
+  classes: ClasseOrderByRelationAggregateInput
 }
 
 

@@ -52,9 +52,6 @@ export class CoursOrderByWithRelationInputStrict
   classeId: Prisma.SortOrder
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  anneeScolaireId: Prisma.SortOrder
-
-  @Field(() => Prisma.SortOrder, { nullable: true })
   professeurId: Prisma.SortOrder | Prisma.SortOrderInput
 
   @Field(() => MatiereOrderByWithRelationInput, { nullable: true })
@@ -68,9 +65,6 @@ export class CoursOrderByWithRelationInputStrict
 
   @Field(() => EvaluationEtudiantsOrderByRelationAggregateInput, { nullable: true })
   evaluationEtudiant: EvaluationEtudiantsOrderByRelationAggregateInput
-
-  @Field(() => AnneeScolaireOrderByWithRelationInput, { nullable: true })
-  AnneeScolaire: AnneeScolaireOrderByWithRelationInput
 
   @Field(() => FeuillePresenceOrderByRelationAggregateInput, { nullable: true })
   feuillePresences: FeuillePresenceOrderByRelationAggregateInput

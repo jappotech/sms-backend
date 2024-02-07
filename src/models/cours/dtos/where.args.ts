@@ -58,12 +58,6 @@ export class CoursWhereInputStrict implements RestrictProperties<CoursWhereInput
   @Field(() => IntFilter, { nullable: true })
   professeurId: IntFilter
 
-  @Field(() => IntFilter, { nullable: true })
-  anneeScolaireId: IntFilter
-
-  @Field(() => AnneeScolaireRelationFilter, { nullable: true })
-  AnneeScolaire: AnneeScolaireRelationFilter
-
   @Field(() => MatiereRelationFilter, { nullable: true })
   matiere: MatiereRelationFilter
 
@@ -147,12 +141,6 @@ export class CoursWhereInput extends PartialType(
   @Field(() => ClasseRelationFilter, { nullable: true })
   classe: ClasseRelationFilter
 
-  @Field(() => IntFilter, { nullable: true })
-  anneeScolaireId: IntFilter
-
-  @Field(() => AnneeScolaireRelationFilter, { nullable: true })
-  AnneeScolaire: AnneeScolaireRelationFilter
-
   @Field(() => EvaluationEtudiantsListRelationFilter, { nullable: true })
   evaluationEtudiant: EvaluationEtudiantsListRelationFilter
 
@@ -164,6 +152,12 @@ export class CoursWhereInput extends PartialType(
 
   @Field(() => EmploiDuTempsListRelationFilter, { nullable: true })
   emploiDuTemps: EmploiDuTempsListRelationFilter
+
+  @Field(() => IntFilter, { nullable: true })
+  anneeScolaireId: IntFilter
+
+  @Field(() => AnneeScolaireRelationFilter, { nullable: true })
+  AnneeScolaire: AnneeScolaireRelationFilter
 
   @Field(() => [CoursWhereInput], { nullable: true })
   AND: CoursWhereInput[]

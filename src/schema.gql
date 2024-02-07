@@ -58,6 +58,7 @@ type Classe {
   niveau: String
   etablissementId: Float
   specialiteId: Float
+  anneeScolaireId: Float
   semestres: [Semestre!]!
   inscriptions: [Inscription!]!
   evaluations: [EvaluationEtudiants!]!
@@ -132,7 +133,6 @@ type Cours {
   salleId: Float
   classeId: Float
   professeurId: Float
-  anneeScolaireId: Float
   matiere: Matiere!
   classe: Classe!
   salle: Salle!
@@ -681,6 +681,8 @@ input ClasseWhereInput {
   nom: StringFilter
   code: StringFilter
   niveau: StringFilter
+  anneeScolaireId: IntFilter
+  AnneeScolaire: AnneeScolaireRelationFilter
   etablissementId: IntFilter
   specialiteId: IntFilter
   etablissement: EtablissementRelationFilter
@@ -692,6 +694,24 @@ input ClasseWhereInput {
   AND: [ClasseWhereInput!]
   OR: [ClasseWhereInput!]
   NOT: [ClasseWhereInput!]
+}
+
+input AnneeScolaireRelationFilter {
+  is: AnneeScolaireWhereInput
+  isNot: AnneeScolaireWhereInput
+}
+
+input AnneeScolaireWhereInput {
+  id: IntFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  dateDebut: IntFilter
+  dateFin: IntFilter
+  nom: StringFilter
+  classes: ClasseListRelationFilter
+  AND: [AnneeScolaireWhereInput!]
+  OR: [AnneeScolaireWhereInput!]
+  NOT: [AnneeScolaireWhereInput!]
 }
 
 input EtablissementRelationFilter {
@@ -790,8 +810,6 @@ input CoursWhereInput {
   salleId: IntFilter
   classeId: IntFilter
   professeurId: IntFilter
-  anneeScolaireId: IntFilter
-  AnneeScolaire: AnneeScolaireRelationFilter
   matiere: MatiereRelationFilter
   salle: SalleRelationFilter
   classe: ClasseRelationFilter
@@ -802,24 +820,8 @@ input CoursWhereInput {
   AND: [CoursWhereInput!]
   OR: [CoursWhereInput!]
   NOT: [CoursWhereInput!]
-}
-
-input AnneeScolaireRelationFilter {
-  is: AnneeScolaireWhereInput
-  isNot: AnneeScolaireWhereInput
-}
-
-input AnneeScolaireWhereInput {
-  id: IntFilter
-  createdAt: DateTimeFilter
-  updatedAt: DateTimeFilter
-  dateDebut: IntFilter
-  dateFin: IntFilter
-  nom: StringFilter
-  cours: CoursListRelationFilter
-  AND: [AnneeScolaireWhereInput!]
-  OR: [AnneeScolaireWhereInput!]
-  NOT: [AnneeScolaireWhereInput!]
+  anneeScolaireId: IntFilter
+  AnneeScolaire: AnneeScolaireRelationFilter
 }
 
 input MatiereRelationFilter {
@@ -1164,6 +1166,8 @@ input ClasseOrderByWithRelationInput {
   nom: SortOrder
   code: SortOrder
   niveau: SortOrder
+  anneeScolaireId: SortOrder
+  AnneeScolaire: SortOrder
   etablissementId: SortOrder
   specialiteId: SortOrder
   etablissement: EtablissementOrderByWithRelationInput
@@ -1272,6 +1276,7 @@ enum ClasseScalarFieldEnum {
   niveau
   etablissementId
   specialiteId
+  anneeScolaireId
 }
 
 input ContactOrderByWithRelationInput {
@@ -1320,13 +1325,11 @@ input CoursOrderByWithRelationInput {
   matiereId: SortOrder
   salleId: SortOrder
   classeId: SortOrder
-  anneeScolaireId: SortOrder
   professeurId: SortOrder
   matiere: MatiereOrderByWithRelationInput
   salle: SalleOrderByWithRelationInput
   classe: ClasseOrderByWithRelationInput
   evaluationEtudiant: EvaluationEtudiantsOrderByRelationAggregateInput
-  AnneeScolaire: AnneeScolaireOrderByWithRelationInput
   feuillePresences: FeuillePresenceOrderByRelationAggregateInput
   professeur: ProfesseurOrderByWithRelationInput
   emploiDuTemps: EmploiDuTempsOrderByRelationAggregateInput
@@ -1395,16 +1398,6 @@ input SalleOrderByWithRelationInput {
 
 input EvaluationEtudiantsOrderByRelationAggregateInput {
   _count: SortOrder
-}
-
-input AnneeScolaireOrderByWithRelationInput {
-  id: SortOrder
-  createdAt: SortOrder
-  updatedAt: SortOrder
-  dateDebut: SortOrder
-  dateFin: SortOrder
-  nom: SortOrder
-  cours: CoursOrderByRelationAggregateInput
 }
 
 input FeuillePresenceOrderByRelationAggregateInput {
@@ -1495,7 +1488,6 @@ enum CoursScalarFieldEnum {
   salleId
   classeId
   professeurId
-  anneeScolaireId
 }
 
 input DiplomeOrderByWithRelationInput {
@@ -2045,6 +2037,7 @@ input CreateClasseInput {
   niveau: String
   etablissementId: Float
   specialiteId: Float
+  anneeScolaireId: Float
 }
 
 input UpdateClasseInput {
@@ -2053,6 +2046,7 @@ input UpdateClasseInput {
   niveau: String
   etablissementId: Float
   specialiteId: Float
+  anneeScolaireId: Float
   id: Float!
 }
 
@@ -2084,7 +2078,6 @@ input CreateCoursInput {
   salleId: Float
   classeId: Float
   professeurId: Float
-  anneeScolaireId: Float
 }
 
 input UpdateCoursInput {
@@ -2098,7 +2091,6 @@ input UpdateCoursInput {
   salleId: Float
   classeId: Float
   professeurId: Float
-  anneeScolaireId: Float
   id: Float!
 }
 

@@ -1,6 +1,7 @@
 import { Field, InputType, PartialType } from '@nestjs/graphql'
 import { Prisma } from '@prisma/client'
 import { DateTimeFilter, IntFilter, RestrictProperties, StringFilter } from 'src/common/dtos/common.input'
+import { ClasseListRelationFilter } from 'src/models/classes/dtos/where.args'
 import { CoursListRelationFilter } from 'src/models/cours/dtos/where.args'
 
 @InputType()
@@ -29,8 +30,8 @@ export class AnneeScolaireWhereInputStrict implements RestrictProperties<AnneeSc
   @Field(() => StringFilter, { nullable: true })
   nom: StringFilter
 
-  @Field(() => CoursListRelationFilter, { nullable: true })
-  cours: CoursListRelationFilter
+  @Field(() => ClasseListRelationFilter, { nullable: true })
+  classes: ClasseListRelationFilter
 
   @Field(() => [AnneeScolaireWhereInputStrict], { nullable: true })
   AND: AnneeScolaireWhereInputStrict[]
@@ -64,8 +65,8 @@ export class AnneeScolaireWhereInput extends PartialType(
   @Field(() => StringFilter, { nullable: true })
   nom: StringFilter
 
-  @Field(() => CoursListRelationFilter, { nullable: true })
-  cours: CoursListRelationFilter
+  @Field(() => ClasseListRelationFilter, { nullable: true })
+  classes: ClasseListRelationFilter
 
   @Field(() => [AnneeScolaireWhereInput], { nullable: true })
   AND: AnneeScolaireWhereInput[]

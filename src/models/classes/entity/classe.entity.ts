@@ -28,4 +28,7 @@ export class Classe implements RestrictProperties<Classe, ClasseType> {
 
     @Field({ nullable: true })
     specialiteId: number
+
+    @Field({ nullable: true })
+    anneeScolaireId: number
 }

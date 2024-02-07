@@ -35,11 +35,11 @@ export class ClasseWhereInputStrict implements RestrictProperties<ClasseWhereInp
   @Field(() => StringFilter, { nullable: true })
   niveau: StringFilter
 
-  /* @Field(() => StringFilter, { nullable: true })
-  anneeScolaire: StringFilter
+  @Field(() => IntFilter, { nullable: true })
+  anneeScolaireId: IntFilter
 
-  @Field(() => StringFilter, { nullable: true })
-  AnneeScolaire: AnneeScolaireRelationFilter */
+  @Field(() => AnneeScolaireRelationFilter, { nullable: true })
+  AnneeScolaire: AnneeScolaireRelationFilter
 
   @Field(() => IntFilter, { nullable: true })
   etablissementId: IntFilter
@@ -97,11 +97,11 @@ export class ClasseWhereInput extends PartialType(
   @Field(() => StringFilter, { nullable: true })
   niveau: StringFilter
 
-  /* @Field(() => StringFilter, { nullable: true })
-  anneeScolaire: StringFilter
+  @Field(() => IntFilter, { nullable: true })
+  anneeScolaireId: IntFilter
 
-  @Field(() => StringFilter, { nullable: true })
-  AnneeScolaire: AnneeScolaireRelationFilter */
+  @Field(() => AnneeScolaireRelationFilter, { nullable: true })
+  AnneeScolaire: AnneeScolaireRelationFilter
 
   @Field(() => IntFilter, { nullable: true })
   etablissementId: IntFilter
