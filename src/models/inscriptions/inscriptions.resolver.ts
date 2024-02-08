@@ -11,6 +11,7 @@ import { PrismaService } from 'src/common/prisma/prisma.service'
 import { Prisma } from '@prisma/client'
 import { Etudiant } from '../etudiants/entity/etudiant.entity'
 import { Utilisateur } from '../utilisateurs/entity/utilisateur.entity'
+import { Classe } from '../classes/entity/classe.entity'
 
 @Resolver(() => Inscription)
 export class InscriptionsResolver {
@@ -55,6 +56,14 @@ export class InscriptionsResolver {
     return this.prisma.etudiant.findUnique({
       where: { id: parent.etudiantId },
       include: { profile: true }
+    })
+  }
+
+  @ResolveField(() => Classe)
+  async classe(@Parent() parent: Inscription) {
+    return this.prisma.classe.findUnique({
+      where: { id: parent.classeId },
+      include: { etablissement: true, semestres: true }
     })
   }
 
