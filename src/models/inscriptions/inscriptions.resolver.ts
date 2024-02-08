@@ -52,7 +52,7 @@ export class InscriptionsResolver {
 
   @ResolveField(() => Etudiant)
   async etudiant(@Parent() parent: Inscription) {
-    return this.prisma.etudiant.findMany({
+    return this.prisma.etudiant.findUnique({
       where: { id: parent.etudiantId },
       include: { profile: true }
     })
