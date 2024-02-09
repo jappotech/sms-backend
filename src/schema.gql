@@ -273,6 +273,7 @@ type NoteEtudiant {
   evaluationEtudiantId: Float
   etudiantId: Float
   etudiant: Etudiant!
+  evaluation: EvaluationEtudiants!
 }
 
 type FeuillePresence {

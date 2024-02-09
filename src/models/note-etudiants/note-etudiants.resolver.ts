@@ -10,6 +10,7 @@ import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { Prisma } from '@prisma/client'
 import { Etudiant } from '../etudiants/entity/etudiant.entity'
+import { EvaluationEtudiants } from '../evaluation-etudiants/entity/evaluation-etudiants.entity'
 
 @Resolver(() => NoteEtudiant)
 export class NoteEtudiantsResolver {
@@ -53,6 +54,13 @@ export class NoteEtudiantsResolver {
   async etudiant(@Parent() parent: NoteEtudiant) {
     return this.prisma.etudiant.findMany({
       where: { id: parent.etudiantId }
+    })
+  }
+
+  @ResolveField(() => EvaluationEtudiants)
+  async evaluation(@Parent() parent: NoteEtudiant) {
+    return this.prisma.evaluationEtudiants.findUnique({
+      where: { id: parent.evaluationEtudiantId }
     })
   }
 }
