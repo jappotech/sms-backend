@@ -13,6 +13,7 @@ import { Semestre } from '../semestres/entity/semestre.entity'
 import { Etudiant } from '../etudiants/entity/etudiant.entity'
 import { Inscription } from '../inscriptions/entity/inscription.entity'
 import { EvaluationEtudiants } from '../evaluation-etudiants/entity/evaluation-etudiants.entity'
+import { AnneeScolaire } from '../annee-scolaires/entity/annee-scolaire.entity'
 
 @Resolver(() => Classe)
 export class ClassesResolver {
@@ -89,6 +90,13 @@ export class ClassesResolver {
     return new Promise((resolve, reject) => {
       resolve(evaluationEtudiants)
       reject([])
+    })
+  }
+
+  @ResolveField(() => AnneeScolaire)
+  async anneeScolaire(@Parent() parent: Classe) {
+    return this.prisma.anneeScolaire.findUnique({
+      where: { id: parent.anneeScolaireId }
     })
   }
 }

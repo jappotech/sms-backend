@@ -10,6 +10,7 @@ import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { Prisma } from '@prisma/client'
 import { Domaine } from '../domaines/entity/domaine.entity'
+import { AnneeScolaire } from '../annee-scolaires/entity/annee-scolaire.entity'
 
 @Resolver(() => Etablissement)
 export class EtablissementsResolver {
@@ -61,4 +62,5 @@ export class EtablissementsResolver {
       }
     })
   }
+
 }

@@ -377,6 +377,8 @@ model NoteEtudiant {
   evaluationEtudiantId Int?
   etudiant             Etudiant             @relation(fields: [etudiantId], references: [id])
   etudiantId           Int
+
+  @@unique([evaluationEtudiantId, etudiantId, note])
 }
 
 model Cours {
