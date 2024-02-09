@@ -338,7 +338,7 @@ type ListeNotes {
 
 type Note {
   matiere: Matiere
-  note: [EvaluationEtudiants!]
+  note: [NoteEtudiant!]
   moyenne: Float
   resultat: Boolean
 }

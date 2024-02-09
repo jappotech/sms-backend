@@ -21,7 +21,7 @@ class Note {
     matiere: Matiere
 
     @Field({ nullable: true })
-    note: EvaluationEtudiants[]
+    note: NoteEtudiant[]
 
     @Field({ nullable: true })
     moyenne: number

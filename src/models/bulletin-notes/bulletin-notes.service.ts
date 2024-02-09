@@ -58,11 +58,13 @@ export class BulletinNotesService {
             include: { NoteEtudiant: true }
           })
           const notesEtudiant = noteEtudiant.filter((note) => {
-            return note.NoteEtudiant.some((ne: NoteEtudiant) => {
+            const res: NoteEtudiant[] = note.NoteEtudiant.filter((ne: NoteEtudiant) => {
               return ne.etudiantId === etudiant.id
             })
+
+            return res
           })
-          noteData.note.push(notesEtudiant)
+          noteData.note = notesEtudiant
         }
         noteData.moyenne = noteData.note.reduce((acc, note: NoteEtudiant) => {
           return acc + note.note
