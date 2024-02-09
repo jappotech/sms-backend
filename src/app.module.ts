@@ -34,6 +34,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import { AuthModule } from './auth/auth.module';
 import { AccountsModule } from './models/accounts/accounts.module';
+import { AnneeScolaire } from './models/annee-scolaires/entity/annee-scolaire.entity';
+import { AnneeScolairesModule } from './models/annee-scolaires/annee-scolaires.module';
 
 @Module({
   imports: [
@@ -56,6 +58,7 @@ import { AccountsModule } from './models/accounts/accounts.module';
 
     AccountsModule,
     AdressesModule,
+    AnneeScolairesModule,
     ClassesModule,
     ContactsModule,
     CoursModule,

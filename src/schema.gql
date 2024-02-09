@@ -92,6 +92,7 @@ type Inscription {
   etudiantId: Float
   classeId: Float
   etudiant: Etudiant!
+  classe: Classe!
 }
 
 type EvaluationEtudiants {
@@ -251,6 +252,7 @@ type Etudiant {
   feuillePresencesId: Float
   profile: Utilisateur!
   notes: [NoteEtudiant!]!
+  inscriptions: [Inscription!]!
 }
 
 type NoteEtudiant {
@@ -319,11 +321,22 @@ type LoginResponse {
   access_token: String!
 }
 
+type AnneeScolaire {
+  id: Float
+  createdAt: DateTime
+  updatedAt: DateTime
+  dateDebut: Float
+  dateFin: Float
+  nom: String
+}
+
 type Query {
   accounts(where: AccountWhereInput, orderBy: [AccountOrderByWithRelationInput!], cursor: AccountWhereUniqueInput, take: Float, skip: Float, distinct: [AccountScalarFieldEnum!]): [Account!]!
   account(where: AccountWhereUniqueInput!): Account!
   adresses(where: AdresseWhereInput, orderBy: [AdresseOrderByWithRelationInput!], cursor: AdresseWhereUniqueInput, take: Float, skip: Float, distinct: [AdresseScalarFieldEnum!]): [Adresse!]!
   adresse(where: AdresseWhereUniqueInput!): Adresse!
+  anneeScolaires(where: AnneeScolaireWhereInput, orderBy: [AnneeScolaireOrderByWithRelationInput!], cursor: AnneeScolaireWhereUniqueInput, take: Float, skip: Float, distinct: [AnneeScolaireScalarFieldEnum!]): [AnneeScolaire!]!
+  anneeScolaire(where: AnneeScolaireWhereUniqueInput!): AnneeScolaire!
   classes(where: ClasseWhereInput, orderBy: [ClasseOrderByWithRelationInput!], cursor: ClasseWhereUniqueInput, take: Float, skip: Float, distinct: [ClasseScalarFieldEnum!]): [Classe!]!
   classe(where: ClasseWhereUniqueInput!): Classe!
   contacts(where: ContactWhereInput, orderBy: [ContactOrderByWithRelationInput!], cursor: ContactWhereUniqueInput, take: Float, skip: Float, distinct: [ContactScalarFieldEnum!]): [Contact!]!
@@ -1159,6 +1172,33 @@ enum AdresseScalarFieldEnum {
   geolocalisation
 }
 
+input AnneeScolaireOrderByWithRelationInput {
+  id: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  dateDebut: SortOrder
+  dateFin: SortOrder
+  nom: SortOrder
+  classes: CoursOrderByRelationAggregateInput
+}
+
+input CoursOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input AnneeScolaireWhereUniqueInput {
+  id: Float!
+}
+
+enum AnneeScolaireScalarFieldEnum {
+  id
+  createdAt
+  updatedAt
+  dateDebut
+  dateFin
+  nom
+}
+
 input ClasseOrderByWithRelationInput {
   id: SortOrder
   createdAt: SortOrder
@@ -1252,10 +1292,6 @@ input ClasseOrderByRelationAggregateInput {
 }
 
 input DiplomeOrderByRelationAggregateInput {
-  _count: SortOrder
-}
-
-input CoursOrderByRelationAggregateInput {
   _count: SortOrder
 }
 
@@ -1927,6 +1963,9 @@ type Mutation {
   createAdresse(createAdresseInput: CreateAdresseInput!): Adresse!
   updateAdresse(updateAdresseInput: UpdateAdresseInput!): Adresse!
   removeAdresse(where: AdresseWhereUniqueInput!): Adresse!
+  createAnneeScolaire(createAnneeScolaireInput: CreateAnneeScolaireInput!): AnneeScolaire!
+  updateAnneeScolaire(updateAnneeScolaireInput: UpdateAnneeScolaireInput!): AnneeScolaire!
+  removeAnneeScolaire(where: AnneeScolaireWhereUniqueInput!): AnneeScolaire!
   createClasse(createClasseInput: CreateClasseInput!): Classe!
   updateClasse(updateClasseInput: UpdateClasseInput!): Classe!
   removeClasse(where: ClasseWhereUniqueInput!): Classe!
@@ -2028,6 +2067,19 @@ input UpdateAdresseInput {
   ville: String
   codePostal: String
   geolocalisation: String
+  id: Float!
+}
+
+input CreateAnneeScolaireInput {
+  dateDebut: Float
+  dateFin: Float
+  nom: String
+}
+
+input UpdateAnneeScolaireInput {
+  dateDebut: Float
+  dateFin: Float
+  nom: String
   id: Float!
 }
 

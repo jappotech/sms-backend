@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql'
+import { Resolver, Query, Mutation, Args, ResolveField, Parent } from '@nestjs/graphql'
 import { MatieresService } from './matieres.service'
 import { Matiere } from './entity/matiere.entity'
 import { FindManyMatiereArgs, FindUniqueMatiereArgs } from './dtos/find.args'
@@ -9,6 +9,7 @@ import { GetUserType } from 'src/common/types'
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { Prisma } from '@prisma/client'
+import { Cours } from '../cours/entity/cours.entity'
 
 @Resolver(() => Matiere)
 export class MatieresResolver {
@@ -47,4 +48,5 @@ export class MatieresResolver {
     // checkRowLevelPermission(user, matiere.uid)
     return this.matieresService.remove(args)
   }
+
 }
