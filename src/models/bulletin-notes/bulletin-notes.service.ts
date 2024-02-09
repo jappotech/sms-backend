@@ -4,6 +4,7 @@ import { PrismaService } from 'src/common/prisma/prisma.service'
 import { BulletinNotes } from './entity/bulletin-notes.entity'
 import { NoteEtudiant } from '../note-etudiants/entity/note-etudiant.entity'
 import { EvaluationEtudiants } from '../evaluation-etudiants/entity/evaluation-etudiants.entity'
+import { Etudiant } from '../etudiants/entity/etudiant.entity'
 
 @Injectable()
 export class BulletinNotesService {
@@ -16,7 +17,7 @@ export class BulletinNotesService {
   }
 
   async findOne(args: FindUniqueBulletinNotesArgs) {
-    let bulletinNotes: BulletinNotes;
+    let bulletinNotes: BulletinNotes = new BulletinNotes();
     console.log("🚀 ~ BulletinNotesService ~ findOne ~ args:", args?.where)
     const etudiant = await this.prisma.etudiant.findUnique({
       where: { id: args.where.etudiantId }
