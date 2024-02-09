@@ -9,4 +9,4 @@ export class etablissementWithDomaines extends Etablissement {
 }
 
 @InputType()
-export class CreateEtablissementInput extends PickType(etablissementWithDomaines, ['adresseId', 'contactId', 'dateCreation', 'logo', 'matricule', 'nom', 'sigle', 'domaines'], InputType) { }
+export class CreateEtablissementInput extends PickType(etablissementWithDomaines, ['adresseId', 'contactId', 'dateCreation', 'logo', 'matricule', 'nom', 'sigle', 'domaines', 'anneeEnCours'], InputType) { }
