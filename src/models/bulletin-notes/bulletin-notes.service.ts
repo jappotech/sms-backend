@@ -31,7 +31,10 @@ export class BulletinNotesService {
     })
 
     for (const uniteEnseignement of uniteEnseignements) {
-      let data: any;
+      let data: any = {
+        uniteEnseignement: null,
+        notes: null
+      };
       data.uniteEnseignement = uniteEnseignement
       let notesData: any[] = []
       const matieres = await this.prisma.matiere.findMany({
