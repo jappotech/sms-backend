@@ -42,7 +42,12 @@ export class BulletinNotesService {
         include: { cours: true }
       })
       for (const matiere of matieres) {
-        let noteData: any = [];
+        let noteData: any = {
+          matiere: null,
+          note: [],
+          moyenne: null,
+          resultat: null
+        };
         noteData.matiere = matiere
         const coursList = matiere.cours
         for (const cours of coursList) {
@@ -57,12 +62,12 @@ export class BulletinNotesService {
               return ne.etudiantId === etudiant.id
             })
           })
-          noteData.note = notesEtudiant
-          noteData.moyenne = noteData.note.reduce((acc, note: NoteEtudiant) => {
-            return acc + note.note
-          }) / noteData.note.length
-          noteData.resultat = noteData.moyenne >= 10 ? true : false
+          noteData.note.push(notesEtudiant)
         }
+        noteData.moyenne = noteData.note.reduce((acc, note: NoteEtudiant) => {
+          return acc + note.note
+        }) / noteData.note.length
+        noteData.resultat = noteData.moyenne >= 10 ? true : false
       }
       data.notes = notesData
     }
