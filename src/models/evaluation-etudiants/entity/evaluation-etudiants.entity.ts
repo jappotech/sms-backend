@@ -1,5 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql'
-import { $Enums, EvaluationEtudiants as EvaluationEtudiantsType } from '@prisma/client'
+import { $Enums, EvaluationEtudiants as EvaluationEtudiantsType, NoteEtudiant } from '@prisma/client'
 import { RestrictProperties } from 'src/common/dtos/common.input'
 
 @ObjectType()

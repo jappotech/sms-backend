@@ -20,7 +20,6 @@ export class BulletinNotesResolver {
 
   @Query(() => BulletinNotes, { name: 'bulletinNotes' })
   findOne(@Args() args: FindUniqueBulletinNotesArgs) {
-    console.log("🚀  ~ findOne ~ args:", args)
     return this.bulletinNotesService.findOne(args)
   }
 

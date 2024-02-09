@@ -18,7 +18,6 @@ export class BulletinNotesService {
 
   async findOne(args: FindUniqueBulletinNotesArgs) {
     let bulletinNotes: BulletinNotes = new BulletinNotes();
-    console.log("🚀 ~ BulletinNotesService ~ findOne ~ args:", args?.where)
     const etudiant = await this.prisma.etudiant.findUnique({
       where: { id: args.where.etudiantId }
     })
@@ -51,27 +50,40 @@ export class BulletinNotesService {
         noteData.matiere = matiere
         const coursList = matiere.cours
         for (const cours of coursList) {
-          const noteEtudiant = await this.prisma.evaluationEtudiants.findMany({
+          const evaluationEtudiant = await this.prisma.evaluationEtudiants.findMany({
             where: {
               coursId: cours.id,
             },
             include: { NoteEtudiant: true }
           })
-          const notesEtudiant = noteEtudiant.filter((note) => {
-            const res = note.NoteEtudiant.filter((ne: NoteEtudiant) => {
+          const notesEtudiant = evaluationEtudiant.filter(async (evaluation: EvaluationEtudiants) => {
+            const notes = await this.prisma.noteEtudiant.findMany({
+              where: { evaluationEtudiantId: evaluation.id }
+            })
+
+            const res: NoteEtudiant[] = notes.filter((ne: NoteEtudiant) => {
               return ne.etudiantId === etudiant.id
             })
 
-            return res
+            return res.some(x => x.evaluationEtudiantId === evaluation.id)
           })
-          noteData.note = notesEtudiant
+          const notesEtd = []
+          for (const n of notesEtudiant) {
+            n.NoteEtudiant.forEach((ne: NoteEtudiant) => {
+              notesEtd.push(ne)
+            })
+          }
+          noteData.note = notesEtd
         }
-        noteData.moyenne = noteData.note.reduce((acc, note: NoteEtudiant) => {
+        noteData.moyenne = noteData.note.reduce((acc, note) => {
           return acc + note.note
-        }) / noteData.note.length
+        }, 0) / noteData.note.length
         noteData.resultat = noteData.moyenne >= 10 ? true : false
+
+        notesData.push(noteData)
       }
       data.notes = notesData
+      donnees.push(data)
     }
     bulletinNotes.donnees = donnees
 
