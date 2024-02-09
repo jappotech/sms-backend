@@ -36,6 +36,7 @@ import { AuthModule } from './auth/auth.module';
 import { AccountsModule } from './models/accounts/accounts.module';
 import { AnneeScolaire } from './models/annee-scolaires/entity/annee-scolaire.entity';
 import { AnneeScolairesModule } from './models/annee-scolaires/annee-scolaires.module';
+import { BulletinNotesModule } from './models/bulletin-notes/bulletin-notes.module';
 
 @Module({
   imports: [
@@ -59,6 +60,7 @@ import { AnneeScolairesModule } from './models/annee-scolaires/annee-scolaires.m
     AccountsModule,
     AdressesModule,
     AnneeScolairesModule,
+    BulletinNotesModule,
     ClassesModule,
     ContactsModule,
     CoursModule,

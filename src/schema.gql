@@ -62,6 +62,7 @@ type Classe {
   semestres: [Semestre!]!
   inscriptions: [Inscription!]!
   evaluations: [EvaluationEtudiants!]!
+  anneeScolaire: AnneeScolaire!
 }
 
 type Semestre {
@@ -107,6 +108,15 @@ type EvaluationEtudiants {
   coursId: Float
   NoteEtudiant: [NoteEtudiant!]!
   Cours: Cours!
+}
+
+type AnneeScolaire {
+  id: Float
+  createdAt: DateTime
+  updatedAt: DateTime
+  dateDebut: Float
+  dateFin: Float
+  nom: String
 }
 
 type Contact {
@@ -321,13 +331,21 @@ type LoginResponse {
   access_token: String!
 }
 
-type AnneeScolaire {
-  id: Float
-  createdAt: DateTime
-  updatedAt: DateTime
-  dateDebut: Float
-  dateFin: Float
-  nom: String
+type ListeNotes {
+  uniteEnseignement: UniteEnseignement
+  notes: [Note!]
+}
+
+type Note {
+  matiere: Matiere
+  note: [EvaluationEtudiants!]
+  moyenne: Float
+  resultat: Boolean
+}
+
+type BulletinNotes {
+  etudiant: Etudiant
+  donnees: [ListeNotes!]
 }
 
 type Query {
@@ -337,6 +355,7 @@ type Query {
   adresse(where: AdresseWhereUniqueInput!): Adresse!
   anneeScolaires(where: AnneeScolaireWhereInput, orderBy: [AnneeScolaireOrderByWithRelationInput!], cursor: AnneeScolaireWhereUniqueInput, take: Float, skip: Float, distinct: [AnneeScolaireScalarFieldEnum!]): [AnneeScolaire!]!
   anneeScolaire(where: AnneeScolaireWhereUniqueInput!): AnneeScolaire!
+  bulletinNotes(where: BulletinNotesWhereUniqueInput!): BulletinNotes!
   classes(where: ClasseWhereInput, orderBy: [ClasseOrderByWithRelationInput!], cursor: ClasseWhereUniqueInput, take: Float, skip: Float, distinct: [ClasseScalarFieldEnum!]): [Classe!]!
   classe(where: ClasseWhereUniqueInput!): Classe!
   contacts(where: ContactWhereInput, orderBy: [ContactOrderByWithRelationInput!], cursor: ContactWhereUniqueInput, take: Float, skip: Float, distinct: [ContactScalarFieldEnum!]): [Contact!]!
@@ -1197,6 +1216,12 @@ enum AnneeScolaireScalarFieldEnum {
   dateDebut
   dateFin
   nom
+}
+
+input BulletinNotesWhereUniqueInput {
+  etudiantId: Float!
+  semestreId: Float!
+  classeId: Float!
 }
 
 input ClasseOrderByWithRelationInput {
