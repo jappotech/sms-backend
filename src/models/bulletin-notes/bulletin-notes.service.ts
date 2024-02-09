@@ -75,9 +75,9 @@ export class BulletinNotesService {
           }
           noteData.note = notesEtd
         }
-        noteData.moyenne = noteData.note.reduce((acc, note) => {
+        noteData.moyenne = (noteData.note.reduce((acc, note) => {
           return acc + note.note
-        }, 0) / noteData.note.length
+        }, 0) / noteData.note.length).toFixed(2)
         noteData.resultat = noteData.moyenne >= 10 ? true : false
 
         notesData.push(noteData)
