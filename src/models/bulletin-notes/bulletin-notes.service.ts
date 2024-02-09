@@ -58,7 +58,7 @@ export class BulletinNotesService {
             include: { NoteEtudiant: true }
           })
           const notesEtudiant = noteEtudiant.filter((note) => {
-            const res: NoteEtudiant[] = note.NoteEtudiant.filter((ne: NoteEtudiant) => {
+            const res = note.NoteEtudiant.filter((ne: NoteEtudiant) => {
               return ne.etudiantId === etudiant.id
             })
 
