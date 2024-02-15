@@ -1,66 +1,93 @@
-import { Resolver, Query, Mutation, Args, ResolveField, Parent } from '@nestjs/graphql'
-import { EvaluationEtudiantsService } from './evaluation-etudiants.service'
-import { EvaluationEtudiants } from './entity/evaluation-etudiants.entity'
-import { FindManyEvaluationEtudiantsArgs, FindUniqueEvaluationEtudiantsArgs } from './dtos/find.args'
-import { CreateEvaluationEtudiantsInput } from './dtos/create-evaluation-etudiants.input'
-import { UpdateEvaluationEtudiantsInput } from './dtos/update-evaluation-etudiants.input'
-import { checkRowLevelPermission } from 'src/common/auth/util'
-import { GetUserType } from 'src/common/types'
-import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
-import { PrismaService } from 'src/common/prisma/prisma.service'
-import { Prisma } from '@prisma/client'
-import { NoteEtudiant } from '../note-etudiants/entity/note-etudiant.entity'
-import { Cours } from '../cours/entity/cours.entity'
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  ResolveField,
+  Parent,
+} from '@nestjs/graphql';
+import { EvaluationEtudiantsService } from './evaluation-etudiants.service';
+import { EvaluationEtudiants } from './entity/evaluation-etudiants.entity';
+import {
+  FindManyEvaluationEtudiantsArgs,
+  FindUniqueEvaluationEtudiantsArgs,
+} from './dtos/find.args';
+import { CreateEvaluationEtudiantsInput } from './dtos/create-evaluation-etudiants.input';
+import { UpdateEvaluationEtudiantsInput } from './dtos/update-evaluation-etudiants.input';
+import { checkRowLevelPermission } from 'src/common/auth/util';
+import { GetUserType } from 'src/common/types';
+import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
+import { PrismaService } from 'src/common/prisma/prisma.service';
+import { Prisma } from '@prisma/client';
+import { NoteEtudiant } from '../note-etudiants/entity/note-etudiant.entity';
+import { Cours } from '../cours/entity/cours.entity';
 
 @Resolver(() => EvaluationEtudiants)
 export class EvaluationEtudiantsResolver {
-  constructor(private readonly evaluationEtudiantsService: EvaluationEtudiantsService,
-    private readonly prisma: PrismaService) { }
+  constructor(
+    private readonly evaluationEtudiantsService: EvaluationEtudiantsService,
+    private readonly prisma: PrismaService,
+  ) { }
 
   @AllowAuthenticated()
   @Mutation(() => EvaluationEtudiants)
-  createEvaluationEtudiants(@Args('createEvaluationEtudiantsInput') args: CreateEvaluationEtudiantsInput, @GetUser() user: GetUserType) {
+  createEvaluationEtudiants(
+    @Args('createEvaluationEtudiantsInput')
+    args: CreateEvaluationEtudiantsInput,
+    @GetUser() user: GetUserType,
+  ) {
     // // checkRowLevelPermission(user, args.uid)
-    return this.evaluationEtudiantsService.create(args)
+    return this.evaluationEtudiantsService.create(args);
   }
 
   @Query(() => [EvaluationEtudiants], { name: 'evaluationsEtudiants' })
   findAll(@Args() args: FindManyEvaluationEtudiantsArgs) {
-    return this.evaluationEtudiantsService.findAll(args)
+    return this.evaluationEtudiantsService.findAll(args);
   }
 
   @Query(() => EvaluationEtudiants, { name: 'evaluationEtudiants' })
   findOne(@Args() args: FindUniqueEvaluationEtudiantsArgs) {
-    return this.evaluationEtudiantsService.findOne(args)
+    return this.evaluationEtudiantsService.findOne(args);
   }
 
   @AllowAuthenticated()
   @Mutation(() => EvaluationEtudiants)
-  async updateEvaluationEtudiants(@Args('updateEvaluationEtudiantsInput') args: UpdateEvaluationEtudiantsInput, @GetUser() user: GetUserType) {
-    const evaluationEtudiants = await this.prisma.evaluationEtudiants.findUnique({ where: { id: args.id } })
+  async updateEvaluationEtudiants(
+    @Args('updateEvaluationEtudiantsInput')
+    args: UpdateEvaluationEtudiantsInput,
+    @GetUser() user: GetUserType,
+  ) {
+    const evaluationEtudiants =
+      await this.prisma.evaluationEtudiants.findUnique({
+        where: { id: args.id },
+      });
     // checkRowLevelPermission(user, evaluationEtudiants.uid)
-    return this.evaluationEtudiantsService.update(args)
+    return this.evaluationEtudiantsService.update(args);
   }
 
   @AllowAuthenticated()
   @Mutation(() => EvaluationEtudiants)
-  async removeEvaluationEtudiants(@Args() args: FindUniqueEvaluationEtudiantsArgs, @GetUser() user: GetUserType) {
-    const evaluationEtudiants = await this.prisma.evaluationEtudiants.findUnique(args)
+  async removeEvaluationEtudiants(
+    @Args() args: FindUniqueEvaluationEtudiantsArgs,
+    @GetUser() user: GetUserType,
+  ) {
+    const evaluationEtudiants =
+      await this.prisma.evaluationEtudiants.findUnique(args);
     // checkRowLevelPermission(user, evaluationEtudiants.uid)
-    return this.evaluationEtudiantsService.remove(args)
+    return this.evaluationEtudiantsService.remove(args);
   }
 
   @ResolveField(() => [NoteEtudiant])
   async NoteEtudiant(@Parent() parent: EvaluationEtudiants) {
     return this.prisma.noteEtudiant.findMany({
-      where: { evaluationEtudiantId: parent.id }
-    })
+      where: { evaluationEtudiantId: parent.id },
+    });
   }
 
   @ResolveField(() => Cours)
   async Cours(@Parent() parent: EvaluationEtudiants) {
-    return this.prisma.cours.findMany({
-      where: { id: parent.coursId }
-    })
+    return this.prisma.cours.findUnique({
+      where: { id: parent.coursId },
+    });
   }
 }

@@ -1,28 +1,29 @@
-import { Field, ObjectType } from '@nestjs/graphql'
-import { UniteEnseignement as UniteEnseignementType } from '@prisma/client'
-import { RestrictProperties } from 'src/common/dtos/common.input'
+import { Field, ObjectType } from '@nestjs/graphql';
+import { UniteEnseignement as UniteEnseignementType } from '@prisma/client';
+import { RestrictProperties } from 'src/common/dtos/common.input';
 
 @ObjectType()
-export class UniteEnseignement implements RestrictProperties<UniteEnseignement, UniteEnseignementType> {
+export class UniteEnseignement
+  implements RestrictProperties<UniteEnseignement, UniteEnseignementType>
+{
+  @Field({ nullable: true })
+  id: number;
 
-    @Field({ nullable: true })
-    id: number
+  @Field({ nullable: true })
+  createdAt: Date;
 
-    @Field({ nullable: true })
-    createdAt: Date
+  @Field({ nullable: true })
+  updatedAt: Date;
 
-    @Field({ nullable: true })
-    updatedAt: Date
+  @Field({ nullable: true })
+  code: string;
 
-    @Field({ nullable: true })
-    code: string
+  @Field({ nullable: true })
+  nom: string;
 
-    @Field({ nullable: true })
-    nom: string
+  @Field({ nullable: true })
+  credit: number;
 
-    @Field({ nullable: true })
-    credit: number
-
-    @Field({ nullable: true })
-    semestreId: number
+  @Field({ nullable: true })
+  semestreId: number;
 }

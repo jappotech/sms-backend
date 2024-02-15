@@ -157,6 +157,7 @@ type Matiere {
   code: String
   nom: String
   credit: Float
+  coefficient: Float
   nbHeure: Float
   uniteEnseigmentId: Float
 }
@@ -335,18 +336,31 @@ type LoginResponse {
 type ListeNotes {
   uniteEnseignement: UniteEnseignement
   notes: [Note!]
+  creditObtenu: Float
+  moyenneUE: Float
+  decision: String
 }
 
 type Note {
   matiere: Matiere
   note: [NoteEtudiant!]
   moyenne: Float
+  moyenneCoeff: Float
   resultat: Boolean
+}
+
+type MoyenneGenerale {
+  moyenneSemestre: Float
+  totalCredit: Float
+  totalCoef: Float
+  nbCreditsObtenus: Float
+  moyenneTotalCoef: Float
 }
 
 type BulletinNotes {
   etudiant: Etudiant
   donnees: [ListeNotes!]
+  moyenneGenerale: MoyenneGenerale
 }
 
 type Query {
@@ -814,6 +828,7 @@ input MatiereWhereInput {
   code: StringFilter
   nom: StringFilter
   credit: IntFilter
+  coefficient: IntFilter
   nbHeure: IntFilter
   uniteEnseigmentId: IntFilter
   cours: CoursListRelationFilter
@@ -1404,6 +1419,7 @@ input MatiereOrderByWithRelationInput {
   code: SortOrder
   nom: SortOrder
   credit: SortOrder
+  coefficient: SortOrder
   nbHeure: SortOrder
   uniteEnseigmentId: SortOrder
   cours: CoursOrderByRelationAggregateInput
@@ -1797,6 +1813,7 @@ enum MatiereScalarFieldEnum {
   code
   nom
   credit
+  coefficient
   nbHeure
   uniteEnseigmentId
 }
@@ -2413,6 +2430,7 @@ input CreateMatiereInput {
   code: String
   nom: String
   credit: Float
+  coefficient: Float
   nbHeure: Float
   uniteEnseigmentId: Float
 }
@@ -2421,6 +2439,7 @@ input UpdateMatiereInput {
   code: String
   nom: String
   credit: Float
+  coefficient: Float
   nbHeure: Float
   uniteEnseigmentId: Float
   id: Float!

@@ -1,71 +1,74 @@
-import { Field, InputType, PartialType } from '@nestjs/graphql'
-import { Prisma } from '@prisma/client'
-import { RestrictProperties } from 'src/common/dtos/common.input'
-import { ClasseOrderByWithRelationInput } from 'src/models/classes/dtos/order-by.args'
-import { DiplomeOrderByWithRelationInput } from 'src/models/diplomes/dtos/order-by.args'
-import { EtudiantOrderByWithRelationInput } from 'src/models/etudiants/dtos/order-by.args'
+import { Field, InputType, PartialType } from '@nestjs/graphql';
+import { Prisma } from '@prisma/client';
+import { RestrictProperties } from 'src/common/dtos/common.input';
+import { ClasseOrderByWithRelationInput } from 'src/models/classes/dtos/order-by.args';
+import { DiplomeOrderByWithRelationInput } from 'src/models/diplomes/dtos/order-by.args';
+import { EtudiantOrderByWithRelationInput } from 'src/models/etudiants/dtos/order-by.args';
 
 @InputType()
 export class InscriptionOrderByWithRelationInputStrict
-  implements RestrictProperties<InscriptionOrderByWithRelationInputStrict, Prisma.InscriptionOrderByWithRelationInput>
+  implements
+    RestrictProperties<
+      InscriptionOrderByWithRelationInputStrict,
+      Prisma.InscriptionOrderByWithRelationInput
+    >
 {
   @Field(() => Prisma.SortOrder, { nullable: true })
-  id: Prisma.SortOrder
+  id: Prisma.SortOrder;
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  createdAt: Prisma.SortOrder
+  createdAt: Prisma.SortOrder;
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  updatedAt: Prisma.SortOrder
+  updatedAt: Prisma.SortOrder;
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  reference: Prisma.SortOrder
+  reference: Prisma.SortOrder;
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  premiereInscription: Prisma.SortOrder
+  premiereInscription: Prisma.SortOrder;
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  dernierDiplome: Prisma.SortOrder | Prisma.SortOrderInput
+  dernierDiplome: Prisma.SortOrder | Prisma.SortOrderInput;
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  autreEtablissement: Prisma.SortOrder | Prisma.SortOrderInput
+  autreEtablissement: Prisma.SortOrder | Prisma.SortOrderInput;
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  activiteProfessionnel: Prisma.SortOrder | Prisma.SortOrderInput
+  activiteProfessionnel: Prisma.SortOrder | Prisma.SortOrderInput;
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  niveau: Prisma.SortOrder | Prisma.SortOrderInput
+  niveau: Prisma.SortOrder | Prisma.SortOrderInput;
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  statut: Prisma.SortOrder | Prisma.SortOrderInput
+  statut: Prisma.SortOrder | Prisma.SortOrderInput;
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  diplomeId: Prisma.SortOrder
+  diplomeId: Prisma.SortOrder;
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  etudiantId: Prisma.SortOrder
+  etudiantId: Prisma.SortOrder;
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  classeId: Prisma.SortOrder
+  classeId: Prisma.SortOrder;
 
   @Field(() => DiplomeOrderByWithRelationInput, { nullable: true })
-  diplome: DiplomeOrderByWithRelationInput
+  diplome: DiplomeOrderByWithRelationInput;
 
   @Field(() => EtudiantOrderByWithRelationInput, { nullable: true })
-  etudiant: EtudiantOrderByWithRelationInput
+  etudiant: EtudiantOrderByWithRelationInput;
 
   @Field(() => ClasseOrderByWithRelationInput, { nullable: true })
-  classe: ClasseOrderByWithRelationInput
+  classe: ClasseOrderByWithRelationInput;
 }
-
 
 @InputType()
 export class InscriptionOrderByWithRelationInput extends PartialType(
   InscriptionOrderByWithRelationInputStrict,
-) { }
+) {}
 
 @InputType()
 export class InscriptionOrderByRelationAggregateInput {
   @Field(() => Prisma.SortOrder)
-  _count?: Prisma.SortOrder
+  _count?: Prisma.SortOrder;
 }

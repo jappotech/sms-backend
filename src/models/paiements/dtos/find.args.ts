@@ -1,42 +1,51 @@
-import { ArgsType, Field, registerEnumType, PartialType } from '@nestjs/graphql'
-import { Prisma } from '@prisma/client'
-import { PaiementOrderByWithRelationInput } from './order-by.args'
-import { PaiementWhereInput, PaiementWhereUniqueInput } from './where.args'
-import { RestrictProperties } from 'src/common/dtos/common.input'
+import {
+  ArgsType,
+  Field,
+  registerEnumType,
+  PartialType,
+} from '@nestjs/graphql';
+import { Prisma } from '@prisma/client';
+import { PaiementOrderByWithRelationInput } from './order-by.args';
+import { PaiementWhereInput, PaiementWhereUniqueInput } from './where.args';
+import { RestrictProperties } from 'src/common/dtos/common.input';
 
 registerEnumType(Prisma.PaiementScalarFieldEnum, {
   name: 'PaiementScalarFieldEnum',
-})
+});
 
 @ArgsType()
 class FindManyPaiementArgsStrict
-  implements RestrictProperties<FindManyPaiementArgsStrict, Omit<Prisma.PaiementFindManyArgs, 'include' | 'select'>>
+  implements
+    RestrictProperties<
+      FindManyPaiementArgsStrict,
+      Omit<Prisma.PaiementFindManyArgs, 'include' | 'select'>
+    >
 {
   @Field(() => PaiementWhereInput, { nullable: true })
-  where: PaiementWhereInput
+  where: PaiementWhereInput;
 
   @Field(() => [PaiementOrderByWithRelationInput], { nullable: true })
-  orderBy: PaiementOrderByWithRelationInput[]
+  orderBy: PaiementOrderByWithRelationInput[];
 
   @Field(() => PaiementWhereUniqueInput, { nullable: true })
-  cursor: PaiementWhereUniqueInput
+  cursor: PaiementWhereUniqueInput;
 
   @Field(() => Number, { nullable: true })
-  take: number
+  take: number;
 
   @Field(() => Number, { nullable: true })
-  skip: number
+  skip: number;
 
   @Field(() => [Prisma.PaiementScalarFieldEnum])
-  distinct: Prisma.PaiementScalarFieldEnum[]
+  distinct: Prisma.PaiementScalarFieldEnum[];
 }
 
 @ArgsType()
 export class FindManyPaiementArgs extends PartialType(
   FindManyPaiementArgsStrict,
-) { }
+) {}
 
 @ArgsType()
 export class FindUniquePaiementArgs {
-  where: PaiementWhereUniqueInput
+  where: PaiementWhereUniqueInput;
 }

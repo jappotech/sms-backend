@@ -1,47 +1,54 @@
-import { Field, InputType, PartialType } from '@nestjs/graphql'
-import { Prisma } from '@prisma/client'
-import { DateTimeFilter, IntFilter, RestrictProperties } from 'src/common/dtos/common.input'
-import { CoursListRelationFilter } from 'src/models/cours/dtos/where.args'
-import { EmploiDuTempsListRelationFilter } from 'src/models/emploi-du-temps/dtos/where.args'
-import { UtilisateurRelationFilter } from 'src/models/utilisateurs/dtos/where.args'
+import { Field, InputType, PartialType } from '@nestjs/graphql';
+import { Prisma } from '@prisma/client';
+import {
+  DateTimeFilter,
+  IntFilter,
+  RestrictProperties,
+} from 'src/common/dtos/common.input';
+import { CoursListRelationFilter } from 'src/models/cours/dtos/where.args';
+import { EmploiDuTempsListRelationFilter } from 'src/models/emploi-du-temps/dtos/where.args';
+import { UtilisateurRelationFilter } from 'src/models/utilisateurs/dtos/where.args';
 
 @InputType()
 export class ProfesseurWhereUniqueInput {
   @Field(() => Number, { nullable: true })
-  id: number
+  id: number;
 }
 
 @InputType()
-export class ProfesseurWhereInputStrict implements RestrictProperties<ProfesseurWhereInputStrict, Prisma.ProfesseurWhereInput> {
+export class ProfesseurWhereInputStrict
+  implements
+    RestrictProperties<ProfesseurWhereInputStrict, Prisma.ProfesseurWhereInput>
+{
   @Field(() => IntFilter, { nullable: true })
-  id: IntFilter
+  id: IntFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  createdAt: DateTimeFilter
+  createdAt: DateTimeFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  updatedAt: DateTimeFilter
+  updatedAt: DateTimeFilter;
 
   @Field(() => IntFilter, { nullable: true })
-  profileId: IntFilter
+  profileId: IntFilter;
 
   @Field(() => UtilisateurRelationFilter, { nullable: true })
-  profile: UtilisateurRelationFilter
+  profile: UtilisateurRelationFilter;
 
   @Field(() => CoursListRelationFilter, { nullable: true })
-  cours: CoursListRelationFilter
+  cours: CoursListRelationFilter;
 
   @Field(() => EmploiDuTempsListRelationFilter, { nullable: true })
-  EmploiDuTemps: EmploiDuTempsListRelationFilter
+  EmploiDuTemps: EmploiDuTempsListRelationFilter;
 
   @Field(() => [ProfesseurWhereInputStrict], { nullable: true })
-  AND: ProfesseurWhereInputStrict[]
+  AND: ProfesseurWhereInputStrict[];
 
   @Field(() => [ProfesseurWhereInputStrict], { nullable: true })
-  OR: ProfesseurWhereInputStrict[]
+  OR: ProfesseurWhereInputStrict[];
 
   @Field(() => [ProfesseurWhereInputStrict], { nullable: true })
-  NOT: ProfesseurWhereInputStrict[]
+  NOT: ProfesseurWhereInputStrict[];
 }
 
 @InputType()
@@ -49,50 +56,50 @@ export class ProfesseurWhereInput extends PartialType(
   ProfesseurWhereInputStrict,
 ) {
   @Field(() => IntFilter, { nullable: true })
-  id: IntFilter
+  id: IntFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  createdAt: DateTimeFilter
+  createdAt: DateTimeFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  updatedAt: DateTimeFilter
+  updatedAt: DateTimeFilter;
 
   @Field(() => IntFilter, { nullable: true })
-  profileId: IntFilter
+  profileId: IntFilter;
 
   @Field(() => UtilisateurRelationFilter, { nullable: true })
-  profile: UtilisateurRelationFilter
+  profile: UtilisateurRelationFilter;
 
   @Field(() => CoursListRelationFilter, { nullable: true })
-  cours: CoursListRelationFilter
+  cours: CoursListRelationFilter;
 
   @Field(() => EmploiDuTempsListRelationFilter, { nullable: true })
-  EmploiDuTemps: EmploiDuTempsListRelationFilter
+  EmploiDuTemps: EmploiDuTempsListRelationFilter;
 
   @Field(() => [ProfesseurWhereInput], { nullable: true })
-  AND: ProfesseurWhereInput[]
+  AND: ProfesseurWhereInput[];
 
   @Field(() => [ProfesseurWhereInput], { nullable: true })
-  OR: ProfesseurWhereInput[]
+  OR: ProfesseurWhereInput[];
 
   @Field(() => [ProfesseurWhereInput], { nullable: true })
-  NOT: ProfesseurWhereInput[]
+  NOT: ProfesseurWhereInput[];
 }
 
 @InputType()
 export class ProfesseurListRelationFilter {
   @Field(() => ProfesseurWhereInput, { nullable: true })
-  every?: ProfesseurWhereInput
+  every?: ProfesseurWhereInput;
   @Field(() => ProfesseurWhereInput, { nullable: true })
-  some?: ProfesseurWhereInput
+  some?: ProfesseurWhereInput;
   @Field(() => ProfesseurWhereInput, { nullable: true })
-  none?: ProfesseurWhereInput
+  none?: ProfesseurWhereInput;
 }
 
 @InputType()
 export class ProfesseurRelationFilter {
   @Field(() => ProfesseurWhereInput, { nullable: true })
-  is?: ProfesseurWhereInput
+  is?: ProfesseurWhereInput;
   @Field(() => ProfesseurWhereInput, { nullable: true })
-  isNot?: ProfesseurWhereInput
+  isNot?: ProfesseurWhereInput;
 }

@@ -6,14 +6,10 @@ import { LoginResponse } from './dtos/loginResponse';
 
 @Resolver(() => Login)
 export class AuthResolver {
-
-  constructor(
-    private authService: AuthService,
-  ) { }
+  constructor(private authService: AuthService) {}
 
   @Mutation(() => LoginResponse)
   login(@Args('loginInput') args: LoginInput) {
     return this.authService.login(args);
   }
-
 }

@@ -1,110 +1,117 @@
-import { Field, InputType, PartialType } from '@nestjs/graphql'
-import { $Enums, Prisma } from '@prisma/client'
-import { BoolFilter, DateTimeFilter, IntFilter, RestrictProperties, StringFilter } from 'src/common/dtos/common.input'
+import { Field, InputType, PartialType } from '@nestjs/graphql';
+import { $Enums, Prisma } from '@prisma/client';
+import {
+  BoolFilter,
+  DateTimeFilter,
+  IntFilter,
+  RestrictProperties,
+  StringFilter,
+} from 'src/common/dtos/common.input';
 
 @InputType()
 export class AccountWhereUniqueInput {
   @Field(() => Number)
-  id: number
+  id: number;
 }
 
 @InputType()
-export class AccountWhereInputStrict implements RestrictProperties<AccountWhereInputStrict, Prisma.AccountWhereInput> {
+export class AccountWhereInputStrict
+  implements
+    RestrictProperties<AccountWhereInputStrict, Prisma.AccountWhereInput>
+{
   @Field(() => IntFilter, { nullable: true })
-  id: number
+  id: number;
 
   @Field(() => StringFilter, { nullable: true })
-  uid: string
+  uid: string;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  createdAt: Date
+  createdAt: Date;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  updatedAt: string
+  updatedAt: string;
 
   @Field(() => StringFilter, { nullable: true })
-  username: string
+  username: string;
 
   @Field(() => StringFilter, { nullable: true })
-  password: string
+  password: string;
 
   @Field(() => StringFilter, { nullable: true })
-  roles: Prisma.EnumRoleNullableListFilter
+  roles: Prisma.EnumRoleNullableListFilter;
 
   @Field(() => BoolFilter, { nullable: true })
-  isActive: boolean
+  isActive: boolean;
 
   @Field(() => IntFilter, { nullable: true })
-  userId: number
+  userId: number;
 
   @Field(() => [AccountWhereInputStrict], { nullable: true })
-  AND: AccountWhereInputStrict[]
+  AND: AccountWhereInputStrict[];
 
   @Field(() => [AccountWhereInputStrict], { nullable: true })
-  OR: AccountWhereInputStrict[]
+  OR: AccountWhereInputStrict[];
 
   @Field(() => [AccountWhereInputStrict], { nullable: true })
-  NOT: AccountWhereInputStrict[]
+  NOT: AccountWhereInputStrict[];
 }
 
 @InputType()
-export class AccountWhereInput extends PartialType(
-  AccountWhereInputStrict,
-) {
+export class AccountWhereInput extends PartialType(AccountWhereInputStrict) {
   @Field(() => IntFilter, { nullable: true })
-  id: number
+  id: number;
 
   @Field(() => StringFilter, { nullable: true })
-  uid: string
+  uid: string;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  createdAt: Date
+  createdAt: Date;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  updatedAt: string
+  updatedAt: string;
 
   @Field(() => StringFilter, { nullable: true })
-  username: string
+  username: string;
 
   @Field(() => StringFilter, { nullable: true })
-  password: string
+  password: string;
 
   @Field(() => StringFilter, { nullable: true })
-  roles: Prisma.EnumRoleNullableListFilter
+  roles: Prisma.EnumRoleNullableListFilter;
 
   @Field(() => BoolFilter, { nullable: true })
-  isActive: boolean
+  isActive: boolean;
 
   @Field(() => IntFilter, { nullable: true })
-  userId: number
+  userId: number;
 
   @Field(() => [AccountWhereInput], { nullable: true })
-  AND: AccountWhereInput[]
+  AND: AccountWhereInput[];
 
   @Field(() => [AccountWhereInput], { nullable: true })
-  OR: AccountWhereInput[]
+  OR: AccountWhereInput[];
 
   @Field(() => [AccountWhereInput], { nullable: true })
-  NOT: AccountWhereInput[]
+  NOT: AccountWhereInput[];
 }
 
 @InputType()
 export class AccountListRelationFilter {
   // @Field(() => [AccountWhereInput], { nullable: true })
-  every?: AccountWhereInput
+  every?: AccountWhereInput;
 
   // @Field(() => [AccountWhereInput], { nullable: true })
-  some?: AccountWhereInput
+  some?: AccountWhereInput;
 
   // @Field(() => [AccountWhereInput], { nullable: true })
-  none?: AccountWhereInput
+  none?: AccountWhereInput;
 }
 
 @InputType()
 export class AccountRelationFilter {
   // @Field(() => [AccountWhereInput], { nullable: true })
-  is?: AccountWhereInput
+  is?: AccountWhereInput;
 
   // @Field(() => [AccountWhereInput], { nullable: true })
-  isNot?: AccountWhereInput
+  isNot?: AccountWhereInput;
 }

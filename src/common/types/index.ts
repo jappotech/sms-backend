@@ -1,8 +1,8 @@
-import { $Enums } from "@prisma/client"
+import { $Enums } from '@prisma/client';
 
-export type Role = $Enums.Role
+export type Role = $Enums.Role;
 
 export type GetUserType = {
-  uid: string
-  roles: $Enums.Role[]
-}
+  uid: string;
+  roles: $Enums.Role[];
+};

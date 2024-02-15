@@ -282,6 +282,7 @@ model Matiere {
   code              String
   nom               String
   credit            Int // 30 -> nbHeure = 30 * 25
+  coefficient       Int               @default(1)
   nbHeure           Int?
   cours             Cours[]
   uniteEnseigment   UniteEnseignement @relation(fields: [uniteEnseigmentId], references: [id])

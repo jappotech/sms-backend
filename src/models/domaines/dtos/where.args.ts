@@ -1,97 +1,103 @@
-import { Field, InputType, PartialType } from '@nestjs/graphql'
-import { Prisma } from '@prisma/client'
-import { DateTimeFilter, IntFilter, RestrictProperties, StringFilter } from 'src/common/dtos/common.input'
-import { EtablissementListRelationFilter } from 'src/models/etablissements/dtos/where.args'
-import { MentionListRelationFilter } from 'src/models/mentions/dtos/where.args'
+import { Field, InputType, PartialType } from '@nestjs/graphql';
+import { Prisma } from '@prisma/client';
+import {
+  DateTimeFilter,
+  IntFilter,
+  RestrictProperties,
+  StringFilter,
+} from 'src/common/dtos/common.input';
+import { EtablissementListRelationFilter } from 'src/models/etablissements/dtos/where.args';
+import { MentionListRelationFilter } from 'src/models/mentions/dtos/where.args';
 
 @InputType()
 export class DomaineWhereUniqueInput {
   @Field(() => Number, { nullable: true })
-  id: number
+  id: number;
 }
 
 @InputType()
-export class DomaineWhereInputStrict implements RestrictProperties<DomaineWhereInputStrict, Prisma.DomaineWhereInput> {
+export class DomaineWhereInputStrict
+  implements
+    RestrictProperties<DomaineWhereInputStrict, Prisma.DomaineWhereInput>
+{
   @Field(() => IntFilter, { nullable: true })
-  id: IntFilter
+  id: IntFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  createdAt: DateTimeFilter
+  createdAt: DateTimeFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  updatedAt: DateTimeFilter
+  updatedAt: DateTimeFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  nom: StringFilter
+  nom: StringFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  slug: StringFilter
+  slug: StringFilter;
 
   @Field(() => EtablissementListRelationFilter, { nullable: true })
-  etablissements: EtablissementListRelationFilter
+  etablissements: EtablissementListRelationFilter;
 
   @Field(() => MentionListRelationFilter, { nullable: true })
-  mentions: MentionListRelationFilter
+  mentions: MentionListRelationFilter;
 
   @Field(() => [DomaineWhereInputStrict], { nullable: true })
-  AND: DomaineWhereInputStrict[]
+  AND: DomaineWhereInputStrict[];
 
   @Field(() => [DomaineWhereInputStrict], { nullable: true })
-  OR: DomaineWhereInputStrict[]
+  OR: DomaineWhereInputStrict[];
 
   @Field(() => [DomaineWhereInputStrict], { nullable: true })
-  NOT: DomaineWhereInputStrict[]
+  NOT: DomaineWhereInputStrict[];
 }
 
 @InputType()
-export class DomaineWhereInput extends PartialType(
-  DomaineWhereInputStrict,
-) {
+export class DomaineWhereInput extends PartialType(DomaineWhereInputStrict) {
   @Field(() => IntFilter, { nullable: true })
-  id: IntFilter
+  id: IntFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  createdAt: DateTimeFilter
+  createdAt: DateTimeFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  updatedAt: DateTimeFilter
+  updatedAt: DateTimeFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  nom: StringFilter
+  nom: StringFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  slug: StringFilter
+  slug: StringFilter;
 
   @Field(() => EtablissementListRelationFilter, { nullable: true })
-  etablissements: EtablissementListRelationFilter
+  etablissements: EtablissementListRelationFilter;
 
   @Field(() => MentionListRelationFilter, { nullable: true })
-  mentions: MentionListRelationFilter
+  mentions: MentionListRelationFilter;
 
   @Field(() => [DomaineWhereInput], { nullable: true })
-  AND: DomaineWhereInput[]
+  AND: DomaineWhereInput[];
 
   @Field(() => [DomaineWhereInput], { nullable: true })
-  OR: DomaineWhereInput[]
+  OR: DomaineWhereInput[];
 
   @Field(() => [DomaineWhereInput], { nullable: true })
-  NOT: DomaineWhereInput[]
+  NOT: DomaineWhereInput[];
 }
 
 @InputType()
 export class DomaineListRelationFilter {
   @Field(() => DomaineWhereInput, { nullable: true })
-  every?: DomaineWhereInput
+  every?: DomaineWhereInput;
   @Field(() => DomaineWhereInput, { nullable: true })
-  some?: DomaineWhereInput
+  some?: DomaineWhereInput;
   @Field(() => DomaineWhereInput, { nullable: true })
-  none?: DomaineWhereInput
+  none?: DomaineWhereInput;
 }
 
 @InputType()
 export class DomaineRelationFilter {
   @Field(() => DomaineWhereInput, { nullable: true })
-  is?: DomaineWhereInput
+  is?: DomaineWhereInput;
   @Field(() => DomaineWhereInput, { nullable: true })
-  isNot?: DomaineWhereInput
+  isNot?: DomaineWhereInput;
 }

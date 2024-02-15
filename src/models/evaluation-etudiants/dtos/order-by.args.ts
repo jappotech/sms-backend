@@ -1,55 +1,58 @@
-import { Field, InputType, PartialType } from '@nestjs/graphql'
-import { Prisma } from '@prisma/client'
-import { RestrictProperties } from 'src/common/dtos/common.input'
-import { CoursOrderByWithRelationInput } from 'src/models/cours/dtos/order-by.args'
-import { NoteEtudiantOrderByRelationAggregateInput } from 'src/models/note-etudiants/dtos/order-by.args'
+import { Field, InputType, PartialType } from '@nestjs/graphql';
+import { Prisma } from '@prisma/client';
+import { RestrictProperties } from 'src/common/dtos/common.input';
+import { CoursOrderByWithRelationInput } from 'src/models/cours/dtos/order-by.args';
+import { NoteEtudiantOrderByRelationAggregateInput } from 'src/models/note-etudiants/dtos/order-by.args';
 
 @InputType()
 export class EvaluationEtudiantsOrderByWithRelationInputStrict
-  implements RestrictProperties<EvaluationEtudiantsOrderByWithRelationInputStrict, Prisma.EvaluationEtudiantsOrderByWithRelationInput>
+  implements
+    RestrictProperties<
+      EvaluationEtudiantsOrderByWithRelationInputStrict,
+      Prisma.EvaluationEtudiantsOrderByWithRelationInput
+    >
 {
   @Field(() => Prisma.SortOrder, { nullable: true })
-  id: Prisma.SortOrder
+  id: Prisma.SortOrder;
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  createdAt: Prisma.SortOrder
+  createdAt: Prisma.SortOrder;
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  updatedAt: Prisma.SortOrder
+  updatedAt: Prisma.SortOrder;
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  dateEvaluation: Prisma.SortOrder
+  dateEvaluation: Prisma.SortOrder;
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  typeEvaluation: Prisma.SortOrder
+  typeEvaluation: Prisma.SortOrder;
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  duree: Prisma.SortOrder
+  duree: Prisma.SortOrder;
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  document: Prisma.SortOrder
+  document: Prisma.SortOrder;
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  description: Prisma.SortOrder | Prisma.SortOrderInput
+  description: Prisma.SortOrder | Prisma.SortOrderInput;
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  coursId: Prisma.SortOrder
+  coursId: Prisma.SortOrder;
 
   @Field(() => CoursOrderByWithRelationInput, { nullable: true })
-  cours: CoursOrderByWithRelationInput
+  cours: CoursOrderByWithRelationInput;
 
   @Field(() => NoteEtudiantOrderByRelationAggregateInput, { nullable: true })
-  NoteEtudiant: NoteEtudiantOrderByRelationAggregateInput
+  NoteEtudiant: NoteEtudiantOrderByRelationAggregateInput;
 }
-
 
 @InputType()
 export class EvaluationEtudiantsOrderByWithRelationInput extends PartialType(
   EvaluationEtudiantsOrderByWithRelationInputStrict,
-) { }
+) {}
 
 @InputType()
 export class EvaluationEtudiantsOrderByRelationAggregateInput {
   @Field(() => Prisma.SortOrder)
-  _count?: Prisma.SortOrder
+  _count?: Prisma.SortOrder;
 }

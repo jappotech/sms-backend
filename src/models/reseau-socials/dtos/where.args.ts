@@ -1,48 +1,59 @@
-import { Field, InputType, PartialType } from '@nestjs/graphql'
-import { Prisma } from '@prisma/client'
-import { DateTimeFilter, IntFilter, RestrictProperties, StringFilter } from 'src/common/dtos/common.input'
-import { ContactRelationFilter } from 'src/models/contacts/dtos/where.args'
+import { Field, InputType, PartialType } from '@nestjs/graphql';
+import { Prisma } from '@prisma/client';
+import {
+  DateTimeFilter,
+  IntFilter,
+  RestrictProperties,
+  StringFilter,
+} from 'src/common/dtos/common.input';
+import { ContactRelationFilter } from 'src/models/contacts/dtos/where.args';
 
 @InputType()
 export class ReseauSocialWhereUniqueInput {
   @Field(() => Number, { nullable: true })
-  id: number
+  id: number;
 }
 
 @InputType()
-export class ReseauSocialWhereInputStrict implements RestrictProperties<ReseauSocialWhereInputStrict, Prisma.ReseauSocialWhereInput> {
+export class ReseauSocialWhereInputStrict
+  implements
+    RestrictProperties<
+      ReseauSocialWhereInputStrict,
+      Prisma.ReseauSocialWhereInput
+    >
+{
   @Field(() => IntFilter, { nullable: true })
-  id: IntFilter
+  id: IntFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  createdAt: DateTimeFilter
+  createdAt: DateTimeFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  updatedAt: DateTimeFilter
+  updatedAt: DateTimeFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  nom: StringFilter
+  nom: StringFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  username: StringFilter
+  username: StringFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  url: StringFilter
+  url: StringFilter;
 
   @Field(() => IntFilter, { nullable: true })
-  contactId: IntFilter
+  contactId: IntFilter;
 
   @Field(() => ContactRelationFilter, { nullable: true })
-  contact: ContactRelationFilter
+  contact: ContactRelationFilter;
 
   @Field(() => [ReseauSocialWhereInputStrict], { nullable: true })
-  AND: ReseauSocialWhereInputStrict[]
+  AND: ReseauSocialWhereInputStrict[];
 
   @Field(() => [ReseauSocialWhereInputStrict], { nullable: true })
-  OR: ReseauSocialWhereInputStrict[]
+  OR: ReseauSocialWhereInputStrict[];
 
   @Field(() => [ReseauSocialWhereInputStrict], { nullable: true })
-  NOT: ReseauSocialWhereInputStrict[]
+  NOT: ReseauSocialWhereInputStrict[];
 }
 
 @InputType()
@@ -50,53 +61,53 @@ export class ReseauSocialWhereInput extends PartialType(
   ReseauSocialWhereInputStrict,
 ) {
   @Field(() => IntFilter, { nullable: true })
-  id: IntFilter
+  id: IntFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  createdAt: DateTimeFilter
+  createdAt: DateTimeFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  updatedAt: DateTimeFilter
+  updatedAt: DateTimeFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  nom: StringFilter
+  nom: StringFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  username: StringFilter
+  username: StringFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  url: StringFilter
+  url: StringFilter;
 
   @Field(() => IntFilter, { nullable: true })
-  contactId: IntFilter
+  contactId: IntFilter;
 
   @Field(() => ContactRelationFilter, { nullable: true })
-  contact: ContactRelationFilter
+  contact: ContactRelationFilter;
 
   @Field(() => [ReseauSocialWhereInput], { nullable: true })
-  AND: ReseauSocialWhereInput[]
+  AND: ReseauSocialWhereInput[];
 
   @Field(() => [ReseauSocialWhereInput], { nullable: true })
-  OR: ReseauSocialWhereInput[]
+  OR: ReseauSocialWhereInput[];
 
   @Field(() => [ReseauSocialWhereInput], { nullable: true })
-  NOT: ReseauSocialWhereInput[]
+  NOT: ReseauSocialWhereInput[];
 }
 
 @InputType()
 export class ReseauSocialListRelationFilter {
   @Field(() => ReseauSocialWhereInput, { nullable: true })
-  every?: ReseauSocialWhereInput
+  every?: ReseauSocialWhereInput;
   @Field(() => ReseauSocialWhereInput, { nullable: true })
-  some?: ReseauSocialWhereInput
+  some?: ReseauSocialWhereInput;
   @Field(() => ReseauSocialWhereInput, { nullable: true })
-  none?: ReseauSocialWhereInput
+  none?: ReseauSocialWhereInput;
 }
 
 @InputType()
 export class ReseauSocialRelationFilter {
   @Field(() => ReseauSocialWhereInput, { nullable: true })
-  is?: ReseauSocialWhereInput
+  is?: ReseauSocialWhereInput;
   @Field(() => ReseauSocialWhereInput, { nullable: true })
-  isNot?: ReseauSocialWhereInput
+  isNot?: ReseauSocialWhereInput;
 }

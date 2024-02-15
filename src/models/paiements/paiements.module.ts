@@ -1,6 +1,6 @@
-import { Module } from '@nestjs/common'
-import { PaiementsService } from './paiements.service'
-import { PaiementsResolver } from './paiements.resolver'
+import { Module } from '@nestjs/common';
+import { PaiementsService } from './paiements.service';
+import { PaiementsResolver } from './paiements.resolver';
 
 @Module({
   providers: [PaiementsResolver, PaiementsService],

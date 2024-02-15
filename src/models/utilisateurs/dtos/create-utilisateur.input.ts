@@ -1,75 +1,88 @@
-import { Field, InputType, ObjectType, PickType } from '@nestjs/graphql'
-import { Utilisateur } from '../entity/utilisateur.entity'
-import { CreateAccountInput } from 'src/models/accounts/dtos/create-account.input'
-import { $Enums } from '@prisma/client'
+import { Field, InputType, ObjectType, PickType } from '@nestjs/graphql';
+import { Utilisateur } from '../entity/utilisateur.entity';
+import { CreateAccountInput } from 'src/models/accounts/dtos/create-account.input';
+import { $Enums } from '@prisma/client';
 
 @InputType()
 export class UtilisateurWithAccount implements Utilisateur {
   @Field({ nullable: true })
-  id: number
+  id: number;
 
   @Field({ nullable: true })
-  matricule: string
+  matricule: string;
 
   @Field({ nullable: true })
-  createdAt: Date
+  createdAt: Date;
 
   @Field({ nullable: true })
-  updatedAt: Date
+  updatedAt: Date;
 
   @Field({ nullable: true })
-  prenom: string
+  prenom: string;
 
   @Field({ nullable: true })
-  nom: string
+  nom: string;
 
   @Field({ nullable: true })
-  dateNaissance: Date
+  dateNaissance: Date;
 
   @Field({ nullable: true })
-  lieuNaissance: string
+  lieuNaissance: string;
 
   @Field({ nullable: true })
-  cni: string
+  cni: string;
 
   @Field(() => String, { nullable: false, defaultValue: $Enums.Genre.Masculin })
-  genre: $Enums.Genre
+  genre: $Enums.Genre;
 
   @Field({ nullable: true })
-  nationalite: string
+  nationalite: string;
 
-  @Field(type => String, { nullable: true })
-  groupeSanguin: $Enums.GroupeSanguin
-
-  @Field({ nullable: true })
-  etablissementId: number
+  @Field((type) => String, { nullable: true })
+  groupeSanguin: $Enums.GroupeSanguin;
 
   @Field({ nullable: true })
-  statutCompte: string
-
-  @Field(type => [String], { nullable: true })
-  roles: $Enums.Role[]
+  etablissementId: number;
 
   @Field({ nullable: true })
-  contactId: number
+  statutCompte: string;
+
+  @Field((type) => [String], { nullable: true })
+  roles: $Enums.Role[];
 
   @Field({ nullable: true })
-  accountId: number
+  contactId: number;
 
   @Field({ nullable: true })
-  adresseId: number
+  accountId: number;
 
   @Field({ nullable: true })
-  account: CreateAccountInput
+  adresseId: number;
+
+  @Field({ nullable: true })
+  account: CreateAccountInput;
 }
 
 @InputType()
 export class CreateUtilisateurInput extends PickType(
   UtilisateurWithAccount,
   [
-    'adresseId', 'nationalite', 'nom', 'prenom', 'roles', 'statutCompte', 'cni', 'account',
-    'contactId', 'dateNaissance', 'etablissementId', 'genre', 'nom', 'groupeSanguin', 'lieuNaissance', 'matricule'
+    'adresseId',
+    'nationalite',
+    'nom',
+    'prenom',
+    'roles',
+    'statutCompte',
+    'cni',
+    'account',
+    'contactId',
+    'dateNaissance',
+    'etablissementId',
+    'genre',
+    'nom',
+    'groupeSanguin',
+    'lieuNaissance',
+    'matricule',
   ],
-  InputType
-) { }
-
+  InputType,
+) {}

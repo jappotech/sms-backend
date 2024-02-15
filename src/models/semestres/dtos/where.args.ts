@@ -1,121 +1,127 @@
-import { Field, InputType, PartialType } from '@nestjs/graphql'
-import { $Enums, Prisma } from '@prisma/client'
-import { DateTimeFilter, IntFilter, RestrictProperties, StringFilter } from 'src/common/dtos/common.input'
-import { ClasseRelationFilter } from 'src/models/classes/dtos/where.args'
-import { UniteEnseignementListRelationFilter } from 'src/models/unite-enseignements/dtos/where.args'
+import { Field, InputType, PartialType } from '@nestjs/graphql';
+import { $Enums, Prisma } from '@prisma/client';
+import {
+  DateTimeFilter,
+  IntFilter,
+  RestrictProperties,
+  StringFilter,
+} from 'src/common/dtos/common.input';
+import { ClasseRelationFilter } from 'src/models/classes/dtos/where.args';
+import { UniteEnseignementListRelationFilter } from 'src/models/unite-enseignements/dtos/where.args';
 
 @InputType()
 export class SemestreWhereUniqueInput {
   @Field(() => Number, { nullable: true })
-  id: number
+  id: number;
 }
 
 @InputType()
-export class SemestreWhereInputStrict implements RestrictProperties<SemestreWhereInputStrict, Prisma.SemestreWhereInput> {
+export class SemestreWhereInputStrict
+  implements
+    RestrictProperties<SemestreWhereInputStrict, Prisma.SemestreWhereInput>
+{
   @Field(() => IntFilter, { nullable: true })
-  id: IntFilter
+  id: IntFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  createdAt: DateTimeFilter
+  createdAt: DateTimeFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  updatedAt: DateTimeFilter
+  updatedAt: DateTimeFilter;
 
   @Field(() => IntFilter, { nullable: true })
-  numero: IntFilter
+  numero: IntFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  grade: Prisma.EnumTypeDiplomeFilter
+  grade: Prisma.EnumTypeDiplomeFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  dateDebut: DateTimeFilter
+  dateDebut: DateTimeFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  dateFin: DateTimeFilter
+  dateFin: DateTimeFilter;
 
   @Field(() => IntFilter, { nullable: true })
-  nombreSemaine: IntFilter
+  nombreSemaine: IntFilter;
 
   @Field(() => IntFilter, { nullable: true })
-  classeId: IntFilter
+  classeId: IntFilter;
 
   @Field(() => UniteEnseignementListRelationFilter, { nullable: true })
-  uniteEnseignement: UniteEnseignementListRelationFilter
+  uniteEnseignement: UniteEnseignementListRelationFilter;
 
   @Field(() => ClasseRelationFilter, { nullable: true })
-  Classe: ClasseRelationFilter
+  Classe: ClasseRelationFilter;
 
   @Field(() => [SemestreWhereInputStrict], { nullable: true })
-  AND: SemestreWhereInputStrict[]
+  AND: SemestreWhereInputStrict[];
 
   @Field(() => [SemestreWhereInputStrict], { nullable: true })
-  OR: SemestreWhereInputStrict[]
+  OR: SemestreWhereInputStrict[];
 
   @Field(() => [SemestreWhereInputStrict], { nullable: true })
-  NOT: SemestreWhereInputStrict[]
+  NOT: SemestreWhereInputStrict[];
 }
 
 @InputType()
-export class SemestreWhereInput extends PartialType(
-  SemestreWhereInputStrict,
-) {
+export class SemestreWhereInput extends PartialType(SemestreWhereInputStrict) {
   @Field(() => IntFilter, { nullable: true })
-  id: IntFilter
+  id: IntFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  createdAt: DateTimeFilter
+  createdAt: DateTimeFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  updatedAt: DateTimeFilter
+  updatedAt: DateTimeFilter;
 
   @Field(() => IntFilter, { nullable: true })
-  numero: IntFilter
+  numero: IntFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  grade: Prisma.EnumTypeDiplomeFilter
+  grade: Prisma.EnumTypeDiplomeFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  dateDebut: DateTimeFilter
+  dateDebut: DateTimeFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  dateFin: DateTimeFilter
+  dateFin: DateTimeFilter;
 
   @Field(() => IntFilter, { nullable: true })
-  nombreSemaine: IntFilter
+  nombreSemaine: IntFilter;
 
   @Field(() => IntFilter, { nullable: true })
-  classeId: IntFilter
+  classeId: IntFilter;
 
   @Field(() => UniteEnseignementListRelationFilter, { nullable: true })
-  uniteEnseignement: UniteEnseignementListRelationFilter
+  uniteEnseignement: UniteEnseignementListRelationFilter;
 
   @Field(() => ClasseRelationFilter, { nullable: true })
-  Classe: ClasseRelationFilter
+  Classe: ClasseRelationFilter;
 
   @Field(() => [SemestreWhereInput], { nullable: true })
-  AND: SemestreWhereInput[]
+  AND: SemestreWhereInput[];
 
   @Field(() => [SemestreWhereInput], { nullable: true })
-  OR: SemestreWhereInput[]
+  OR: SemestreWhereInput[];
 
   @Field(() => [SemestreWhereInput], { nullable: true })
-  NOT: SemestreWhereInput[]
+  NOT: SemestreWhereInput[];
 }
 
 @InputType()
 export class SemestreListRelationFilter {
   @Field(() => SemestreWhereInput, { nullable: true })
-  every?: SemestreWhereInput
+  every?: SemestreWhereInput;
   @Field(() => SemestreWhereInput, { nullable: true })
-  some?: SemestreWhereInput
+  some?: SemestreWhereInput;
   @Field(() => SemestreWhereInput, { nullable: true })
-  none?: SemestreWhereInput
+  none?: SemestreWhereInput;
 }
 
 @InputType()
 export class SemestreRelationFilter {
   @Field(() => SemestreWhereInput, { nullable: true })
-  is?: SemestreWhereInput
+  is?: SemestreWhereInput;
   @Field(() => SemestreWhereInput, { nullable: true })
-  isNot?: SemestreWhereInput
+  isNot?: SemestreWhereInput;
 }

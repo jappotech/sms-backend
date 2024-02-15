@@ -1,42 +1,54 @@
-import { ArgsType, Field, registerEnumType, PartialType } from '@nestjs/graphql'
-import { Prisma } from '@prisma/client'
-import { ReseauSocialOrderByWithRelationInput } from './order-by.args'
-import { ReseauSocialWhereInput, ReseauSocialWhereUniqueInput } from './where.args'
-import { RestrictProperties } from 'src/common/dtos/common.input'
+import {
+  ArgsType,
+  Field,
+  registerEnumType,
+  PartialType,
+} from '@nestjs/graphql';
+import { Prisma } from '@prisma/client';
+import { ReseauSocialOrderByWithRelationInput } from './order-by.args';
+import {
+  ReseauSocialWhereInput,
+  ReseauSocialWhereUniqueInput,
+} from './where.args';
+import { RestrictProperties } from 'src/common/dtos/common.input';
 
 registerEnumType(Prisma.ReseauSocialScalarFieldEnum, {
   name: 'ReseauSocialScalarFieldEnum',
-})
+});
 
 @ArgsType()
 class FindManyReseauSocialArgsStrict
-  implements RestrictProperties<FindManyReseauSocialArgsStrict, Omit<Prisma.ReseauSocialFindManyArgs, 'include' | 'select'>>
+  implements
+    RestrictProperties<
+      FindManyReseauSocialArgsStrict,
+      Omit<Prisma.ReseauSocialFindManyArgs, 'include' | 'select'>
+    >
 {
   @Field(() => ReseauSocialWhereInput, { nullable: true })
-  where: ReseauSocialWhereInput
+  where: ReseauSocialWhereInput;
 
   @Field(() => [ReseauSocialOrderByWithRelationInput], { nullable: true })
-  orderBy: ReseauSocialOrderByWithRelationInput[]
+  orderBy: ReseauSocialOrderByWithRelationInput[];
 
   @Field(() => ReseauSocialWhereUniqueInput, { nullable: true })
-  cursor: ReseauSocialWhereUniqueInput
+  cursor: ReseauSocialWhereUniqueInput;
 
   @Field(() => Number, { nullable: true })
-  take: number
+  take: number;
 
   @Field(() => Number, { nullable: true })
-  skip: number
+  skip: number;
 
   @Field(() => [Prisma.ReseauSocialScalarFieldEnum])
-  distinct: Prisma.ReseauSocialScalarFieldEnum[]
+  distinct: Prisma.ReseauSocialScalarFieldEnum[];
 }
 
 @ArgsType()
 export class FindManyReseauSocialArgs extends PartialType(
   FindManyReseauSocialArgsStrict,
-) { }
+) {}
 
 @ArgsType()
 export class FindUniqueReseauSocialArgs {
-  where: ReseauSocialWhereUniqueInput
+  where: ReseauSocialWhereUniqueInput;
 }

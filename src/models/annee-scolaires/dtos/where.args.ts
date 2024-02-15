@@ -1,46 +1,56 @@
-import { Field, InputType, PartialType } from '@nestjs/graphql'
-import { Prisma } from '@prisma/client'
-import { DateTimeFilter, IntFilter, RestrictProperties, StringFilter } from 'src/common/dtos/common.input'
-import { ClasseListRelationFilter } from 'src/models/classes/dtos/where.args'
-import { CoursListRelationFilter } from 'src/models/cours/dtos/where.args'
+import { Field, InputType, PartialType } from '@nestjs/graphql';
+import { Prisma } from '@prisma/client';
+import {
+  DateTimeFilter,
+  IntFilter,
+  RestrictProperties,
+  StringFilter,
+} from 'src/common/dtos/common.input';
+import { ClasseListRelationFilter } from 'src/models/classes/dtos/where.args';
+import { CoursListRelationFilter } from 'src/models/cours/dtos/where.args';
 
 @InputType()
 export class AnneeScolaireWhereUniqueInput {
-  id: number
+  id: number;
 }
 
 @InputType()
-export class AnneeScolaireWhereInputStrict implements RestrictProperties<AnneeScolaireWhereInputStrict, Prisma.AnneeScolaireWhereInput> {
-
+export class AnneeScolaireWhereInputStrict
+  implements
+    RestrictProperties<
+      AnneeScolaireWhereInputStrict,
+      Prisma.AnneeScolaireWhereInput
+    >
+{
   @Field(() => IntFilter, { nullable: true })
-  id: IntFilter
+  id: IntFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  createdAt: DateTimeFilter
+  createdAt: DateTimeFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  updatedAt: DateTimeFilter
+  updatedAt: DateTimeFilter;
 
   @Field(() => IntFilter, { nullable: true })
-  dateDebut: IntFilter
+  dateDebut: IntFilter;
 
   @Field(() => IntFilter, { nullable: true })
-  dateFin: IntFilter
+  dateFin: IntFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  nom: StringFilter
+  nom: StringFilter;
 
   @Field(() => ClasseListRelationFilter, { nullable: true })
-  classes: ClasseListRelationFilter
+  classes: ClasseListRelationFilter;
 
   @Field(() => [AnneeScolaireWhereInputStrict], { nullable: true })
-  AND: AnneeScolaireWhereInputStrict[]
+  AND: AnneeScolaireWhereInputStrict[];
 
   @Field(() => [AnneeScolaireWhereInputStrict], { nullable: true })
-  OR: AnneeScolaireWhereInputStrict[]
+  OR: AnneeScolaireWhereInputStrict[];
 
   @Field(() => [AnneeScolaireWhereInputStrict], { nullable: true })
-  NOT: AnneeScolaireWhereInputStrict[]
+  NOT: AnneeScolaireWhereInputStrict[];
 }
 
 @InputType()
@@ -48,45 +58,45 @@ export class AnneeScolaireWhereInput extends PartialType(
   AnneeScolaireWhereInputStrict,
 ) {
   @Field(() => IntFilter, { nullable: true })
-  id: IntFilter
+  id: IntFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  createdAt: DateTimeFilter
+  createdAt: DateTimeFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  updatedAt: DateTimeFilter
+  updatedAt: DateTimeFilter;
 
   @Field(() => IntFilter, { nullable: true })
-  dateDebut: IntFilter
+  dateDebut: IntFilter;
 
   @Field(() => IntFilter, { nullable: true })
-  dateFin: IntFilter
+  dateFin: IntFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  nom: StringFilter
+  nom: StringFilter;
 
   @Field(() => ClasseListRelationFilter, { nullable: true })
-  classes: ClasseListRelationFilter
+  classes: ClasseListRelationFilter;
 
   @Field(() => [AnneeScolaireWhereInput], { nullable: true })
-  AND: AnneeScolaireWhereInput[]
+  AND: AnneeScolaireWhereInput[];
 
   @Field(() => [AnneeScolaireWhereInput], { nullable: true })
-  OR: AnneeScolaireWhereInput[]
+  OR: AnneeScolaireWhereInput[];
 
   @Field(() => [AnneeScolaireWhereInput], { nullable: true })
-  NOT: AnneeScolaireWhereInput[]
+  NOT: AnneeScolaireWhereInput[];
 }
 
 @InputType()
 export class AnneeScolaireListRelationFilter {
-  every?: AnneeScolaireWhereInput
-  some?: AnneeScolaireWhereInput
-  none?: AnneeScolaireWhereInput
+  every?: AnneeScolaireWhereInput;
+  some?: AnneeScolaireWhereInput;
+  none?: AnneeScolaireWhereInput;
 }
 
 @InputType()
 export class AnneeScolaireRelationFilter {
-  is?: AnneeScolaireWhereInput
-  isNot?: AnneeScolaireWhereInput
+  is?: AnneeScolaireWhereInput;
+  isNot?: AnneeScolaireWhereInput;
 }

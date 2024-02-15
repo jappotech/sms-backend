@@ -1,103 +1,112 @@
-import { Field, InputType, PartialType } from '@nestjs/graphql'
-import { Prisma } from '@prisma/client'
-import { DateTimeFilter, IntFilter, RestrictProperties, StringFilter } from 'src/common/dtos/common.input'
-import { DomaineRelationFilter, DomaineWhereInput } from 'src/models/domaines/dtos/where.args'
-import { SpecialiteListRelationFilter } from 'src/models/specialites/dtos/where.args'
+import { Field, InputType, PartialType } from '@nestjs/graphql';
+import { Prisma } from '@prisma/client';
+import {
+  DateTimeFilter,
+  IntFilter,
+  RestrictProperties,
+  StringFilter,
+} from 'src/common/dtos/common.input';
+import {
+  DomaineRelationFilter,
+  DomaineWhereInput,
+} from 'src/models/domaines/dtos/where.args';
+import { SpecialiteListRelationFilter } from 'src/models/specialites/dtos/where.args';
 
 @InputType()
 export class MentionWhereUniqueInput {
   @Field(() => Number, { nullable: true })
-  id: number
+  id: number;
 }
 
 @InputType()
-export class MentionWhereInputStrict implements RestrictProperties<MentionWhereInputStrict, Prisma.MentionWhereInput> {
+export class MentionWhereInputStrict
+  implements
+    RestrictProperties<MentionWhereInputStrict, Prisma.MentionWhereInput>
+{
   @Field(() => IntFilter, { nullable: true })
-  id: IntFilter
+  id: IntFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  createdAt: DateTimeFilter
+  createdAt: DateTimeFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  updatedAt: DateTimeFilter
+  updatedAt: DateTimeFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  nom: StringFilter
+  nom: StringFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  slug: StringFilter
+  slug: StringFilter;
 
   @Field(() => IntFilter, { nullable: true })
-  domaineId: IntFilter
+  domaineId: IntFilter;
 
   @Field(() => DomaineRelationFilter, { nullable: true })
-  domaine: DomaineRelationFilter
+  domaine: DomaineRelationFilter;
 
   @Field(() => SpecialiteListRelationFilter, { nullable: true })
-  specialites: SpecialiteListRelationFilter
+  specialites: SpecialiteListRelationFilter;
 
   @Field(() => [MentionWhereInputStrict], { nullable: true })
-  AND: MentionWhereInputStrict[]
+  AND: MentionWhereInputStrict[];
 
   @Field(() => [MentionWhereInputStrict], { nullable: true })
-  OR: MentionWhereInputStrict[]
+  OR: MentionWhereInputStrict[];
 
   @Field(() => [MentionWhereInputStrict], { nullable: true })
-  NOT: MentionWhereInputStrict[]
+  NOT: MentionWhereInputStrict[];
 }
 
 @InputType()
-export class MentionWhereInput extends PartialType(
-  MentionWhereInputStrict,
-) {
+export class MentionWhereInput extends PartialType(MentionWhereInputStrict) {
   @Field(() => IntFilter, { nullable: true })
-  id: IntFilter
+  id: IntFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  createdAt: DateTimeFilter
+  createdAt: DateTimeFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  updatedAt: DateTimeFilter
+  updatedAt: DateTimeFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  nom: StringFilter
+  nom: StringFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  slug: StringFilter
+  slug: StringFilter;
 
   @Field(() => IntFilter, { nullable: true })
-  domaineId: IntFilter
+  domaineId: IntFilter;
 
   @Field(() => DomaineRelationFilter, { nullable: true })
-  domaine: DomaineRelationFilter
+  domaine: DomaineRelationFilter;
 
   @Field(() => SpecialiteListRelationFilter, { nullable: true })
-  specialites: SpecialiteListRelationFilter
+  specialites: SpecialiteListRelationFilter;
 
   @Field(() => [MentionWhereInput], { nullable: true })
-  AND: MentionWhereInput[]
+  AND: MentionWhereInput[];
 
   @Field(() => [MentionWhereInput], { nullable: true })
-  OR: MentionWhereInput[]
+  OR: MentionWhereInput[];
 
   @Field(() => [MentionWhereInput], { nullable: true })
-  NOT: MentionWhereInput[]
+  NOT: MentionWhereInput[];
 }
 
 @InputType()
 export class MentionListRelationFilter {
   @Field(() => MentionWhereInput, { nullable: true })
-  every?: MentionWhereInput
+  every?: MentionWhereInput;
   @Field(() => MentionWhereInput, { nullable: true })
-  some?: MentionWhereInput
+  some?: MentionWhereInput;
   @Field(() => MentionWhereInput, { nullable: true })
-  none?: MentionWhereInput
+  none?: MentionWhereInput;
 }
 
 @InputType()
 export class MentionRelationFilter {
   @Field(() => MentionWhereInput, { nullable: true })
-  is?: MentionWhereInput
+  is?: MentionWhereInput;
   @Field(() => MentionWhereInput, { nullable: true })
-  isNot?: MentionWhereInput
+  isNot?: MentionWhereInput;
 }

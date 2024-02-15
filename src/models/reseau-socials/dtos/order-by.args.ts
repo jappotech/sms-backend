@@ -1,46 +1,48 @@
-import { Field, InputType, PartialType } from '@nestjs/graphql'
-import { Prisma } from '@prisma/client'
-import { RestrictProperties } from 'src/common/dtos/common.input'
-import { ContactOrderByWithRelationInput } from 'src/models/contacts/dtos/order-by.args'
+import { Field, InputType, PartialType } from '@nestjs/graphql';
+import { Prisma } from '@prisma/client';
+import { RestrictProperties } from 'src/common/dtos/common.input';
+import { ContactOrderByWithRelationInput } from 'src/models/contacts/dtos/order-by.args';
 
 @InputType()
 export class ReseauSocialOrderByWithRelationInputStrict
-  implements RestrictProperties<ReseauSocialOrderByWithRelationInputStrict, Prisma.ReseauSocialOrderByWithRelationInput>
+  implements
+    RestrictProperties<
+      ReseauSocialOrderByWithRelationInputStrict,
+      Prisma.ReseauSocialOrderByWithRelationInput
+    >
 {
+  @Field(() => Prisma.SortOrder, { nullable: true })
+  id: Prisma.SortOrder;
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  id: Prisma.SortOrder
+  createdAt: Prisma.SortOrder;
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  createdAt: Prisma.SortOrder
+  updatedAt: Prisma.SortOrder;
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  updatedAt: Prisma.SortOrder
+  nom: Prisma.SortOrder;
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  nom: Prisma.SortOrder
+  username: Prisma.SortOrder;
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  username: Prisma.SortOrder
+  url: Prisma.SortOrder;
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  url: Prisma.SortOrder
-
-  @Field(() => Prisma.SortOrder, { nullable: true })
-  contactId: Prisma.SortOrder | Prisma.SortOrderInput
+  contactId: Prisma.SortOrder | Prisma.SortOrderInput;
 
   @Field(() => ContactOrderByWithRelationInput, { nullable: true })
-  contact: ContactOrderByWithRelationInput
+  contact: ContactOrderByWithRelationInput;
 }
-
 
 @InputType()
 export class ReseauSocialOrderByWithRelationInput extends PartialType(
   ReseauSocialOrderByWithRelationInputStrict,
-) { }
+) {}
 
 @InputType()
 export class ReseauSocialOrderByRelationAggregateInput {
   @Field(() => Prisma.SortOrder)
-  _count?: Prisma.SortOrder
+  _count?: Prisma.SortOrder;
 }

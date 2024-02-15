@@ -6,21 +6,30 @@ import { LoginInput } from './dtos/login.input';
 
 @Injectable()
 export class AuthService {
-
   constructor(
     private prismaService: PrismaService,
-    private jwtService: JwtService
-  ) { }
+    private jwtService: JwtService,
+  ) {}
 
   async validateUser(username: string, pass: string): Promise<any> {
-    const user = await this.prismaService.account.findUnique({ where: { username: username } });
+    const user = await this.prismaService.account.findUnique({
+      where: { username: username },
+    });
 
     if (user) {
       const isMatch = await bcrypt.compare(pass, user.password);
       if (!isMatch) {
         return null;
       }
-      const { password, id, userId, createdAt, updatedAt, username, ...result } = user;
+      const {
+        password,
+        id,
+        userId,
+        createdAt,
+        updatedAt,
+        username,
+        ...result
+      } = user;
       return result;
     }
     return null;
@@ -31,10 +40,9 @@ export class AuthService {
     if (!payload) {
       throw new UnauthorizedException('Invalid credentials');
     }
-    const access_token = this.jwtService.sign(payload)
+    const access_token = this.jwtService.sign(payload);
     return {
       access_token,
     };
   }
-
 }

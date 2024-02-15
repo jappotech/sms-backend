@@ -1,75 +1,78 @@
-import { Field, InputType, PartialType } from '@nestjs/graphql'
-import { Prisma } from '@prisma/client'
-import { RestrictProperties } from 'src/common/dtos/common.input'
-import { AnneeScolaireOrderByWithRelationInput } from 'src/models/annee-scolaires/dtos/order-by.args'
-import { CoursOrderByRelationAggregateInput } from 'src/models/cours/dtos/order-by.args'
-import { EmploiDuTempsOrderByRelationAggregateInput } from 'src/models/emploi-du-temps/dtos/order-by.args'
-import { EtablissementOrderByWithRelationInput } from 'src/models/etablissements/dtos/order-by.args'
-import { InscriptionOrderByRelationAggregateInput } from 'src/models/inscriptions/dtos/order-by.args'
-import { SemestreOrderByRelationAggregateInput } from 'src/models/semestres/dtos/order-by.args'
-import { SpecialiteOrderByWithRelationInput } from 'src/models/specialites/dtos/order-by.args'
+import { Field, InputType, PartialType } from '@nestjs/graphql';
+import { Prisma } from '@prisma/client';
+import { RestrictProperties } from 'src/common/dtos/common.input';
+import { AnneeScolaireOrderByWithRelationInput } from 'src/models/annee-scolaires/dtos/order-by.args';
+import { CoursOrderByRelationAggregateInput } from 'src/models/cours/dtos/order-by.args';
+import { EmploiDuTempsOrderByRelationAggregateInput } from 'src/models/emploi-du-temps/dtos/order-by.args';
+import { EtablissementOrderByWithRelationInput } from 'src/models/etablissements/dtos/order-by.args';
+import { InscriptionOrderByRelationAggregateInput } from 'src/models/inscriptions/dtos/order-by.args';
+import { SemestreOrderByRelationAggregateInput } from 'src/models/semestres/dtos/order-by.args';
+import { SpecialiteOrderByWithRelationInput } from 'src/models/specialites/dtos/order-by.args';
 
 @InputType()
 export class ClasseOrderByWithRelationInputStrict
-  implements RestrictProperties<ClasseOrderByWithRelationInputStrict, Prisma.ClasseOrderByWithRelationInput>
+  implements
+    RestrictProperties<
+      ClasseOrderByWithRelationInputStrict,
+      Prisma.ClasseOrderByWithRelationInput
+    >
 {
   @Field(() => Prisma.SortOrder, { nullable: true })
-  id: Prisma.SortOrder
+  id: Prisma.SortOrder;
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  createdAt: Prisma.SortOrder
+  createdAt: Prisma.SortOrder;
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  updatedAt: Prisma.SortOrder
+  updatedAt: Prisma.SortOrder;
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  nom: Prisma.SortOrder
+  nom: Prisma.SortOrder;
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  code: Prisma.SortOrder
+  code: Prisma.SortOrder;
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  niveau: Prisma.SortOrder
+  niveau: Prisma.SortOrder;
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  anneeScolaireId: Prisma.SortOrder
+  anneeScolaireId: Prisma.SortOrder;
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  AnneeScolaire: AnneeScolaireOrderByWithRelationInput
+  AnneeScolaire: AnneeScolaireOrderByWithRelationInput;
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  etablissementId: Prisma.SortOrder
+  etablissementId: Prisma.SortOrder;
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  specialiteId: Prisma.SortOrder
+  specialiteId: Prisma.SortOrder;
 
   @Field(() => EtablissementOrderByWithRelationInput, { nullable: true })
-  etablissement: EtablissementOrderByWithRelationInput
+  etablissement: EtablissementOrderByWithRelationInput;
 
   @Field(() => SemestreOrderByRelationAggregateInput, { nullable: true })
-  semestres: SemestreOrderByRelationAggregateInput
+  semestres: SemestreOrderByRelationAggregateInput;
 
   @Field(() => InscriptionOrderByRelationAggregateInput, { nullable: true })
-  inscriptions: InscriptionOrderByRelationAggregateInput
+  inscriptions: InscriptionOrderByRelationAggregateInput;
 
   @Field(() => SpecialiteOrderByWithRelationInput, { nullable: true })
-  specialite: SpecialiteOrderByWithRelationInput
+  specialite: SpecialiteOrderByWithRelationInput;
 
   @Field(() => CoursOrderByRelationAggregateInput, { nullable: true })
-  Cours: CoursOrderByRelationAggregateInput
+  Cours: CoursOrderByRelationAggregateInput;
 
   @Field(() => EmploiDuTempsOrderByRelationAggregateInput, { nullable: true })
-  EmploiDuTemps: EmploiDuTempsOrderByRelationAggregateInput
+  EmploiDuTemps: EmploiDuTempsOrderByRelationAggregateInput;
 }
-
 
 @InputType()
 export class ClasseOrderByWithRelationInput extends PartialType(
   ClasseOrderByWithRelationInputStrict,
-) { }
+) {}
 
 @InputType()
 export class ClasseOrderByRelationAggregateInput {
   @Field(() => Prisma.SortOrder)
-  _count?: Prisma.SortOrder
+  _count?: Prisma.SortOrder;
 }

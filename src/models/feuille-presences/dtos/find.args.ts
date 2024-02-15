@@ -1,42 +1,54 @@
-import { ArgsType, Field, registerEnumType, PartialType } from '@nestjs/graphql'
-import { Prisma } from '@prisma/client'
-import { FeuillePresenceOrderByWithRelationInput } from './order-by.args'
-import { FeuillePresenceWhereInput, FeuillePresenceWhereUniqueInput } from './where.args'
-import { RestrictProperties } from 'src/common/dtos/common.input'
+import {
+  ArgsType,
+  Field,
+  registerEnumType,
+  PartialType,
+} from '@nestjs/graphql';
+import { Prisma } from '@prisma/client';
+import { FeuillePresenceOrderByWithRelationInput } from './order-by.args';
+import {
+  FeuillePresenceWhereInput,
+  FeuillePresenceWhereUniqueInput,
+} from './where.args';
+import { RestrictProperties } from 'src/common/dtos/common.input';
 
 registerEnumType(Prisma.FeuillePresenceScalarFieldEnum, {
   name: 'FeuillePresenceScalarFieldEnum',
-})
+});
 
 @ArgsType()
 class FindManyFeuillePresenceArgsStrict
-  implements RestrictProperties<FindManyFeuillePresenceArgsStrict, Omit<Prisma.FeuillePresenceFindManyArgs, 'include' | 'select'>>
+  implements
+    RestrictProperties<
+      FindManyFeuillePresenceArgsStrict,
+      Omit<Prisma.FeuillePresenceFindManyArgs, 'include' | 'select'>
+    >
 {
   @Field(() => FeuillePresenceWhereInput, { nullable: true })
-  where: FeuillePresenceWhereInput
+  where: FeuillePresenceWhereInput;
 
   @Field(() => [FeuillePresenceOrderByWithRelationInput], { nullable: true })
-  orderBy: FeuillePresenceOrderByWithRelationInput[]
+  orderBy: FeuillePresenceOrderByWithRelationInput[];
 
   @Field(() => FeuillePresenceWhereUniqueInput, { nullable: true })
-  cursor: FeuillePresenceWhereUniqueInput
+  cursor: FeuillePresenceWhereUniqueInput;
 
   @Field(() => Number, { nullable: true })
-  take: number
+  take: number;
 
   @Field(() => Number, { nullable: true })
-  skip: number
+  skip: number;
 
   @Field(() => [Prisma.FeuillePresenceScalarFieldEnum])
-  distinct: Prisma.FeuillePresenceScalarFieldEnum[]
+  distinct: Prisma.FeuillePresenceScalarFieldEnum[];
 }
 
 @ArgsType()
 export class FindManyFeuillePresenceArgs extends PartialType(
   FindManyFeuillePresenceArgsStrict,
-) { }
+) {}
 
 @ArgsType()
 export class FindUniqueFeuillePresenceArgs {
-  where: FeuillePresenceWhereUniqueInput
+  where: FeuillePresenceWhereUniqueInput;
 }

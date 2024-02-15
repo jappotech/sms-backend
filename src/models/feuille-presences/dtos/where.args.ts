@@ -1,55 +1,65 @@
-import { Field, InputType, PartialType } from '@nestjs/graphql'
-import { Prisma } from '@prisma/client'
-import { DateTimeFilter, IntFilter, RestrictProperties } from 'src/common/dtos/common.input'
-import { CoursRelationFilter } from 'src/models/cours/dtos/where.args'
-import { EtudiantRelationFilter } from 'src/models/etudiants/dtos/where.args'
+import { Field, InputType, PartialType } from '@nestjs/graphql';
+import { Prisma } from '@prisma/client';
+import {
+  DateTimeFilter,
+  IntFilter,
+  RestrictProperties,
+} from 'src/common/dtos/common.input';
+import { CoursRelationFilter } from 'src/models/cours/dtos/where.args';
+import { EtudiantRelationFilter } from 'src/models/etudiants/dtos/where.args';
 
 @InputType()
 export class FeuillePresenceWhereUniqueInput {
   @Field(() => Number, { nullable: true })
-  id: number
+  id: number;
 }
 
 @InputType()
-export class FeuillePresenceWhereInputStrict implements RestrictProperties<FeuillePresenceWhereInputStrict, Prisma.FeuillePresenceWhereInput> {
+export class FeuillePresenceWhereInputStrict
+  implements
+    RestrictProperties<
+      FeuillePresenceWhereInputStrict,
+      Prisma.FeuillePresenceWhereInput
+    >
+{
   @Field(() => IntFilter, { nullable: true })
-  id: IntFilter
+  id: IntFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  createdAt: DateTimeFilter
+  createdAt: DateTimeFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  updatedAt: DateTimeFilter
+  updatedAt: DateTimeFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  date: DateTimeFilter
+  date: DateTimeFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  heureDebut: DateTimeFilter
+  heureDebut: DateTimeFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  heureFin: DateTimeFilter
+  heureFin: DateTimeFilter;
 
   @Field(() => IntFilter, { nullable: true })
-  coursId: IntFilter
+  coursId: IntFilter;
 
   @Field(() => IntFilter, { nullable: true })
-  etudiantId: IntFilter
+  etudiantId: IntFilter;
 
   @Field(() => CoursRelationFilter, { nullable: true })
-  cours: CoursRelationFilter
+  cours: CoursRelationFilter;
 
   @Field(() => EtudiantRelationFilter, { nullable: true })
-  etudiant: EtudiantRelationFilter
+  etudiant: EtudiantRelationFilter;
 
   @Field(() => [FeuillePresenceWhereInputStrict], { nullable: true })
-  AND: FeuillePresenceWhereInputStrict[]
+  AND: FeuillePresenceWhereInputStrict[];
 
   @Field(() => [FeuillePresenceWhereInputStrict], { nullable: true })
-  OR: FeuillePresenceWhereInputStrict[]
+  OR: FeuillePresenceWhereInputStrict[];
 
   @Field(() => [FeuillePresenceWhereInputStrict], { nullable: true })
-  NOT: FeuillePresenceWhereInputStrict[]
+  NOT: FeuillePresenceWhereInputStrict[];
 }
 
 @InputType()
@@ -57,59 +67,59 @@ export class FeuillePresenceWhereInput extends PartialType(
   FeuillePresenceWhereInputStrict,
 ) {
   @Field(() => IntFilter, { nullable: true })
-  id: IntFilter
+  id: IntFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  createdAt: DateTimeFilter
+  createdAt: DateTimeFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  updatedAt: DateTimeFilter
+  updatedAt: DateTimeFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  date: DateTimeFilter
+  date: DateTimeFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  heureDebut: DateTimeFilter
+  heureDebut: DateTimeFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  heureFin: DateTimeFilter
+  heureFin: DateTimeFilter;
 
   @Field(() => IntFilter, { nullable: true })
-  coursId: IntFilter
+  coursId: IntFilter;
 
   @Field(() => IntFilter, { nullable: true })
-  etudiantId: IntFilter
+  etudiantId: IntFilter;
 
   @Field(() => CoursRelationFilter, { nullable: true })
-  cours: CoursRelationFilter
+  cours: CoursRelationFilter;
 
   @Field(() => EtudiantRelationFilter, { nullable: true })
-  etudiant: EtudiantRelationFilter
+  etudiant: EtudiantRelationFilter;
 
   @Field(() => [FeuillePresenceWhereInput], { nullable: true })
-  AND: FeuillePresenceWhereInput[]
+  AND: FeuillePresenceWhereInput[];
 
   @Field(() => [FeuillePresenceWhereInput], { nullable: true })
-  OR: FeuillePresenceWhereInput[]
+  OR: FeuillePresenceWhereInput[];
 
   @Field(() => [FeuillePresenceWhereInput], { nullable: true })
-  NOT: FeuillePresenceWhereInput[]
+  NOT: FeuillePresenceWhereInput[];
 }
 
 @InputType()
 export class FeuillePresenceListRelationFilter {
   @Field(() => FeuillePresenceWhereInput, { nullable: true })
-  every?: FeuillePresenceWhereInput
+  every?: FeuillePresenceWhereInput;
   @Field(() => FeuillePresenceWhereInput, { nullable: true })
-  some?: FeuillePresenceWhereInput
+  some?: FeuillePresenceWhereInput;
   @Field(() => FeuillePresenceWhereInput, { nullable: true })
-  none?: FeuillePresenceWhereInput
+  none?: FeuillePresenceWhereInput;
 }
 
 @InputType()
 export class FeuillePresenceRelationFilter {
   @Field(() => FeuillePresenceWhereInput, { nullable: true })
-  is?: FeuillePresenceWhereInput
+  is?: FeuillePresenceWhereInput;
   @Field(() => FeuillePresenceWhereInput, { nullable: true })
-  isNot?: FeuillePresenceWhereInput
+  isNot?: FeuillePresenceWhereInput;
 }

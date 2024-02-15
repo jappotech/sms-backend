@@ -1,80 +1,91 @@
-import { Field, InputType, PartialType } from '@nestjs/graphql'
-import { Prisma } from '@prisma/client'
-import { DateTimeFilter, IntFilter, RestrictProperties, StringFilter } from 'src/common/dtos/common.input'
-import { AdresseRelationFilter } from 'src/models/adresses/dtos/where.args'
-import { ClasseListRelationFilter } from 'src/models/classes/dtos/where.args'
-import { ContactRelationFilter } from 'src/models/contacts/dtos/where.args'
-import { DomaineListRelationFilter } from 'src/models/domaines/dtos/where.args'
-import { SalleListRelationFilter } from 'src/models/salles/dtos/where.args'
-import { UtilisateurListRelationFilter } from 'src/models/utilisateurs/dtos/where.args'
+import { Field, InputType, PartialType } from '@nestjs/graphql';
+import { Prisma } from '@prisma/client';
+import {
+  DateTimeFilter,
+  IntFilter,
+  RestrictProperties,
+  StringFilter,
+} from 'src/common/dtos/common.input';
+import { AdresseRelationFilter } from 'src/models/adresses/dtos/where.args';
+import { ClasseListRelationFilter } from 'src/models/classes/dtos/where.args';
+import { ContactRelationFilter } from 'src/models/contacts/dtos/where.args';
+import { DomaineListRelationFilter } from 'src/models/domaines/dtos/where.args';
+import { SalleListRelationFilter } from 'src/models/salles/dtos/where.args';
+import { UtilisateurListRelationFilter } from 'src/models/utilisateurs/dtos/where.args';
 
 @InputType()
 export class EtablissementWhereUniqueInput {
   @Field(() => Number, { nullable: true })
-  id: number
+  id: number;
 }
 
 @InputType()
-export class EtablissementWhereInputStrict implements RestrictProperties<EtablissementWhereInputStrict, Prisma.EtablissementWhereInput> {
+export class EtablissementWhereInputStrict
+  implements
+    RestrictProperties<
+      EtablissementWhereInputStrict,
+      Prisma.EtablissementWhereInput
+    >
+{
   @Field(() => IntFilter, { nullable: true })
-  id: IntFilter
+  id: IntFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  createdAt: DateTimeFilter
+  createdAt: DateTimeFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  updatedAt: DateTimeFilter
+  updatedAt: DateTimeFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  nom: StringFilter
+  nom: StringFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  matricule: StringFilter
+  matricule: StringFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  sigle: StringFilter
+  sigle: StringFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  dateCreation: StringFilter
+  dateCreation: StringFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  logo: StringFilter
+  logo: StringFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  anneeEnCours: StringFilter
+  anneeEnCours: StringFilter;
 
   @Field(() => IntFilter, { nullable: true })
-  adresseId: IntFilter
+  adresseId: IntFilter;
 
   @Field(() => IntFilter, { nullable: true })
-  contactId: IntFilter
+  contactId: IntFilter;
 
   @Field(() => AdresseRelationFilter, { nullable: true })
-  adresse: AdresseRelationFilter
+  adresse: AdresseRelationFilter;
 
   @Field(() => ContactRelationFilter, { nullable: true })
-  contact: ContactRelationFilter
+  contact: ContactRelationFilter;
 
   @Field(() => UtilisateurListRelationFilter, { nullable: true })
-  utilisateurs: UtilisateurListRelationFilter
+  utilisateurs: UtilisateurListRelationFilter;
 
   @Field(() => DomaineListRelationFilter, { nullable: true })
-  domaines: DomaineListRelationFilter
+  domaines: DomaineListRelationFilter;
 
   @Field(() => ClasseListRelationFilter, { nullable: true })
-  classes: ClasseListRelationFilter
+  classes: ClasseListRelationFilter;
 
   @Field(() => SalleListRelationFilter, { nullable: true })
-  salle: SalleListRelationFilter
+  salle: SalleListRelationFilter;
 
   @Field(() => [EtablissementWhereInputStrict], { nullable: true })
-  AND: EtablissementWhereInputStrict[]
+  AND: EtablissementWhereInputStrict[];
 
   @Field(() => [EtablissementWhereInputStrict], { nullable: true })
-  OR: EtablissementWhereInputStrict[]
+  OR: EtablissementWhereInputStrict[];
 
   @Field(() => [EtablissementWhereInputStrict], { nullable: true })
-  NOT: EtablissementWhereInputStrict[]
+  NOT: EtablissementWhereInputStrict[];
 }
 
 @InputType()
@@ -82,80 +93,80 @@ export class EtablissementWhereInput extends PartialType(
   EtablissementWhereInputStrict,
 ) {
   @Field(() => IntFilter, { nullable: true })
-  id: IntFilter
+  id: IntFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  createdAt: DateTimeFilter
+  createdAt: DateTimeFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  updatedAt: DateTimeFilter
+  updatedAt: DateTimeFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  nom: StringFilter
+  nom: StringFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  matricule: StringFilter
+  matricule: StringFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  sigle: StringFilter
+  sigle: StringFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  dateCreation: StringFilter
+  dateCreation: StringFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  logo: StringFilter
+  logo: StringFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  anneeEnCours: StringFilter
+  anneeEnCours: StringFilter;
 
   @Field(() => IntFilter, { nullable: true })
-  adresseId: IntFilter
+  adresseId: IntFilter;
 
   @Field(() => IntFilter, { nullable: true })
-  contactId: IntFilter
+  contactId: IntFilter;
 
   @Field(() => AdresseRelationFilter, { nullable: true })
-  adresse: AdresseRelationFilter
+  adresse: AdresseRelationFilter;
 
   @Field(() => ContactRelationFilter, { nullable: true })
-  contact: ContactRelationFilter
+  contact: ContactRelationFilter;
 
   @Field(() => UtilisateurListRelationFilter, { nullable: true })
-  utilisateurs: UtilisateurListRelationFilter
+  utilisateurs: UtilisateurListRelationFilter;
 
   @Field(() => DomaineListRelationFilter, { nullable: true })
-  domaines: DomaineListRelationFilter
+  domaines: DomaineListRelationFilter;
 
   @Field(() => ClasseListRelationFilter, { nullable: true })
-  classes: ClasseListRelationFilter
+  classes: ClasseListRelationFilter;
 
   @Field(() => SalleListRelationFilter, { nullable: true })
-  salle: SalleListRelationFilter
+  salle: SalleListRelationFilter;
 
   @Field(() => [EtablissementWhereInput], { nullable: true })
-  AND: EtablissementWhereInput[]
+  AND: EtablissementWhereInput[];
 
   @Field(() => [EtablissementWhereInput], { nullable: true })
-  OR: EtablissementWhereInput[]
+  OR: EtablissementWhereInput[];
 
   @Field(() => [EtablissementWhereInput], { nullable: true })
-  NOT: EtablissementWhereInput[]
+  NOT: EtablissementWhereInput[];
 }
 
 @InputType()
 export class EtablissementListRelationFilter {
   @Field(() => EtablissementWhereInput, { nullable: true })
-  every?: EtablissementWhereInput
+  every?: EtablissementWhereInput;
   @Field(() => EtablissementWhereInput, { nullable: true })
-  some?: EtablissementWhereInput
+  some?: EtablissementWhereInput;
   @Field(() => EtablissementWhereInput, { nullable: true })
-  none?: EtablissementWhereInput
+  none?: EtablissementWhereInput;
 }
 
 @InputType()
 export class EtablissementRelationFilter {
   @Field(() => EtablissementWhereInput, { nullable: true })
-  is?: EtablissementWhereInput
+  is?: EtablissementWhereInput;
   @Field(() => EtablissementWhereInput, { nullable: true })
-  isNot?: EtablissementWhereInput
+  isNot?: EtablissementWhereInput;
 }

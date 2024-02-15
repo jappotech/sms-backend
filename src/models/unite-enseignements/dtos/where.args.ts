@@ -1,52 +1,63 @@
-import { Field, InputType, PartialType } from '@nestjs/graphql'
-import { Prisma } from '@prisma/client'
-import { DateTimeFilter, IntFilter, RestrictProperties, StringFilter } from 'src/common/dtos/common.input'
-import { MatiereListRelationFilter } from 'src/models/matieres/dtos/where.args'
-import { SemestreRelationFilter } from 'src/models/semestres/dtos/where.args'
+import { Field, InputType, PartialType } from '@nestjs/graphql';
+import { Prisma } from '@prisma/client';
+import {
+  DateTimeFilter,
+  IntFilter,
+  RestrictProperties,
+  StringFilter,
+} from 'src/common/dtos/common.input';
+import { MatiereListRelationFilter } from 'src/models/matieres/dtos/where.args';
+import { SemestreRelationFilter } from 'src/models/semestres/dtos/where.args';
 
 @InputType()
 export class UniteEnseignementWhereUniqueInput {
   @Field(() => Number, { nullable: true })
-  id: number
+  id: number;
 }
 
 @InputType()
-export class UniteEnseignementWhereInputStrict implements RestrictProperties<UniteEnseignementWhereInputStrict, Prisma.UniteEnseignementWhereInput> {
+export class UniteEnseignementWhereInputStrict
+  implements
+    RestrictProperties<
+      UniteEnseignementWhereInputStrict,
+      Prisma.UniteEnseignementWhereInput
+    >
+{
   @Field(() => IntFilter, { nullable: true })
-  id: IntFilter
+  id: IntFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  createdAt: StringFilter
+  createdAt: StringFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  updatedAt: DateTimeFilter
+  updatedAt: DateTimeFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  code: StringFilter
+  code: StringFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  nom: StringFilter
+  nom: StringFilter;
 
   @Field(() => IntFilter, { nullable: true })
-  credit: IntFilter
+  credit: IntFilter;
 
   @Field(() => IntFilter, { nullable: true })
   semestreId: IntFilter;
 
   @Field(() => SemestreRelationFilter, { nullable: true })
-  semestre: SemestreRelationFilter
+  semestre: SemestreRelationFilter;
 
   @Field(() => MatiereListRelationFilter, { nullable: true })
-  matieres: MatiereListRelationFilter
+  matieres: MatiereListRelationFilter;
 
   @Field(() => [UniteEnseignementWhereInputStrict], { nullable: true })
-  AND: UniteEnseignementWhereInputStrict[]
+  AND: UniteEnseignementWhereInputStrict[];
 
   @Field(() => [UniteEnseignementWhereInputStrict], { nullable: true })
-  OR: UniteEnseignementWhereInputStrict[]
+  OR: UniteEnseignementWhereInputStrict[];
 
   @Field(() => [UniteEnseignementWhereInputStrict], { nullable: true })
-  NOT: UniteEnseignementWhereInputStrict[]
+  NOT: UniteEnseignementWhereInputStrict[];
 }
 
 @InputType()
@@ -54,51 +65,51 @@ export class UniteEnseignementWhereInput extends PartialType(
   UniteEnseignementWhereInputStrict,
 ) {
   @Field(() => IntFilter, { nullable: true })
-  id: IntFilter
+  id: IntFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  createdAt: StringFilter
+  createdAt: StringFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
-  updatedAt: DateTimeFilter
+  updatedAt: DateTimeFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  code: StringFilter
+  code: StringFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  nom: StringFilter
+  nom: StringFilter;
 
   @Field(() => IntFilter, { nullable: true })
-  credit: IntFilter
+  credit: IntFilter;
 
   @Field(() => IntFilter, { nullable: true })
   semestreId: IntFilter;
 
   @Field(() => SemestreRelationFilter, { nullable: true })
-  semestre: SemestreRelationFilter
+  semestre: SemestreRelationFilter;
 
   @Field(() => MatiereListRelationFilter, { nullable: true })
-  matieres: MatiereListRelationFilter
+  matieres: MatiereListRelationFilter;
 
   @Field(() => [UniteEnseignementWhereInput], { nullable: true })
-  AND: UniteEnseignementWhereInput[]
+  AND: UniteEnseignementWhereInput[];
 
   @Field(() => [UniteEnseignementWhereInput], { nullable: true })
-  OR: UniteEnseignementWhereInput[]
+  OR: UniteEnseignementWhereInput[];
 
   @Field(() => [UniteEnseignementWhereInput], { nullable: true })
-  NOT: UniteEnseignementWhereInput[]
+  NOT: UniteEnseignementWhereInput[];
 }
 
 @InputType()
 export class UniteEnseignementListRelationFilter {
-  every?: UniteEnseignementWhereInput
-  some?: UniteEnseignementWhereInput
-  none?: UniteEnseignementWhereInput
+  every?: UniteEnseignementWhereInput;
+  some?: UniteEnseignementWhereInput;
+  none?: UniteEnseignementWhereInput;
 }
 
 @InputType()
 export class UniteEnseignementRelationFilter {
-  is?: UniteEnseignementWhereInput
-  isNot?: UniteEnseignementWhereInput
+  is?: UniteEnseignementWhereInput;
+  isNot?: UniteEnseignementWhereInput;
 }
