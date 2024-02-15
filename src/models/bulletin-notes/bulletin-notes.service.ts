@@ -84,11 +84,10 @@ export class BulletinNotesService {
           }
           noteData.note = notesEtd;
         }
-        const moyenneMatiere = (
+        const moyenneMatiere = noteData.note.length > 0 ? (
           noteData.note.reduce((acc, note) => {
             return acc + note.note;
-          }, 0) / noteData.note.length
-        );
+          }, 0) / noteData.note.length) : 0;
         noteData.moyenne = moyenneMatiere.toFixed(2);
         noteData.moyenneCoeff = (matiere.coefficient * moyenneMatiere).toFixed(2);
         noteData.resultat = noteData.moyenne >= 10 ? true : false;
