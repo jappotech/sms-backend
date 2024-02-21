@@ -159,8 +159,7 @@ type Matiere {
   credit: Float
   coefficient: Float
   nbHeure: Float
-  uniteEnseigmentId: Float
-  uniteEnseignement: UniteEnseignement!
+  uniteEnseignementId: Float
 }
 
 type Salle {
@@ -289,17 +288,6 @@ type FeuillePresence {
   etudiantId: Float
 }
 
-type UniteEnseignement {
-  id: Float
-  createdAt: DateTime
-  updatedAt: DateTime
-  code: String
-  nom: String
-  credit: Float
-  semestreId: Float
-  matieres: [Matiere!]!
-}
-
 type Paiement {
   id: Float
   etudiantId: Float
@@ -328,6 +316,17 @@ type ReseauSocial {
   username: String
   url: String
   contactId: Float
+}
+
+type UniteEnseignement {
+  id: Float
+  createdAt: DateTime
+  updatedAt: DateTime
+  code: String
+  nom: String
+  credit: Float
+  semestreId: Float
+  matieres: [Matiere!]!
 }
 
 type LoginResponse {
@@ -831,9 +830,9 @@ input MatiereWhereInput {
   credit: IntFilter
   coefficient: IntFilter
   nbHeure: IntFilter
-  uniteEnseigmentId: IntFilter
+  uniteEnseignementId: IntFilter
   cours: CoursListRelationFilter
-  uniteEnseigment: UniteEnseignementRelationFilter
+  uniteEnseignement: UniteEnseignementRelationFilter
   AND: [MatiereWhereInput!]
   OR: [MatiereWhereInput!]
   NOT: [MatiereWhereInput!]
@@ -1422,9 +1421,9 @@ input MatiereOrderByWithRelationInput {
   credit: SortOrder
   coefficient: SortOrder
   nbHeure: SortOrder
-  uniteEnseigmentId: SortOrder
+  uniteEnseignementId: SortOrder
   cours: CoursOrderByRelationAggregateInput
-  uniteEnseigment: UniteEnseignementOrderByWithRelationInput
+  uniteEnseignement: UniteEnseignementOrderByWithRelationInput
 }
 
 input UniteEnseignementOrderByWithRelationInput {
@@ -1816,7 +1815,7 @@ enum MatiereScalarFieldEnum {
   credit
   coefficient
   nbHeure
-  uniteEnseigmentId
+  uniteEnseignementId
 }
 
 input MentionWhereUniqueInput {
@@ -2433,7 +2432,7 @@ input CreateMatiereInput {
   credit: Float
   coefficient: Float
   nbHeure: Float
-  uniteEnseigmentId: Float
+  uniteEnseignementId: Float
 }
 
 input UpdateMatiereInput {
@@ -2442,7 +2441,7 @@ input UpdateMatiereInput {
   credit: Float
   coefficient: Float
   nbHeure: Float
-  uniteEnseigmentId: Float
+  uniteEnseignementId: Float
   id: Float!
 }
 

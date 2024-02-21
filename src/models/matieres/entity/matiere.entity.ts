@@ -29,5 +29,5 @@ export class Matiere implements RestrictProperties<Matiere, MatiereType> {
   nbHeure: number;
 
   @Field({ nullable: true })
-  uniteEnseigmentId: number;
+  uniteEnseignementId: number;
 }

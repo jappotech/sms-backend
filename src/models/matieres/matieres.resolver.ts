@@ -70,12 +70,4 @@ export class MatieresResolver {
     return this.matieresService.remove(args);
   }
 
-  @ResolveField(() => UniteEnseignement)
-  async uniteEnseignement(
-    @Parent() parent: Matiere,
-  ) {
-    return this.prisma.uniteEnseignement.findUnique({
-      where: { id: parent.uniteEnseigmentId },
-    });
-  }
 }

@@ -40,7 +40,7 @@ export class BulletinNotesService {
       data.uniteEnseignement = uniteEnseignement;
       const notesData: any[] = [];
       const matieres = await this.prisma.matiere.findMany({
-        where: { uniteEnseigmentId: uniteEnseignement.id },
+        where: { uniteEnseignementId: uniteEnseignement.id },
         include: { cours: true },
       });
       for (const matiere of matieres) {

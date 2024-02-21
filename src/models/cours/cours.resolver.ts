@@ -80,6 +80,9 @@ export class CoursResolver {
       where: {
         id: parent.matiereId,
       },
+      include: {
+        uniteEnseignement: true,
+      },
     });
   }
 

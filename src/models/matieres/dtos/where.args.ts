@@ -45,13 +45,13 @@ export class MatiereWhereInputStrict
   nbHeure: IntFilter;
 
   @Field(() => IntFilter, { nullable: true })
-  uniteEnseigmentId: IntFilter;
+  uniteEnseignementId: IntFilter;
 
   @Field(() => CoursListRelationFilter, { nullable: true })
   cours: CoursListRelationFilter;
 
   @Field(() => UniteEnseignementRelationFilter, { nullable: true })
-  uniteEnseigment: UniteEnseignementRelationFilter;
+  uniteEnseignement: UniteEnseignementRelationFilter;
 
   @Field(() => [MatiereWhereInputStrict], { nullable: true })
   AND: MatiereWhereInputStrict[];
@@ -90,13 +90,13 @@ export class MatiereWhereInput extends PartialType(MatiereWhereInputStrict) {
   nbHeure: IntFilter;
 
   @Field(() => IntFilter, { nullable: true })
-  uniteEnseigmentId: IntFilter;
+  uniteEnseignementId: IntFilter;
 
   @Field(() => CoursListRelationFilter, { nullable: true })
   cours: CoursListRelationFilter;
 
   @Field(() => UniteEnseignementRelationFilter, { nullable: true })
-  uniteEnseigment: UniteEnseignementRelationFilter;
+  uniteEnseignement: UniteEnseignementRelationFilter;
 
   @Field(() => [MatiereWhereInput], { nullable: true })
   AND: MatiereWhereInput[];

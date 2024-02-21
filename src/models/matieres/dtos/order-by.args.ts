@@ -37,13 +37,13 @@ export class MatiereOrderByWithRelationInputStrict
   nbHeure: Prisma.SortOrder | Prisma.SortOrderInput;
 
   @Field(() => Prisma.SortOrder, { nullable: true })
-  uniteEnseigmentId: Prisma.SortOrder;
+  uniteEnseignementId: Prisma.SortOrder;
 
   @Field(() => CoursOrderByRelationAggregateInput, { nullable: true })
   cours: CoursOrderByRelationAggregateInput;
 
   @Field(() => UniteEnseignementOrderByWithRelationInput, { nullable: true })
-  uniteEnseigment: UniteEnseignementOrderByWithRelationInput;
+  uniteEnseignement: UniteEnseignementOrderByWithRelationInput;
 }
 
 @InputType()

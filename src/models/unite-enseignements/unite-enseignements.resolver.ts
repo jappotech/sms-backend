@@ -26,7 +26,7 @@ export class UniteEnseignementsResolver {
   constructor(
     private readonly uniteEnseignementsService: UniteEnseignementsService,
     private readonly prisma: PrismaService,
-  ) {}
+  ) { }
 
   // @AllowAuthenticated()
   @Mutation(() => UniteEnseignement)
@@ -76,7 +76,7 @@ export class UniteEnseignementsResolver {
   @ResolveField(() => [Matiere])
   async matieres(@Parent() parent: UniteEnseignement) {
     return this.prisma.matiere.findMany({
-      where: { uniteEnseigmentId: parent.id },
+      where: { uniteEnseignementId: parent.id },
     });
   }
 }

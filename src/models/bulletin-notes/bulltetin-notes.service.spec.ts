@@ -116,7 +116,7 @@ describe('BulletinNotesService', () => {
         where: { semestreId: 1 },
       });
       expect(prismaMock.matiere.findMany).toHaveBeenCalledWith({
-        where: { uniteEnseigmentId: 1 },
+        where: { uniteEnseignementId: 1 },
         include: { cours: true },
       });
       expect(prismaMock.cours.findMany).toHaveBeenCalledWith({

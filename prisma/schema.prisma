@@ -276,17 +276,17 @@ model UniteEnseignement {
 }
 
 model Matiere {
-  id                Int               @id @default(autoincrement())
-  createdAt         DateTime          @default(now())
-  updatedAt         DateTime          @updatedAt
-  code              String
-  nom               String
-  credit            Int // 30 -> nbHeure = 30 * 25
-  coefficient       Int               @default(1)
-  nbHeure           Int?
-  cours             Cours[]
-  uniteEnseigment   UniteEnseignement @relation(fields: [uniteEnseigmentId], references: [id])
-  uniteEnseigmentId Int
+  id                  Int               @id @default(autoincrement())
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+  code                String
+  nom                 String
+  credit              Int // 30 -> nbHeure = 30 * 25
+  coefficient         Int               @default(1)
+  nbHeure             Int?
+  cours               Cours[]
+  uniteEnseignement   UniteEnseignement @relation(fields: [uniteEnseignementId], references: [id])
+  uniteEnseignementId Int
 }
 
 model Etablissement {
