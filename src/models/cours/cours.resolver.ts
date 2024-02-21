@@ -26,7 +26,7 @@ export class CoursResolver {
   constructor(
     private readonly coursService: CoursService,
     private readonly prisma: PrismaService,
-  ) {}
+  ) { }
 
   // @AllowAuthenticated()
   @Mutation(() => Cours)

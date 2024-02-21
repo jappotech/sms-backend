@@ -17,13 +17,14 @@ import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
 import { PrismaService } from 'src/common/prisma/prisma.service';
 import { Prisma } from '@prisma/client';
 import { Cours } from '../cours/entity/cours.entity';
+import { UniteEnseignement } from '../unite-enseignements/entity/unite-enseignement.entity';
 
 @Resolver(() => Matiere)
 export class MatieresResolver {
   constructor(
     private readonly matieresService: MatieresService,
     private readonly prisma: PrismaService,
-  ) {}
+  ) { }
 
   // @AllowAuthenticated()
   @Mutation(() => Matiere)
@@ -67,5 +68,14 @@ export class MatieresResolver {
     const matiere = await this.prisma.matiere.findUnique(args);
     // checkRowLevelPermission(user, matiere.uid)
     return this.matieresService.remove(args);
+  }
+
+  @ResolveField(() => UniteEnseignement)
+  async uniteEnseignement(
+    @Parent() parent: Matiere,
+  ) {
+    return this.prisma.uniteEnseignement.findUnique({
+      where: { id: parent.uniteEnseigmentId },
+    });
   }
 }

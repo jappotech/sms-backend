@@ -160,6 +160,7 @@ type Matiere {
   coefficient: Float
   nbHeure: Float
   uniteEnseigmentId: Float
+  uniteEnseignement: UniteEnseignement!
 }
 
 type Salle {
@@ -288,6 +289,17 @@ type FeuillePresence {
   etudiantId: Float
 }
 
+type UniteEnseignement {
+  id: Float
+  createdAt: DateTime
+  updatedAt: DateTime
+  code: String
+  nom: String
+  credit: Float
+  semestreId: Float
+  matieres: [Matiere!]!
+}
+
 type Paiement {
   id: Float
   etudiantId: Float
@@ -316,17 +328,6 @@ type ReseauSocial {
   username: String
   url: String
   contactId: Float
-}
-
-type UniteEnseignement {
-  id: Float
-  createdAt: DateTime
-  updatedAt: DateTime
-  code: String
-  nom: String
-  credit: Float
-  semestreId: Float
-  matieres: [Matiere!]!
 }
 
 type LoginResponse {
