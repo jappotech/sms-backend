@@ -66,7 +66,7 @@ export class BulletinNotesService {
           const notesEtudiant = evaluationEtudiant.filter(
             async (evaluation: EvaluationEtudiants) => {
               const notes = await this.prisma.noteEtudiant.findMany({
-                where: { evaluationEtudiantId: evaluation.id },
+                where: { evaluationEtudiantId: evaluation.id, etudiantId: etudiant.id },
               });
 
               const res: NoteEtudiant[] = notes.filter((ne: NoteEtudiant) => {
