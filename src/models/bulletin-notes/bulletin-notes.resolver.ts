@@ -11,10 +11,11 @@ export class BulletinNotesResolver {
   constructor(
     private readonly bulletinNotesService: BulletinNotesService,
     private readonly prisma: PrismaService,
-  ) {}
+  ) { }
 
   @Query(() => BulletinNotes, { name: 'bulletinNotes' })
   findOne(@Args() args: FindUniqueBulletinNotesArgs) {
     return this.bulletinNotesService.findOne(args);
   }
+
 }

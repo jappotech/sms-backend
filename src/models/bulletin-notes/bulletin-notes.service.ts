@@ -69,20 +69,18 @@ export class BulletinNotesService {
                 where: { evaluationEtudiantId: evaluation.id, etudiantId: etudiant.id },
               });
 
-              const res: NoteEtudiant[] = notes.filter((ne: NoteEtudiant) => {
-                return ne.etudiantId === etudiant.id;
-              });
-
-              return res.some((x) => x.evaluationEtudiantId === evaluation.id);
+              return notes.filter((x) => x.evaluationEtudiantId === evaluation.id);
             },
           );
           const notesEtd = [];
-          for (const n of notesEtudiant) {
-            n.NoteEtudiant.forEach((ne: NoteEtudiant) => {
-              notesEtd.push(ne);
-            });
+          if (notesEtudiant.length > 0) {
+            for (const n of notesEtudiant) {
+              n.NoteEtudiant.forEach((ne: NoteEtudiant) => {
+                notesEtd.push(ne);
+              });
+            }
+            noteData.note = notesEtd;
           }
-          noteData.note = notesEtd;
         }
         const moyenneMatiere = noteData.note.length > 0 ? (
           noteData.note.reduce((acc, note) => {
