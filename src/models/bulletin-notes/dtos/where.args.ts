@@ -10,6 +10,13 @@ export class BulletinNotesWhereUniqueInput {
 }
 
 @InputType()
+export class BulletinNotesAnnuelWhereUniqueInput {
+  etudiantId: number;
+  anneeScolaire: string;
+  classeId: number;
+}
+
+@InputType()
 export class BulletinNotesWhereInputStrict {
   @Field(() => [BulletinNotesWhereInputStrict], { nullable: true })
   AND: BulletinNotesWhereInputStrict[];

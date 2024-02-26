@@ -371,7 +371,10 @@ type Query {
   adresse(where: AdresseWhereUniqueInput!): Adresse!
   anneeScolaires(where: AnneeScolaireWhereInput, orderBy: [AnneeScolaireOrderByWithRelationInput!], cursor: AnneeScolaireWhereUniqueInput, take: Float, skip: Float, distinct: [AnneeScolaireScalarFieldEnum!]): [AnneeScolaire!]!
   anneeScolaire(where: AnneeScolaireWhereUniqueInput!): AnneeScolaire!
-  bulletinNotes(where: BulletinNotesWhereUniqueInput!): BulletinNotes!
+  bulletinNotesSemestre(where: BulletinNotesWhereUniqueInput!): BulletinNotes!
+  bulletinNotesAnnuel(where: BulletinNotesAnnuelWhereUniqueInput!): [BulletinNotes!]!
+  bulletinNotesValidationAnnee(where: BulletinNotesAnnuelWhereUniqueInput!): String!
+  bulletinNotesValidationSemestre(where: BulletinNotesWhereUniqueInput!): String!
   classes(where: ClasseWhereInput, orderBy: [ClasseOrderByWithRelationInput!], cursor: ClasseWhereUniqueInput, take: Float, skip: Float, distinct: [ClasseScalarFieldEnum!]): [Classe!]!
   classe(where: ClasseWhereUniqueInput!): Classe!
   contacts(where: ContactWhereInput, orderBy: [ContactOrderByWithRelationInput!], cursor: ContactWhereUniqueInput, take: Float, skip: Float, distinct: [ContactScalarFieldEnum!]): [Contact!]!
@@ -1238,6 +1241,12 @@ enum AnneeScolaireScalarFieldEnum {
 input BulletinNotesWhereUniqueInput {
   etudiantId: Float!
   semestreId: Float!
+  classeId: Float!
+}
+
+input BulletinNotesAnnuelWhereUniqueInput {
+  etudiantId: Float!
+  anneeScolaire: String!
   classeId: Float!
 }
 

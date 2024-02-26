@@ -7,6 +7,7 @@ import {
 import { Prisma } from '@prisma/client';
 import { BulletinNotesOrderByWithRelationInput } from './order-by.args';
 import {
+  BulletinNotesAnnuelWhereUniqueInput,
   BulletinNotesWhereInput,
   BulletinNotesWhereUniqueInput,
 } from './where.args';
@@ -33,9 +34,14 @@ class FindManyBulletinNotesArgsStrict {
 @ArgsType()
 export class FindManyBulletinNotesArgs extends PartialType(
   FindManyBulletinNotesArgsStrict,
-) {}
+) { }
 
 @ArgsType()
 export class FindUniqueBulletinNotesArgs {
   where: BulletinNotesWhereUniqueInput;
+}
+
+@ArgsType()
+export class FindUniqueBulletinNotesAnnuelArgs {
+  where: BulletinNotesAnnuelWhereUniqueInput;
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import {
   FindManyBulletinNotesArgs,
+  FindUniqueBulletinNotesAnnuelArgs,
   FindUniqueBulletinNotesArgs,
 } from './dtos/find.args';
 import { PrismaService } from '../../common/prisma/prisma.service';
@@ -13,7 +14,75 @@ import { Etudiant } from '../etudiants/entity/etudiant.entity';
 export class BulletinNotesService {
   constructor(private readonly prisma: PrismaService) { }
 
-  async findOne(args: FindUniqueBulletinNotesArgs) {
+  async resultatAnnuel(args: FindUniqueBulletinNotesAnnuelArgs) {
+    const classe = await this.prisma.classe.findUnique({
+      where: { id: args.where.classeId },
+      include: { semestres: true, AnneeScolaire: true },
+    });
+
+    const resultats: BulletinNotes[] = [];
+    let semestreValide = true;
+    for (const semestre of classe.semestres) {
+      const bulletin = await this.bulletinSemestre({
+        where: {
+          etudiantId: args.where.etudiantId,
+          semestreId: semestre.id,
+          classeId: classe.id,
+        },
+      });
+      if (bulletin.moyenneGenerale.nbCreditsObtenus < bulletin.moyenneGenerale.totalCredit) {
+        semestreValide = false;
+      }
+      resultats.push(bulletin);
+    }
+
+    return semestreValide ? 'Année Validée' : 'Année Invalidée';
+  }
+
+  async resultatSemestre(args: FindUniqueBulletinNotesArgs) {
+    let semestreValide = true;
+    const bulletin = await this.bulletinSemestre({
+      where: {
+        etudiantId: args.where.etudiantId,
+        semestreId: args.where.semestreId,
+        classeId: args.where.classeId,
+      },
+    });
+    if (bulletin.moyenneGenerale.nbCreditsObtenus < bulletin.moyenneGenerale.totalCredit) {
+      semestreValide = false;
+    }
+
+    return semestreValide ? 'Semestre Validé' : 'Semestre Invalidé';
+  }
+
+  async bulletinAnnuel(args: FindUniqueBulletinNotesAnnuelArgs) {
+    const etudiant = await this.prisma.etudiant.findUnique({
+      where: {
+        id: args.where.etudiantId,
+      },
+      include: { inscriptions: true },
+    });
+    const classe = await this.prisma.classe.findUnique({
+      where: { id: args.where.classeId },
+      include: { semestres: true, AnneeScolaire: true },
+    });
+
+    const resultats: BulletinNotes[] = [];
+    for (const semestre of classe.semestres) {
+      const bulletin = await this.bulletinSemestre({
+        where: {
+          etudiantId: etudiant.id,
+          semestreId: semestre.id,
+          classeId: classe.id,
+        },
+      });
+      resultats.push(bulletin);
+    }
+
+    return resultats;
+  }
+
+  async bulletinSemestre(args: FindUniqueBulletinNotesArgs) {
     const bulletinNotes: BulletinNotes = new BulletinNotes();
     const etudiant = await this.prisma.etudiant.findUnique({
       where: { id: args.where.etudiantId },
@@ -60,6 +129,7 @@ export class BulletinNotesService {
             await this.prisma.evaluationEtudiants.findMany({
               where: {
                 coursId: cours.id,
+                NoteEtudiant: { some: { etudiantId: etudiant.id } },
               },
               include: { NoteEtudiant: true },
             });
@@ -75,9 +145,12 @@ export class BulletinNotesService {
           const notesEtd = [];
           if (notesEtudiant.length > 0) {
             for (const n of notesEtudiant) {
-              n.NoteEtudiant.forEach((ne: NoteEtudiant) => {
-                notesEtd.push(ne);
-              });
+              if (n.NoteEtudiant && n.NoteEtudiant.length > 0) {
+                n.NoteEtudiant.forEach((ne: NoteEtudiant) => {
+                  if (ne.etudiantId === etudiant.id) // Pas nécessaire mais pour plus de sécurité
+                    notesEtd.push(ne);
+                });
+              }
             }
             noteData.note = notesEtd;
           }
@@ -95,9 +168,12 @@ export class BulletinNotesService {
         notesData.push(noteData);
       }
       // calcul de la moyenne de l'unité d'enseignement
-      const moyenneUE = notesData.reduce((acc, note) => {
-        return acc + parseFloat(note.moyenne);
-      }, 0) / notesData.length;
+      let moyenneUE = 0;
+      if (notesData.length > 0) {
+        moyenneUE = notesData.reduce((acc, note) => {
+          return acc + parseFloat(note.moyenne);
+        }, 0) / notesData.length;
+      }
       data.moyenneUE = moyenneUE.toFixed(2);
       // calcul du credit obtenu
       const creditObtenu = notesData.reduce((acc, note) => {
@@ -110,7 +186,7 @@ export class BulletinNotesService {
         return acc + note.matiere.credit;
       }, 0);
       // decision
-      data.decision = parseFloat(creditObtenu) == parseFloat(totalCredit) ? 'Validé' : 'Invalidé';
+      data.decision = (parseFloat(totalCredit) > 0 && parseFloat(creditObtenu) === parseFloat(totalCredit)) ? 'Validé' : 'Invalidé';
       data.notes = notesData;
       donnees.push(data);
     }
@@ -123,16 +199,16 @@ export class BulletinNotesService {
       moyenneTotalCoef: null,
     };
     // calcul de la moyenne générale
-    const moyenneSemestre = donnees.reduce((acc, ue) => {
-      return acc + parseFloat(ue.moyenneUE);
-    }, 0) / donnees.length;
+    let moyenneSemestre = 0;
+    if (donnees.length > 0) {
+      moyenneSemestre = donnees.reduce((acc, ue) => {
+        return acc + parseFloat(ue.moyenneUE);
+      }, 0) / donnees.length;
+    }
     moyenneGenerale.moyenneSemestre = moyenneSemestre.toFixed(2);
     moyenneGenerale.totalCredit = g_totalCredit;
     moyenneGenerale.totalCoef = g_totalCoef;
     moyenneGenerale.nbCreditsObtenus = g_nbCreditsObtenus;
-    // TODO: test this moyenneTotalCoef
-
-    console.log("🚀 ~ BulletinNotesService ~ findOne ~ g_moyenneTotalCoef:", g_moyenneTotalCoef)
     moyenneGenerale.moyenneTotalCoef = (Number(g_moyenneTotalCoef)).toFixed(2);
 
     bulletinNotes.moyenneGenerale = moyenneGenerale;
