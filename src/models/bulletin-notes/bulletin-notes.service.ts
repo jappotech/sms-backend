@@ -5,7 +5,7 @@ import {
   FindUniqueBulletinNotesArgs,
 } from './dtos/find.args';
 import { PrismaService } from '../../common/prisma/prisma.service';
-import { BulletinNotes } from './entity/bulletin-notes.entity';
+import { BulletinNotes, ResultatAnnuel } from './entity/bulletin-notes.entity';
 import { NoteEtudiant } from '../note-etudiants/entity/note-etudiant.entity';
 import { EvaluationEtudiants } from '../evaluation-etudiants/entity/evaluation-etudiants.entity';
 import { Etudiant } from '../etudiants/entity/etudiant.entity';
@@ -13,6 +13,11 @@ import { Etudiant } from '../etudiants/entity/etudiant.entity';
 @Injectable()
 export class BulletinNotesService {
   constructor(private readonly prisma: PrismaService) { }
+
+  /*
+  Modifier le type de heure debut et heure  fin dans cours
+  Mettre Spécialité dans classe, mention dans spécialité et domaine dans mention
+  */
 
   async resultatAnnuel(args: FindUniqueBulletinNotesAnnuelArgs) {
     const classe = await this.prisma.classe.findUnique({
@@ -22,6 +27,8 @@ export class BulletinNotesService {
 
     const resultats: BulletinNotes[] = [];
     let semestreValide = true;
+    let moyenneAnnuelle = 0;
+    let totalCredit = 0;
     for (const semestre of classe.semestres) {
       const bulletin = await this.bulletinSemestre({
         where: {
@@ -30,13 +37,20 @@ export class BulletinNotesService {
           classeId: classe.id,
         },
       });
+      moyenneAnnuelle += Number(bulletin.moyenneGenerale.moyenneSemestre);
+      totalCredit += Number(bulletin.moyenneGenerale.totalCredit);
       if (bulletin.moyenneGenerale.nbCreditsObtenus < bulletin.moyenneGenerale.totalCredit) {
         semestreValide = false;
       }
       resultats.push(bulletin);
     }
+    const res: ResultatAnnuel = {
+      moyenneAnnuelle: (moyenneAnnuelle / classe.semestres.length).toFixed(2),
+      totalCredit,
+      resultat: semestreValide ? 'Année Validée' : 'Année Invalidée',
+    }
 
-    return semestreValide ? 'Année Validée' : 'Année Invalidée';
+    return res
   }
 
   async resultatSemestre(args: FindUniqueBulletinNotesArgs) {

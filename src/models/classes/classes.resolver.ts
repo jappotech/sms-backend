@@ -21,13 +21,14 @@ import { Etudiant } from '../etudiants/entity/etudiant.entity';
 import { Inscription } from '../inscriptions/entity/inscription.entity';
 import { EvaluationEtudiants } from '../evaluation-etudiants/entity/evaluation-etudiants.entity';
 import { AnneeScolaire } from '../annee-scolaires/entity/annee-scolaire.entity';
+import { Specialite } from '../specialites/entity/specialite.entity';
 
 @Resolver(() => Classe)
 export class ClassesResolver {
   constructor(
     private readonly classesService: ClassesService,
     private readonly prisma: PrismaService,
-  ) {}
+  ) { }
 
   @AllowAuthenticated()
   @Mutation(() => Classe)
@@ -119,6 +120,13 @@ export class ClassesResolver {
   async anneeScolaire(@Parent() parent: Classe) {
     return this.prisma.anneeScolaire.findUnique({
       where: { id: parent.anneeScolaireId },
+    });
+  }
+
+  @ResolveField(() => Specialite)
+  async specialite(@Parent() parent: Classe) {
+    return this.prisma.specialite.findUnique({
+      where: { id: parent.specialiteId },
     });
   }
 }

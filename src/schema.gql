@@ -63,6 +63,7 @@ type Classe {
   inscriptions: [Inscription!]!
   evaluations: [EvaluationEtudiants!]!
   anneeScolaire: AnneeScolaire!
+  specialite: Specialite!
 }
 
 type Semestre {
@@ -117,6 +118,17 @@ type AnneeScolaire {
   dateDebut: Float
   dateFin: Float
   nom: String
+}
+
+type Specialite {
+  id: Float
+  createdAt: DateTime
+  updatedAt: DateTime
+  nom: String
+  slug: String
+  mentionId: Float
+  classes: [Classe!]!
+  mention: Mention!
 }
 
 type Contact {
@@ -207,16 +219,6 @@ type Domaine {
   mentions: [Mention!]!
 }
 
-type Specialite {
-  id: Float
-  createdAt: DateTime
-  updatedAt: DateTime
-  nom: String
-  slug: String
-  mentionId: Float
-  classes: [Classe!]!
-}
-
 type Mention {
   id: Float
   createdAt: DateTime
@@ -225,6 +227,7 @@ type Mention {
   slug: String
   domaineId: Float
   specialites: [Specialite!]!
+  domaine: Domaine!
 }
 
 type EmploiDuTemps {
@@ -364,6 +367,12 @@ type BulletinNotes {
   moyenneGenerale: MoyenneGenerale
 }
 
+type ResultatAnnuel {
+  moyenneAnnuelle: String
+  totalCredit: Float
+  resultat: String
+}
+
 type Query {
   accounts(where: AccountWhereInput, orderBy: [AccountOrderByWithRelationInput!], cursor: AccountWhereUniqueInput, take: Float, skip: Float, distinct: [AccountScalarFieldEnum!]): [Account!]!
   account(where: AccountWhereUniqueInput!): Account!
@@ -373,7 +382,7 @@ type Query {
   anneeScolaire(where: AnneeScolaireWhereUniqueInput!): AnneeScolaire!
   bulletinNotesSemestre(where: BulletinNotesWhereUniqueInput!): BulletinNotes!
   bulletinNotesAnnuel(where: BulletinNotesAnnuelWhereUniqueInput!): [BulletinNotes!]!
-  bulletinNotesValidationAnnee(where: BulletinNotesAnnuelWhereUniqueInput!): String!
+  bulletinNotesValidationAnnee(where: BulletinNotesAnnuelWhereUniqueInput!): ResultatAnnuel!
   bulletinNotesValidationSemestre(where: BulletinNotesWhereUniqueInput!): String!
   classes(where: ClasseWhereInput, orderBy: [ClasseOrderByWithRelationInput!], cursor: ClasseWhereUniqueInput, take: Float, skip: Float, distinct: [ClasseScalarFieldEnum!]): [Classe!]!
   classe(where: ClasseWhereUniqueInput!): Classe!

@@ -20,13 +20,14 @@ import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
 import { PrismaService } from 'src/common/prisma/prisma.service';
 import { Prisma } from '@prisma/client';
 import { Classe } from '../classes/entity/classe.entity';
+import { Mention } from '../mentions/entity/mention.entity';
 
 @Resolver(() => Specialite)
 export class SpecialitesResolver {
   constructor(
     private readonly specialitesService: SpecialitesService,
     private readonly prisma: PrismaService,
-  ) {}
+  ) { }
 
   // @AllowAuthenticated()
   @Mutation(() => Specialite)
@@ -76,6 +77,13 @@ export class SpecialitesResolver {
   async classes(@Parent() parent: Specialite) {
     return this.prisma.classe.findMany({
       where: { specialiteId: parent.id },
+    });
+  }
+
+  @ResolveField(() => Mention)
+  async mention(@Parent() parent: Specialite) {
+    return this.prisma.mention.findUnique({
+      where: { id: parent.mentionId },
     });
   }
 }

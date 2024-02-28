@@ -18,13 +18,14 @@ import { PrismaService } from 'src/common/prisma/prisma.service';
 import { Prisma } from '@prisma/client';
 import { Res } from '@nestjs/common';
 import { Specialite } from '../specialites/entity/specialite.entity';
+import { Domaine } from '../domaines/entity/domaine.entity';
 
 @Resolver(() => Mention)
 export class MentionsResolver {
   constructor(
     private readonly mentionsService: MentionsService,
     private readonly prisma: PrismaService,
-  ) {}
+  ) { }
 
   // @AllowAuthenticated()
   @Mutation(() => Mention)
@@ -74,6 +75,13 @@ export class MentionsResolver {
   async specialites(@Parent() parent: Mention) {
     return this.prisma.specialite.findMany({
       where: { mentionId: parent.id },
+    });
+  }
+
+  @ResolveField(() => Domaine)
+  async domaine(@Parent() parent: Mention) {
+    return this.prisma.domaine.findUnique({
+      where: { id: parent.domaineId },
     });
   }
 }

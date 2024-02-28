@@ -69,3 +69,15 @@ export class BulletinNotes {
   @Field({ nullable: true })
   moyenneGenerale: MoyenneGenerale;
 }
+
+@ObjectType()
+export class ResultatAnnuel {
+  @Field({ nullable: true })
+  moyenneAnnuelle: string;
+
+  @Field({ nullable: true })
+  totalCredit: number;
+
+  @Field({ nullable: true })
+  resultat: string;
+}

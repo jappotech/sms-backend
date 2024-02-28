@@ -1,6 +1,6 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { BulletinNotesService } from './bulletin-notes.service';
-import { BulletinNotes } from './entity/bulletin-notes.entity';
+import { BulletinNotes, ResultatAnnuel } from './entity/bulletin-notes.entity';
 import {
   FindUniqueBulletinNotesAnnuelArgs,
   FindUniqueBulletinNotesArgs,
@@ -24,7 +24,7 @@ export class BulletinNotesResolver {
     return this.bulletinNotesService.bulletinAnnuel(args);
   }
 
-  @Query(() => String, { name: 'bulletinNotesValidationAnnee' })
+  @Query(() => ResultatAnnuel, { name: 'bulletinNotesValidationAnnee' })
   validationAnneeScolaire(@Args() args: FindUniqueBulletinNotesAnnuelArgs) {
     return this.bulletinNotesService.resultatAnnuel(args);
   }
