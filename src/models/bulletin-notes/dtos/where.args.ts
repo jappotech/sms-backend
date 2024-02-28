@@ -12,7 +12,6 @@ export class BulletinNotesWhereUniqueInput {
 @InputType()
 export class BulletinNotesAnnuelWhereUniqueInput {
   etudiantId: number;
-  anneeScolaire: string;
   classeId: number;
 }
 

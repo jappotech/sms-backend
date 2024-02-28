@@ -1255,7 +1255,6 @@ input BulletinNotesWhereUniqueInput {
 
 input BulletinNotesAnnuelWhereUniqueInput {
   etudiantId: Float!
-  anneeScolaire: String!
   classeId: Float!
 }
 

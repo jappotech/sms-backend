@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import {
   FindManyBulletinNotesArgs,
   FindUniqueBulletinNotesAnnuelArgs,
@@ -24,7 +24,9 @@ export class BulletinNotesService {
       where: { id: args.where.classeId },
       include: { semestres: true, AnneeScolaire: true },
     });
-
+    if (!classe) {
+      throw new NotFoundException('Classe non trouvée');
+    }
     const resultats: BulletinNotes[] = [];
     let semestreValide = true;
     let moyenneAnnuelle = 0;
@@ -38,7 +40,7 @@ export class BulletinNotesService {
         },
       });
       moyenneAnnuelle += Number(bulletin.moyenneGenerale.moyenneSemestre);
-      totalCredit += Number(bulletin.moyenneGenerale.totalCredit);
+      totalCredit += Number(bulletin.moyenneGenerale.nbCreditsObtenus);
       if (bulletin.moyenneGenerale.nbCreditsObtenus < bulletin.moyenneGenerale.totalCredit) {
         semestreValide = false;
       }
@@ -54,6 +56,9 @@ export class BulletinNotesService {
   }
 
   async resultatSemestre(args: FindUniqueBulletinNotesArgs) {
+    if (!args.where.etudiantId || !args.where.semestreId || !args.where.classeId) {
+      throw new BadRequestException('Veuillez renseigner les paramètres');
+    }
     let semestreValide = true;
     const bulletin = await this.bulletinSemestre({
       where: {
@@ -76,11 +81,16 @@ export class BulletinNotesService {
       },
       include: { inscriptions: true },
     });
+    if (!etudiant) {
+      throw new NotFoundException('Etudiant non trouvé');
+    }
     const classe = await this.prisma.classe.findUnique({
       where: { id: args.where.classeId },
       include: { semestres: true, AnneeScolaire: true },
     });
-
+    if (!classe) {
+      throw new NotFoundException('Classe non trouvée');
+    }
     const resultats: BulletinNotes[] = [];
     for (const semestre of classe.semestres) {
       const bulletin = await this.bulletinSemestre({
@@ -101,6 +111,9 @@ export class BulletinNotesService {
     const etudiant = await this.prisma.etudiant.findUnique({
       where: { id: args.where.etudiantId },
     });
+    if (!etudiant) {
+      throw new NotFoundException('Etudiant non trouvé');
+    }
     bulletinNotes.etudiant = etudiant;
 
     const donnees: any[] = [];
