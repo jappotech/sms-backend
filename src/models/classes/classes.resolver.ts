@@ -22,6 +22,7 @@ import { Inscription } from '../inscriptions/entity/inscription.entity';
 import { EvaluationEtudiants } from '../evaluation-etudiants/entity/evaluation-etudiants.entity';
 import { AnneeScolaire } from '../annee-scolaires/entity/annee-scolaire.entity';
 import { Specialite } from '../specialites/entity/specialite.entity';
+import { Cours } from '../cours/entity/cours.entity';
 
 @Resolver(() => Classe)
 export class ClassesResolver {
@@ -129,4 +130,12 @@ export class ClassesResolver {
       where: { id: parent.specialiteId },
     });
   }
+
+  @ResolveField(() => [Cours])
+  async cours(@Parent() parent: Classe) {
+    return this.prisma.cours.findMany({
+      where: { classeId: parent.id },
+    });
+  }
+
 }
