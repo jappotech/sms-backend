@@ -64,6 +64,7 @@ type Classe {
   evaluations: [EvaluationEtudiants!]!
   anneeScolaire: AnneeScolaire!
   specialite: Specialite!
+  cours: [Cours!]!
 }
 
 type Semestre {
@@ -131,17 +132,6 @@ type Specialite {
   mention: Mention!
 }
 
-type Contact {
-  id: Float
-  createdAt: DateTime
-  updatedAt: DateTime
-  telephone: String
-  fix: String
-  fax: String
-  email: String
-  siteWeb: String
-}
-
 type Cours {
   id: Float
   createdAt: DateTime
@@ -160,6 +150,17 @@ type Cours {
   classe: Classe!
   salle: Salle!
   professeur: Professeur!
+}
+
+type Contact {
+  id: Float
+  createdAt: DateTime
+  updatedAt: DateTime
+  telephone: String
+  fix: String
+  fax: String
+  email: String
+  siteWeb: String
 }
 
 type Matiere {

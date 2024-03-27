@@ -18,9 +18,9 @@ export class UtilisateursResolver {
   constructor(
     private readonly utilisateursService: UtilisateursService,
     private readonly prisma: PrismaService,
-  ) {}
+  ) { }
 
-  @AllowAuthenticated()
+  // @AllowAuthenticated()
   @Mutation(() => Utilisateur)
   createUtilisateur(
     @Args('createUtilisateurInput') args: CreateUtilisateurInput,

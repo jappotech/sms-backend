@@ -89,4 +89,4 @@ import { BulletinNotesModule } from './models/bulletin-notes/bulletin-notes.modu
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
