@@ -14,7 +14,7 @@ import {
 } from './dtos/find.args';
 import { CreateInscriptionInput } from './dtos/create-inscription.input';
 import { UpdateInscriptionInput } from './dtos/update-inscription.input';
-import { checkRowLevelPermission } from 'src/common/auth/util';
+import { checkRowLevelPermission, checkUserAffiliation } from 'src/common/auth/util';
 import { GetUserType } from 'src/common/types';
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
 import { PrismaService } from 'src/common/prisma/prisma.service';
@@ -28,7 +28,7 @@ export class InscriptionsResolver {
   constructor(
     private readonly inscriptionsService: InscriptionsService,
     private readonly prisma: PrismaService,
-  ) {}
+  ) { }
 
   @AllowAuthenticated()
   @Mutation(() => Inscription)
@@ -40,8 +40,16 @@ export class InscriptionsResolver {
     return this.inscriptionsService.create(args);
   }
 
+  @AllowAuthenticated()
   @Query(() => [Inscription], { name: 'inscriptions' })
-  findAll(@Args() args: FindManyInscriptionArgs) {
+  async findAll(@Args() args: FindManyInscriptionArgs, @GetUser() user: GetUserType) {
+    const affiliation = await checkUserAffiliation(user);
+    if (affiliation) {
+      return this.inscriptionsService.findAllByEtablissement(
+        args,
+        affiliation.etablissementId,
+      );
+    }
     return this.inscriptionsService.findAll(args);
   }
 

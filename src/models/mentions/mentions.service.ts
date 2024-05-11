@@ -8,7 +8,7 @@ import slugify from 'slugify';
 
 @Injectable()
 export class MentionsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   async create(createMentionInput: CreateMentionInput) {
     const { specialites, ...data } = createMentionInput;
     const slug = slugify(`${createMentionInput.nom.toLowerCase()}`);
@@ -37,6 +37,24 @@ export class MentionsService {
 
   findAll(args: FindManyMentionArgs) {
     return this.prisma.mention.findMany(args);
+  }
+
+  findAllByEtablissement(args: FindManyMentionArgs, etablissementId: number) {
+    return this.prisma.mention.findMany({
+      ...args,
+      where: {
+        ...args.where,
+        domaine: {
+          is: {
+            etablissements: {
+              some: {
+                id: etablissementId,
+              },
+            },
+          }
+        }
+      },
+    });
   }
 
   findOne(args: FindUniqueMentionArgs) {

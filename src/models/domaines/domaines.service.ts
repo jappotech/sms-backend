@@ -8,7 +8,7 @@ import slugify from 'slugify';
 
 @Injectable()
 export class DomainesService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   async create(createDomaineInput: CreateDomaineInput) {
     const { mentions, ...data } = createDomaineInput;
 
@@ -34,6 +34,20 @@ export class DomainesService {
 
   findAll(args: FindManyDomaineArgs) {
     return this.prisma.domaine.findMany(args);
+  }
+
+  findAllByEtablissement(args: FindManyDomaineArgs, etablissementId: number) {
+    return this.prisma.domaine.findMany({
+      ...args,
+      where: {
+        ...args.where,
+        etablissements: {
+          some: {
+            id: etablissementId,
+          },
+        }
+      },
+    });
   }
 
   findOne(args: FindUniqueDomaineArgs) {

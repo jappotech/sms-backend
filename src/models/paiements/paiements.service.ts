@@ -9,7 +9,7 @@ import slugify from 'slugify';
 
 @Injectable()
 export class PaiementsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   create(createPaiementInput: CreatePaiementInput) {
     createPaiementInput.referencePaiement = uniqueId(
       slugify(
@@ -23,6 +23,26 @@ export class PaiementsService {
 
   findAll(args: FindManyPaiementArgs) {
     return this.prisma.paiement.findMany(args);
+  }
+
+  findAllByEtablissement(args: FindManyPaiementArgs, etablissementId: number) {
+    return this.prisma.paiement.findMany({
+      ...args,
+      where: {
+        ...args.where,
+        etudiant: {
+          is: {
+            profile: {
+              is: {
+                etablissementId: {
+                  equals: etablissementId,
+                },
+              },
+            },
+          },
+        },
+      },
+    });
   }
 
   findOne(args: FindUniquePaiementArgs) {

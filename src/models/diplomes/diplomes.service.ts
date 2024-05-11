@@ -7,7 +7,7 @@ import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class DiplomesService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   create(createDiplomeInput: CreateDiplomeInput) {
     return this.prisma.diplome.create({
       data: createDiplomeInput,
@@ -16,6 +16,26 @@ export class DiplomesService {
 
   findAll(args: FindManyDiplomeArgs) {
     return this.prisma.diplome.findMany(args);
+  }
+
+  findAllByEtablissement(args: FindManyDiplomeArgs, etablissementId: number) {
+    return this.prisma.diplome.findMany({
+      ...args,
+      where: {
+        ...args.where,
+        specialite: {
+          is: {
+            Classe: {
+              some: {
+                etablissementId: {
+                  equals: etablissementId,
+                }
+              }
+            }
+          }
+        }
+      },
+    });
   }
 
   findOne(args: FindUniqueDiplomeArgs) {

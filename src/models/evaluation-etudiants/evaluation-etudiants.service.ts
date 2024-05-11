@@ -10,7 +10,7 @@ import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class EvaluationEtudiantsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   create(createEvaluationEtudiantsInput: CreateEvaluationEtudiantsInput) {
     return this.prisma.evaluationEtudiants.create({
       data: createEvaluationEtudiantsInput,
@@ -19,6 +19,26 @@ export class EvaluationEtudiantsService {
 
   findAll(args: FindManyEvaluationEtudiantsArgs) {
     return this.prisma.evaluationEtudiants.findMany(args);
+  }
+
+  findAllByEtablissement(args: FindManyEvaluationEtudiantsArgs, id: number) {
+    return this.prisma.evaluationEtudiants.findMany({
+      ...args,
+      where: {
+        ...args.where,
+        cours: {
+          is: {
+            classe: {
+              is: {
+                etablissementId: {
+                  equals: id,
+                },
+              }
+            }
+          }
+        }
+      },
+    });
   }
 
   findOne(args: FindUniqueEvaluationEtudiantsArgs) {

@@ -11,7 +11,7 @@ import { Mention } from './entity/mention.entity';
 import { FindManyMentionArgs, FindUniqueMentionArgs } from './dtos/find.args';
 import { CreateMentionInput } from './dtos/create-mention.input';
 import { UpdateMentionInput } from './dtos/update-mention.input';
-import { checkRowLevelPermission } from 'src/common/auth/util';
+import { checkRowLevelPermission, checkUserAffiliation } from 'src/common/auth/util';
 import { GetUserType } from 'src/common/types';
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
 import { PrismaService } from 'src/common/prisma/prisma.service';
@@ -37,8 +37,16 @@ export class MentionsResolver {
     return this.mentionsService.create(args);
   }
 
+  @AllowAuthenticated()
   @Query(() => [Mention], { name: 'mentions' })
-  findAll(@Args() args: FindManyMentionArgs) {
+  async findAll(@Args() args: FindManyMentionArgs, @GetUser() user: GetUserType) {
+    const affiliation = await checkUserAffiliation(user);
+    if (affiliation) {
+      return this.mentionsService.findAllByEtablissement(
+        args,
+        affiliation.etablissementId,
+      );
+    }
     return this.mentionsService.findAll(args);
   }
 
@@ -71,10 +79,23 @@ export class MentionsResolver {
     return this.mentionsService.remove(args);
   }
 
+  @AllowAuthenticated()
   @ResolveField(() => [Specialite])
-  async specialites(@Parent() parent: Mention) {
+  async specialites(@Parent() parent: Mention, @GetUser() user: GetUserType) {
+    const affiliation = await checkUserAffiliation(user);
     return this.prisma.specialite.findMany({
-      where: { mentionId: parent.id },
+      where: {
+        AND: [
+          {
+            mention: {
+              id: parent.id,
+            }
+          },
+          {
+            etablissementId: affiliation.etablissementId
+          }
+        ]
+      },
     });
   }
 

@@ -14,7 +14,7 @@ import {
 } from './dtos/find.args';
 import { CreateEvaluationEtudiantsInput } from './dtos/create-evaluation-etudiants.input';
 import { UpdateEvaluationEtudiantsInput } from './dtos/update-evaluation-etudiants.input';
-import { checkRowLevelPermission } from 'src/common/auth/util';
+import { checkRowLevelPermission, checkUserAffiliation } from 'src/common/auth/util';
 import { GetUserType } from 'src/common/types';
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
 import { PrismaService } from 'src/common/prisma/prisma.service';
@@ -40,8 +40,16 @@ export class EvaluationEtudiantsResolver {
     return this.evaluationEtudiantsService.create(args);
   }
 
+  @AllowAuthenticated()
   @Query(() => [EvaluationEtudiants], { name: 'evaluationsEtudiants' })
-  findAll(@Args() args: FindManyEvaluationEtudiantsArgs) {
+  async findAll(@Args() args: FindManyEvaluationEtudiantsArgs, @GetUser() user: GetUserType) {
+    const affiliation = await checkUserAffiliation(user);
+    if (affiliation) {
+      return this.evaluationEtudiantsService.findAllByEtablissement(
+        args,
+        affiliation.etablissementId,
+      );
+    }
     return this.evaluationEtudiantsService.findAll(args);
   }
 

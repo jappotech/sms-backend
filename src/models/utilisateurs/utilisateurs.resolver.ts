@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, ResolveField, Parent } from '@nestjs/graphql';
 import { UtilisateursService } from './utilisateurs.service';
 import { Utilisateur } from './entity/utilisateur.entity';
 import {
@@ -7,11 +7,15 @@ import {
 } from './dtos/find.args';
 import { CreateUtilisateurInput } from './dtos/create-utilisateur.input';
 import { UpdateUtilisateurInput } from './dtos/update-utilisateur.input';
-import { checkRowLevelPermission } from 'src/common/auth/util';
+import { checkRowLevelPermission, checkUserAffiliation } from 'src/common/auth/util';
 import { GetUserType } from 'src/common/types';
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
 import { PrismaService } from 'src/common/prisma/prisma.service';
 import { Prisma } from '@prisma/client';
+import { Res } from '@nestjs/common';
+import { Etablissement } from '../etablissements/entity/etablissement.entity';
+import { Adresse } from '../adresses/entity/adresse.entity';
+import { Contact } from '../contacts/entity/contact.entity';
 
 @Resolver(() => Utilisateur)
 export class UtilisateursResolver {
@@ -32,7 +36,14 @@ export class UtilisateursResolver {
 
   @AllowAuthenticated()
   @Query(() => [Utilisateur], { name: 'utilisateurs' })
-  findAll(@Args() args: FindManyUtilisateurArgs) {
+  async findAll(@Args() args: FindManyUtilisateurArgs, @GetUser() user: GetUserType) {
+    const affiliation = await checkUserAffiliation(user);
+    if (affiliation) {
+      return this.utilisateursService.findAllByEtablissement(
+        args,
+        affiliation.etablissementId,
+      );
+    }
     return this.utilisateursService.findAll(args);
   }
 
@@ -71,5 +82,26 @@ export class UtilisateursResolver {
     const utilisateur = await this.prisma.utilisateur.findUnique(args);
     // // checkRowLevelPermission(user, utilisateur.uid)
     return this.utilisateursService.remove(args);
+  }
+
+  @ResolveField(() => Etablissement)
+  async etablissement(@Parent() parent: Utilisateur) {
+    return this.prisma.etablissement.findUnique({
+      where: { id: parent.etablissementId },
+    });
+  }
+
+  @ResolveField(() => Adresse)
+  async adresse(@Parent() parent: Utilisateur) {
+    return this.prisma.adresse.findUnique({
+      where: { id: parent.adresseId },
+    });
+  }
+
+  @ResolveField(() => Contact)
+  async contact(@Parent() parent: Utilisateur) {
+    return this.prisma.contact.findUnique({
+      where: { id: parent.contactId },
+    });
   }
 }

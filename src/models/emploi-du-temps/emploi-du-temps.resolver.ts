@@ -7,7 +7,7 @@ import {
 } from './dtos/find.args';
 import { CreateEmploiDuTempsInput } from './dtos/create-emploi-du-temps.input';
 import { UpdateEmploiDuTempsInput } from './dtos/update-emploi-du-temps.input';
-import { checkRowLevelPermission } from 'src/common/auth/util';
+import { checkRowLevelPermission, checkUserAffiliation } from 'src/common/auth/util';
 import { GetUserType } from 'src/common/types';
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
 import { PrismaService } from 'src/common/prisma/prisma.service';
@@ -18,7 +18,7 @@ export class EmploiDuTempsResolver {
   constructor(
     private readonly emploiDuTempsService: EmploiDuTempsService,
     private readonly prisma: PrismaService,
-  ) {}
+  ) { }
 
   @AllowAuthenticated()
   @Mutation(() => EmploiDuTemps)
@@ -30,8 +30,16 @@ export class EmploiDuTempsResolver {
     return this.emploiDuTempsService.create(args);
   }
 
+  @AllowAuthenticated()
   @Query(() => [EmploiDuTemps], { name: 'emploisDuTemps' })
-  findAll(@Args() args: FindManyEmploiDuTempsArgs) {
+  async findAll(@Args() args: FindManyEmploiDuTempsArgs, @GetUser() user: GetUserType) {
+    const affiliation = await checkUserAffiliation(user);
+    if (affiliation) {
+      return this.emploiDuTempsService.findAllByEtablissement(
+        args,
+        affiliation.etablissementId,
+      );
+    }
     return this.emploiDuTempsService.findAll(args);
   }
 

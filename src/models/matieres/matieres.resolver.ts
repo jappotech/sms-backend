@@ -11,13 +11,12 @@ import { Matiere } from './entity/matiere.entity';
 import { FindManyMatiereArgs, FindUniqueMatiereArgs } from './dtos/find.args';
 import { CreateMatiereInput } from './dtos/create-matiere.input';
 import { UpdateMatiereInput } from './dtos/update-matiere.input';
-import { checkRowLevelPermission } from 'src/common/auth/util';
+import { checkRowLevelPermission, checkUserAffiliation } from 'src/common/auth/util';
 import { GetUserType } from 'src/common/types';
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
 import { PrismaService } from 'src/common/prisma/prisma.service';
-import { Prisma } from '@prisma/client';
-import { Cours } from '../cours/entity/cours.entity';
 import { UniteEnseignement } from '../unite-enseignements/entity/unite-enseignement.entity';
+import { Account } from '../accounts/entity/account.entity';
 
 @Resolver(() => Matiere)
 export class MatieresResolver {
@@ -36,8 +35,13 @@ export class MatieresResolver {
     return this.matieresService.create(args);
   }
 
+  @AllowAuthenticated()
   @Query(() => [Matiere], { name: 'matieres' })
-  findAll(@Args() args: FindManyMatiereArgs) {
+  async findAll(@Args() args: FindManyMatiereArgs, @GetUser() user: GetUserType) {
+    const affiliation = await checkUserAffiliation(user)
+    if (affiliation) {
+      return this.matieresService.findAllByEtablissement(args, affiliation.etablissementId);
+    }
     return this.matieresService.findAll(args);
   }
 

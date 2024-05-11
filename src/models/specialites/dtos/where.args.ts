@@ -19,8 +19,7 @@ export class SpecialiteWhereUniqueInput {
 @InputType()
 export class SpecialiteWhereInputStrict
   implements
-    RestrictProperties<SpecialiteWhereInputStrict, Prisma.SpecialiteWhereInput>
-{
+  RestrictProperties<SpecialiteWhereInputStrict, Prisma.SpecialiteWhereInput> {
   @Field(() => IntFilter, { nullable: true })
   id: IntFilter;
 
@@ -47,6 +46,9 @@ export class SpecialiteWhereInputStrict
 
   @Field(() => DiplomeListRelationFilter, { nullable: true })
   Diplome: DiplomeListRelationFilter;
+
+  @Field(() => IntFilter, { nullable: true })
+  etablissementId: IntFilter;
 
   @Field(() => [SpecialiteWhereInputStrict], { nullable: true })
   AND: SpecialiteWhereInput[];
@@ -88,6 +90,9 @@ export class SpecialiteWhereInput extends PartialType(
 
   @Field(() => DiplomeListRelationFilter, { nullable: true })
   Diplome: DiplomeListRelationFilter;
+
+  @Field(() => IntFilter, { nullable: true })
+  etablissementId: IntFilter;
 
   @Field(() => [SpecialiteWhereInput], { nullable: true })
   AND: SpecialiteWhereInput[];

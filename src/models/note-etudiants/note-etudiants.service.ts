@@ -10,7 +10,7 @@ import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class NoteEtudiantsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   create(createNoteEtudiantInput: CreateNoteEtudiantInput) {
     return this.prisma.noteEtudiant.create({
       data: createNoteEtudiantInput,
@@ -19,6 +19,26 @@ export class NoteEtudiantsService {
 
   findAll(args: FindManyNoteEtudiantArgs) {
     return this.prisma.noteEtudiant.findMany(args);
+  }
+
+  findAllByEtablissement(args: FindManyNoteEtudiantArgs, id: number) {
+    return this.prisma.noteEtudiant.findMany({
+      ...args,
+      where: {
+        ...args.where,
+        etudiant: {
+          is: {
+            profile: {
+              is: {
+                etablissementId: {
+                  equals: id,
+                },
+              },
+            }
+          },
+        },
+      },
+    });
   }
 
   findOne(args: FindUniqueNoteEtudiantArgs) {

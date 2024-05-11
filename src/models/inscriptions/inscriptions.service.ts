@@ -11,7 +11,7 @@ import { randomUUID } from 'crypto';
 
 @Injectable()
 export class InscriptionsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   create(createInscriptionInput: CreateInscriptionInput) {
     createInscriptionInput.reference =
       `${createInscriptionInput.etudiantId}-${randomUUID().split('-')[0]}`.toUpperCase();
@@ -22,6 +22,22 @@ export class InscriptionsService {
 
   findAll(args: FindManyInscriptionArgs) {
     return this.prisma.inscription.findMany(args);
+  }
+
+  findAllByEtablissement(args: FindManyInscriptionArgs, id: number) {
+    return this.prisma.inscription.findMany({
+      ...args,
+      where: {
+        ...args.where,
+        classe: {
+          is: {
+            etablissementId: {
+              equals: id,
+            },
+          },
+        },
+      },
+    });
   }
 
   findOne(args: FindUniqueInscriptionArgs) {

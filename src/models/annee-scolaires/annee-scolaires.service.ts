@@ -1,3 +1,4 @@
+import { Classe } from '@prisma/client';
 import { Injectable } from '@nestjs/common';
 import {
   FindManyAnneeScolaireArgs,
@@ -9,7 +10,7 @@ import { UpdateAnneeScolaireInput } from './dtos/update-annee-scolaire.input';
 
 @Injectable()
 export class AnneeScolairesService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   create(createAnneeScolaireInput: CreateAnneeScolaireInput) {
     return this.prisma.anneeScolaire.create({
       data: createAnneeScolaireInput,
@@ -18,6 +19,24 @@ export class AnneeScolairesService {
 
   findAll(args: FindManyAnneeScolaireArgs) {
     return this.prisma.anneeScolaire.findMany(args);
+  }
+
+  async findAllByEtablissement(args: FindManyAnneeScolaireArgs, etablissementId: number) {
+    const etablissement = await this.prisma.etablissement.findUnique({
+      where: {
+        id: etablissementId,
+      }
+    });
+    const anneeEnCours = etablissement.anneeEnCours;
+    return this.prisma.anneeScolaire.findMany({
+      ...args,
+      where: {
+        ...args.where,
+        nom: {
+          equals: anneeEnCours,
+        }
+      },
+    });
   }
 
   findOne(args: FindUniqueAnneeScolaireArgs) {

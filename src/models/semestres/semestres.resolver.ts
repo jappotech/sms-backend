@@ -11,7 +11,7 @@ import { Semestre } from './entity/semestre.entity';
 import { FindManySemestreArgs, FindUniqueSemestreArgs } from './dtos/find.args';
 import { CreateSemestreInput } from './dtos/create-semestre.input';
 import { UpdateSemestreInput } from './dtos/update-semestre.input';
-import { checkRowLevelPermission } from 'src/common/auth/util';
+import { checkRowLevelPermission, checkUserAffiliation } from 'src/common/auth/util';
 import { GetUserType } from 'src/common/types';
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
 import { PrismaService } from 'src/common/prisma/prisma.service';
@@ -24,7 +24,7 @@ export class SemestresResolver {
   constructor(
     private readonly semestresService: SemestresService,
     private readonly prisma: PrismaService,
-  ) {}
+  ) { }
 
   @AllowAuthenticated()
   @Mutation(() => Semestre)
@@ -36,8 +36,16 @@ export class SemestresResolver {
     return this.semestresService.create(args);
   }
 
+  @AllowAuthenticated()
   @Query(() => [Semestre], { name: 'semestres' })
-  findAll(@Args() args: FindManySemestreArgs) {
+  async findAll(@Args() args: FindManySemestreArgs, @GetUser() user: GetUserType) {
+    const affiliation = await checkUserAffiliation(user);
+    if (affiliation) {
+      return this.semestresService.findAllByEtablissement(
+        args,
+        affiliation.etablissementId,
+      );
+    }
     return this.semestresService.findAll(args);
   }
 

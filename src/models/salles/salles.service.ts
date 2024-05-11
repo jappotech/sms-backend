@@ -7,7 +7,7 @@ import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class SallesService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   create(createSalleInput: CreateSalleInput) {
     return this.prisma.salle.create({
       data: createSalleInput,
@@ -16,6 +16,18 @@ export class SallesService {
 
   findAll(args: FindManySalleArgs) {
     return this.prisma.salle.findMany(args);
+  }
+
+  findAllByEtablissement(args: FindManySalleArgs, etablissementId: number) {
+    return this.prisma.salle.findMany({
+      ...args,
+      where: {
+        ...args.where,
+        etablissementId: {
+          equals: etablissementId,
+        },
+      },
+    });
   }
 
   findOne(args: FindUniqueSalleArgs) {

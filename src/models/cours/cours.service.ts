@@ -7,7 +7,7 @@ import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class CoursService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   async create(createCoursInput: CreateCoursInput) {
     const cours = await this.prisma.cours.create({
       data: createCoursInput,
@@ -20,6 +20,22 @@ export class CoursService {
 
   findAll(args: FindManyCoursArgs) {
     return this.prisma.cours.findMany(args);
+  }
+
+  findAllByEtablissement(args: FindManyCoursArgs, etablissementId: number) {
+    return this.prisma.cours.findMany({
+      ...args,
+      where: {
+        ...args.where,
+        classe: {
+          is: {
+            etablissementId: {
+              equals: etablissementId,
+            }
+          }
+        }
+      },
+    });
   }
 
   findOne(args: FindUniqueCoursArgs) {

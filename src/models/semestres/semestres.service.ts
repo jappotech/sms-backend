@@ -7,7 +7,7 @@ import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class SemestresService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   create(createSemestreInput: CreateSemestreInput) {
     return this.prisma.semestre.create({
       data: createSemestreInput,
@@ -16,6 +16,18 @@ export class SemestresService {
 
   findAll(args: FindManySemestreArgs) {
     return this.prisma.semestre.findMany(args);
+  }
+
+  findAllByEtablissement(args: FindManySemestreArgs, etablissementId: number) {
+    return this.prisma.semestre.findMany({
+      ...args,
+      where: {
+        ...args.where,
+        etablissementId: {
+          equals: etablissementId,
+        },
+      },
+    });
   }
 
   findOne(args: FindUniqueSemestreArgs) {

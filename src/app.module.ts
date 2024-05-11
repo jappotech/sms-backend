@@ -54,7 +54,7 @@ import { BulletinNotesModule } from './models/bulletin-notes/bulletin-notes.modu
     JwtModule.register({
       global: true,
       secret: 'jwtConstants.secret',
-      signOptions: { expiresIn: '3600s' },
+      signOptions: { expiresIn: '45d' }, // one month
     }),
 
     AccountsModule,

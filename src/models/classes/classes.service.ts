@@ -6,7 +6,7 @@ import { UpdateClasseInput } from './dtos/update-classe.input';
 
 @Injectable()
 export class ClassesService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   async create(createClasseInput: CreateClasseInput) {
     // ToDo: Add logic to generate code
     createClasseInput.code =
@@ -22,6 +22,18 @@ export class ClassesService {
 
   findAll(args: FindManyClasseArgs) {
     return this.prisma.classe.findMany(args);
+  }
+
+  findAllByEtablissement(args: FindManyClasseArgs, etablissementId: number) {
+    return this.prisma.classe.findMany({
+      ...args,
+      where: {
+        ...args.where,
+        etablissementId: {
+          equals: etablissementId,
+        },
+      },
+    });
   }
 
   findOne(args: FindUniqueClasseArgs) {

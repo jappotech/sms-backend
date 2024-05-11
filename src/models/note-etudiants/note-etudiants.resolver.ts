@@ -14,7 +14,7 @@ import {
 } from './dtos/find.args';
 import { CreateNoteEtudiantInput } from './dtos/create-note-etudiant.input';
 import { UpdateNoteEtudiantInput } from './dtos/update-note-etudiant.input';
-import { checkRowLevelPermission } from 'src/common/auth/util';
+import { checkRowLevelPermission, checkUserAffiliation } from 'src/common/auth/util';
 import { GetUserType } from 'src/common/types';
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
 import { PrismaService } from 'src/common/prisma/prisma.service';
@@ -27,7 +27,7 @@ export class NoteEtudiantsResolver {
   constructor(
     private readonly noteEtudiantsService: NoteEtudiantsService,
     private readonly prisma: PrismaService,
-  ) {}
+  ) { }
 
   @AllowAuthenticated()
   @Mutation(() => NoteEtudiant)
@@ -39,8 +39,16 @@ export class NoteEtudiantsResolver {
     return this.noteEtudiantsService.create(args);
   }
 
+  @AllowAuthenticated()
   @Query(() => [NoteEtudiant], { name: 'noteEtudiants' })
-  findAll(@Args() args: FindManyNoteEtudiantArgs) {
+  async findAll(@Args() args: FindManyNoteEtudiantArgs, @GetUser() user: GetUserType) {
+    const affiliation = await checkUserAffiliation(user);
+    if (affiliation) {
+      return this.noteEtudiantsService.findAllByEtablissement(
+        args,
+        affiliation.etablissementId,
+      );
+    }
     return this.noteEtudiantsService.findAll(args);
   }
 
@@ -75,7 +83,7 @@ export class NoteEtudiantsResolver {
 
   @ResolveField(() => Etudiant)
   async etudiant(@Parent() parent: NoteEtudiant) {
-    return this.prisma.etudiant.findMany({
+    return this.prisma.etudiant.findUnique({
       where: { id: parent.etudiantId },
     });
   }

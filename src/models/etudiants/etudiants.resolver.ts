@@ -11,7 +11,7 @@ import { Etudiant } from './entity/etudiant.entity';
 import { FindManyEtudiantArgs, FindUniqueEtudiantArgs } from './dtos/find.args';
 import { CreateEtudiantInput } from './dtos/create-etudiant.input';
 import { UpdateEtudiantInput } from './dtos/update-etudiant.input';
-import { checkRowLevelPermission } from 'src/common/auth/util';
+import { checkRowLevelPermission, checkUserAffiliation } from 'src/common/auth/util';
 import { GetUserType } from 'src/common/types';
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
 import { PrismaService } from 'src/common/prisma/prisma.service';
@@ -25,7 +25,7 @@ export class EtudiantsResolver {
   constructor(
     private readonly etudiantsService: EtudiantsService,
     private readonly prisma: PrismaService,
-  ) {}
+  ) { }
 
   @AllowAuthenticated()
   @Mutation(() => Etudiant)
@@ -39,7 +39,14 @@ export class EtudiantsResolver {
 
   @AllowAuthenticated()
   @Query(() => [Etudiant], { name: 'etudiants' })
-  findAll(@Args() args: FindManyEtudiantArgs) {
+  async findAll(@Args() args: FindManyEtudiantArgs, @GetUser() user: GetUserType) {
+    const affiliation = await checkUserAffiliation(user);
+    if (affiliation) {
+      return this.etudiantsService.findAllByEtablissement(
+        args,
+        affiliation.etablissementId,
+      );
+    }
     return this.etudiantsService.findAll(args);
   }
 

@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, ResolveField, Parent, Int } from '@nestjs/graphql';
 import { AccountsService } from './accounts.service';
 import { Account } from './entity/account.entity';
 import { FindManyAccountArgs, FindUniqueAccountArgs } from './dtos/find.args';
@@ -14,7 +14,7 @@ export class AccountsResolver {
   constructor(
     private readonly accountsService: AccountsService,
     private readonly prisma: PrismaService,
-  ) {}
+  ) { }
 
   @AllowAuthenticated()
   @Mutation(() => Account)
@@ -62,5 +62,14 @@ export class AccountsResolver {
     const account = await this.prisma.account.findUnique(args);
     checkRowLevelPermission(user, user.uid, ['ADMIN']);
     return this.accountsService.remove(args);
+  }
+
+  @ResolveField(() => Int)
+  async etablissementId(@Parent() parent: Account) {
+    const user = await this.prisma.utilisateur.findUnique({
+      where: { accountId: parent.id },
+    });
+
+    return user?.etablissementId;
   }
 }

@@ -18,11 +18,10 @@ export class UniteEnseignementWhereUniqueInput {
 @InputType()
 export class UniteEnseignementWhereInputStrict
   implements
-    RestrictProperties<
-      UniteEnseignementWhereInputStrict,
-      Prisma.UniteEnseignementWhereInput
-    >
-{
+  RestrictProperties<
+    UniteEnseignementWhereInputStrict,
+    Prisma.UniteEnseignementWhereInput
+  > {
   @Field(() => IntFilter, { nullable: true })
   id: IntFilter;
 
@@ -40,6 +39,9 @@ export class UniteEnseignementWhereInputStrict
 
   @Field(() => IntFilter, { nullable: true })
   credit: IntFilter;
+
+  @Field(() => IntFilter, { nullable: true })
+  numero: IntFilter;
 
   @Field(() => IntFilter, { nullable: true })
   semestreId: IntFilter;
@@ -81,6 +83,9 @@ export class UniteEnseignementWhereInput extends PartialType(
 
   @Field(() => IntFilter, { nullable: true })
   credit: IntFilter;
+
+  @Field(() => IntFilter, { nullable: true })
+  numero: IntFilter;
 
   @Field(() => IntFilter, { nullable: true })
   semestreId: IntFilter;

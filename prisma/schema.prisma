@@ -3,7 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "./generated/client"
+  // output   = "./generated/client"
 }
 
 datasource db {
@@ -29,7 +29,9 @@ enum GroupeSanguin {
 }
 
 enum Role {
-  ADMIN /// allowed to do everything
+  SUPER_ADMIN /// school administrator
+  SUPER_USER /// school administrator
+  ADMIN /// school administrator
   UTILISATEUR
   ETUDIANT
   PROFESSEUR
@@ -209,16 +211,17 @@ model Mention {
 }
 
 model Specialite {
-  id        Int       @id @default(autoincrement())
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  nom       String
-  slug      String?   @unique
+  id              Int       @id @default(autoincrement())
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  nom             String
+  slug            String?   @unique
+  etablissementId Int?
   // filieres  Filiere[]
-  mention   Mention?  @relation(fields: [mentionId], references: [id])
-  mentionId Int?
-  Classe    Classe[]
-  Diplome   Diplome[]
+  mention         Mention?  @relation(fields: [mentionId], references: [id])
+  mentionId       Int?
+  Classe          Classe[]
+  Diplome         Diplome[]
 }
 
 enum TypeDiplome {
@@ -258,6 +261,7 @@ model Semestre {
   dateDebut         DateTime
   dateFin           DateTime
   nombreSemaine     Int
+  etablissementId   Int?
   uniteEnseignement UniteEnseignement[]
   Classe            Classe?             @relation(fields: [classeId], references: [id])
   classeId          Int?
@@ -270,6 +274,7 @@ model UniteEnseignement {
   updatedAt  DateTime  @updatedAt
   code       String
   nom        String
+  numero     Int       @default(1)
   credit     Int // Crédits d’Évaluation Capitalisables et Transférables (CECT)
   semestre   Semestre? @relation(fields: [semestreId], references: [id])
   semestreId Int?

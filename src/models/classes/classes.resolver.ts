@@ -11,7 +11,7 @@ import { Classe } from './entity/classe.entity';
 import { FindManyClasseArgs, FindUniqueClasseArgs } from './dtos/find.args';
 import { CreateClasseInput } from './dtos/create-classe.input';
 import { UpdateClasseInput } from './dtos/update-classe.input';
-import { checkRowLevelPermission } from 'src/common/auth/util';
+import { checkRowLevelPermission, checkUserAffiliation } from 'src/common/auth/util';
 import { GetUserType } from 'src/common/types';
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
 import { PrismaService } from 'src/common/prisma/prisma.service';
@@ -41,8 +41,13 @@ export class ClassesResolver {
     return this.classesService.create(args);
   }
 
+  @AllowAuthenticated()
   @Query(() => [Classe], { name: 'classes' })
-  findAll(@Args() args: FindManyClasseArgs) {
+  async findAll(@Args() args: FindManyClasseArgs, @GetUser() user: GetUserType) {
+    const affiliation = await checkUserAffiliation(user)
+    if (affiliation) {
+      return this.classesService.findAllByEtablissement(args, affiliation.etablissementId);
+    }
     return this.classesService.findAll(args);
   }
 

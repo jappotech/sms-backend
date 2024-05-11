@@ -15,7 +15,7 @@ export class ProfesseursService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly utilisateurService: UtilisateursService,
-  ) {}
+  ) { }
   async create(createProfesseurInput: CreateProfesseurInput) {
     const utilisateur = await this.utilisateurService.create(
       createProfesseurInput.profile,
@@ -27,6 +27,22 @@ export class ProfesseursService {
 
   findAll(args: FindManyProfesseurArgs) {
     return this.prisma.professeur.findMany(args);
+  }
+
+  findAllByEtablissement(args: FindManyProfesseurArgs, id: number) {
+    return this.prisma.professeur.findMany({
+      ...args,
+      where: {
+        ...args.where,
+        profile: {
+          is: {
+            etablissementId: {
+              equals: id,
+            },
+          },
+        },
+      },
+    });
   }
 
   findOne(args: FindUniqueProfesseurArgs) {

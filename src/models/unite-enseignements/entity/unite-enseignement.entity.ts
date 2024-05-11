@@ -4,8 +4,7 @@ import { RestrictProperties } from 'src/common/dtos/common.input';
 
 @ObjectType()
 export class UniteEnseignement
-  implements RestrictProperties<UniteEnseignement, UniteEnseignementType>
-{
+  implements RestrictProperties<UniteEnseignement, UniteEnseignementType> {
   @Field({ nullable: true })
   id: number;
 
@@ -23,6 +22,9 @@ export class UniteEnseignement
 
   @Field({ nullable: true })
   credit: number;
+
+  @Field({ nullable: true })
+  numero: number;
 
   @Field({ nullable: true })
   semestreId: number;

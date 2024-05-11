@@ -21,6 +21,9 @@ type Utilisateur {
   contactId: Float
   accountId: Float
   adresseId: Float
+  etablissement: Etablissement!
+  adresse: Adresse!
+  contact: Contact!
 }
 
 """
@@ -38,6 +41,24 @@ type Account {
   roles: [String!]!
   isActive: Boolean!
   userId: Float
+  etablissementId: Int!
+}
+
+type Etablissement {
+  id: Float
+  createdAt: DateTime
+  updatedAt: DateTime
+  nom: String
+  matricule: String
+  sigle: String
+  dateCreation: DateTime
+  logo: String
+  anneeEnCours: String
+  adresseId: Float
+  contactId: Float
+  domaines: [Domaine!]!
+  adresse: Adresse!
+  contact: Contact!
 }
 
 type Adresse {
@@ -47,6 +68,17 @@ type Adresse {
   ville: String
   codePostal: String
   geolocalisation: String
+}
+
+type Contact {
+  id: Float
+  createdAt: DateTime
+  updatedAt: DateTime
+  telephone: String
+  fix: String
+  fax: String
+  email: String
+  siteWeb: String
 }
 
 type Classe {
@@ -76,6 +108,7 @@ type Semestre {
   dateDebut: DateTime
   dateFin: DateTime
   nombreSemaine: Float
+  etablissementId: Float
   classeId: Float
   uniteEnseignements: [UniteEnseignement!]!
 }
@@ -128,6 +161,7 @@ type Specialite {
   nom: String
   slug: String
   mentionId: Float
+  etablissementId: Float
   classes: [Classe!]!
   mention: Mention!
 }
@@ -150,17 +184,6 @@ type Cours {
   classe: Classe!
   salle: Salle!
   professeur: Professeur!
-}
-
-type Contact {
-  id: Float
-  createdAt: DateTime
-  updatedAt: DateTime
-  telephone: String
-  fix: String
-  fax: String
-  email: String
-  siteWeb: String
 }
 
 type Matiere {
@@ -241,21 +264,6 @@ type EmploiDuTemps {
   dateFin: DateTime
 }
 
-type Etablissement {
-  id: Float
-  createdAt: DateTime
-  updatedAt: DateTime
-  nom: String
-  matricule: String
-  sigle: String
-  dateCreation: DateTime
-  logo: String
-  anneeEnCours: String
-  adresseId: Float
-  contactId: Float
-  domaines: [Domaine!]!
-}
-
 type Etudiant {
   id: Float
   createdAt: DateTime
@@ -300,6 +308,7 @@ type UniteEnseignement {
   code: String
   nom: String
   credit: Float
+  numero: Float
   semestreId: Float
   matieres: [Matiere!]!
 }
@@ -394,6 +403,7 @@ type Query {
   diplomes(where: DiplomeWhereInput, orderBy: [DiplomeOrderByWithRelationInput!], cursor: DiplomeWhereUniqueInput, take: Float, skip: Float, distinct: [DiplomeScalarFieldEnum!]): [Diplome!]!
   diplome(where: DiplomeWhereUniqueInput!): Diplome!
   domaines(where: DomaineWhereInput, orderBy: [DomaineOrderByWithRelationInput!], cursor: DomaineWhereUniqueInput, take: Float, skip: Float, distinct: [DomaineScalarFieldEnum!]): [Domaine!]!
+  domaines_etablissement(where: DomaineWhereInput, orderBy: [DomaineOrderByWithRelationInput!], cursor: DomaineWhereUniqueInput, take: Float, skip: Float, distinct: [DomaineScalarFieldEnum!]): [Domaine!]!
   domaine(where: DomaineWhereUniqueInput!): Domaine!
   emploisDuTemps(where: EmploiDuTempsWhereInput, orderBy: [EmploiDuTempsOrderByWithRelationInput!], cursor: EmploiDuTempsWhereUniqueInput, take: Float, skip: Float, distinct: [EmploiDuTempsScalarFieldEnum!]): [EmploiDuTemps!]!
   emploiDuTemps(where: EmploiDuTempsWhereUniqueInput!): EmploiDuTemps!
@@ -719,6 +729,7 @@ input SpecialiteWhereInput {
   mention: MentionRelationFilter
   Classe: ClasseListRelationFilter
   Diplome: DiplomeListRelationFilter
+  etablissementId: IntFilter
   AND: [SpecialiteWhereInput!]
   OR: [SpecialiteWhereInput!]
   NOT: [SpecialiteWhereInput!]
@@ -796,6 +807,7 @@ input SemestreWhereInput {
   dateFin: DateTimeFilter
   nombreSemaine: IntFilter
   classeId: IntFilter
+  etablissementId: IntFilter
   uniteEnseignement: UniteEnseignementListRelationFilter
   Classe: ClasseRelationFilter
   AND: [SemestreWhereInput!]
@@ -816,6 +828,7 @@ input UniteEnseignementWhereInput {
   code: StringFilter
   nom: StringFilter
   credit: IntFilter
+  numero: IntFilter
   semestreId: IntFilter
   semestre: SemestreRelationFilter
   matieres: MatiereListRelationFilter
@@ -1316,6 +1329,7 @@ input SpecialiteOrderByWithRelationInput {
   mention: MentionOrderByWithRelationInput
   Classe: ClasseOrderByRelationAggregateInput
   Diplome: DiplomeOrderByRelationAggregateInput
+  etablissementId: SortOrder
 }
 
 input MentionOrderByWithRelationInput {
@@ -1452,6 +1466,7 @@ input UniteEnseignementOrderByWithRelationInput {
   code: SortOrder
   nom: SortOrder
   credit: SortOrder
+  numero: SortOrder
   semestreId: SortOrder
   semestre: SemestreOrderByWithRelationInput
   matieres: MatiereOrderByRelationAggregateInput
@@ -1466,6 +1481,7 @@ input SemestreOrderByWithRelationInput {
   dateDebut: SortOrder
   dateFin: SortOrder
   nombreSemaine: SortOrder
+  etablissementId: SortOrder
   classeId: SortOrder
   uniteEnseignement: UniteEnseignementOrderByRelationAggregateInput
   Classe: ClasseOrderByWithRelationInput
@@ -1988,6 +2004,7 @@ enum SemestreScalarFieldEnum {
   dateDebut
   dateFin
   nombreSemaine
+  etablissementId
   classeId
 }
 
@@ -2001,6 +2018,7 @@ enum SpecialiteScalarFieldEnum {
   updatedAt
   nom
   slug
+  etablissementId
   mentionId
 }
 
@@ -2014,6 +2032,7 @@ enum UniteEnseignementScalarFieldEnum {
   updatedAt
   code
   nom
+  numero
   credit
   semestreId
 }
@@ -2096,6 +2115,7 @@ type Mutation {
   removeSpecialite(where: SpecialiteWhereUniqueInput!): Specialite!
   createUniteEnseignement(createUniteEnseignementInput: CreateUniteEnseignementInput!): UniteEnseignement!
   updateUniteEnseignement(updateUniteEnseignementInput: UpdateUniteEnseignementInput!): UniteEnseignement!
+  genererCodeUniteEnseignement(genererCodeUniteEnseignement: UpdateUniteEnseignementInput!): UniteEnseignement!
   removeUniteEnseignement(where: UniteEnseignementWhereUniqueInput!): UniteEnseignement!
   login(loginInput: LoginInput!): LoginResponse!
 }
@@ -2249,6 +2269,7 @@ input CreateMentionInput {
 input CreateSpecialiteInput {
   nom: String
   mentionId: Float
+  etablissementId: Float
 }
 
 input UpdateDomaineInput {
@@ -2563,6 +2584,7 @@ input CreateSemestreInput {
   dateDebut: DateTime
   dateFin: DateTime
   nombreSemaine: Float
+  etablissementId: Float
   classeId: Float
 }
 
@@ -2572,6 +2594,7 @@ input UpdateSemestreInput {
   dateDebut: DateTime
   dateFin: DateTime
   nombreSemaine: Float
+  etablissementId: Float
   classeId: Float
   id: Float!
 }
@@ -2579,6 +2602,7 @@ input UpdateSemestreInput {
 input UpdateSpecialiteInput {
   nom: String
   mentionId: Float
+  etablissementId: Float
   id: Float!
 }
 
@@ -2586,6 +2610,7 @@ input CreateUniteEnseignementInput {
   code: String
   nom: String
   credit: Float
+  numero: Float
   semestreId: Float
 }
 
@@ -2593,6 +2618,7 @@ input UpdateUniteEnseignementInput {
   code: String
   nom: String
   credit: Float
+  numero: Float
   semestreId: Float
   id: Float!
 }

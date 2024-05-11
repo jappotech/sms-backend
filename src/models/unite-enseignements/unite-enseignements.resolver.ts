@@ -14,12 +14,13 @@ import {
 } from './dtos/find.args';
 import { CreateUniteEnseignementInput } from './dtos/create-unite-enseignement.input';
 import { UpdateUniteEnseignementInput } from './dtos/update-unite-enseignement.input';
-import { checkRowLevelPermission } from 'src/common/auth/util';
+import { checkRowLevelPermission, checkUserAffiliation } from 'src/common/auth/util';
 import { GetUserType } from 'src/common/types';
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
 import { PrismaService } from 'src/common/prisma/prisma.service';
 import { Prisma } from '@prisma/client';
 import { Matiere } from '../matieres/entity/matiere.entity';
+import { AppService } from 'src/app.service';
 
 @Resolver(() => UniteEnseignement)
 export class UniteEnseignementsResolver {
@@ -38,8 +39,16 @@ export class UniteEnseignementsResolver {
     return this.uniteEnseignementsService.create(args);
   }
 
+  @AllowAuthenticated()
   @Query(() => [UniteEnseignement], { name: 'uniteEnseignements' })
-  findAll(@Args() args: FindManyUniteEnseignementArgs) {
+  async findAll(@Args() args: FindManyUniteEnseignementArgs, @GetUser() user: GetUserType) {
+    const affiliation = await checkUserAffiliation(user);
+    if (affiliation) {
+      return this.uniteEnseignementsService.findAllByEtablissement(
+        args,
+        affiliation.etablissementId,
+      );
+    }
     return this.uniteEnseignementsService.findAll(args);
   }
 
@@ -59,6 +68,21 @@ export class UniteEnseignementsResolver {
     });
     // checkRowLevelPermission(user, uniteEnseignement.uid)
     return this.uniteEnseignementsService.update(args);
+  }
+
+  @AllowAuthenticated()
+  @Mutation(() => UniteEnseignement)
+  async genererCodeUniteEnseignement(
+    @Args('genererCodeUniteEnseignement') args: UpdateUniteEnseignementInput,
+    @GetUser() user: GetUserType,
+  ) {
+    const uniteEnseignement = await this.prisma.uniteEnseignement.findUnique({
+      where: { id: args.id },
+    });
+    const codeUE = await this.uniteEnseignementsService.genererCodeUE(uniteEnseignement.id);
+    console.log("🚀 ~ codeUE:", codeUE)
+    // checkRowLevelPermission(user, uniteEnseignement.uid)
+    return this.uniteEnseignementsService.update({ ...args, code: codeUE });
   }
 
   @AllowAuthenticated()

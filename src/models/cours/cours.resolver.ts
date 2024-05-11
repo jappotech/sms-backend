@@ -11,7 +11,7 @@ import { Cours } from './entity/cours.entity';
 import { FindManyCoursArgs, FindUniqueCoursArgs } from './dtos/find.args';
 import { CreateCoursInput } from './dtos/create-cours.input';
 import { UpdateCoursInput } from './dtos/update-cours.input';
-import { checkRowLevelPermission } from 'src/common/auth/util';
+import { checkRowLevelPermission, checkUserAffiliation } from 'src/common/auth/util';
 import { GetUserType } from 'src/common/types';
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
 import { PrismaService } from 'src/common/prisma/prisma.service';
@@ -38,8 +38,16 @@ export class CoursResolver {
     return this.coursService.create(args);
   }
 
+  @AllowAuthenticated()
   @Query(() => [Cours], { name: 'all_cours' })
-  findAll(@Args() args: FindManyCoursArgs) {
+  async findAll(@Args() args: FindManyCoursArgs, @GetUser() user: GetUserType) {
+    const affiliation = await checkUserAffiliation(user);
+    if (affiliation) {
+      return this.coursService.findAllByEtablissement(
+        args,
+        affiliation.etablissementId,
+      );
+    }
     return this.coursService.findAll(args);
   }
 

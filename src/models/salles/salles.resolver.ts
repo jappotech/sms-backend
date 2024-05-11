@@ -4,7 +4,7 @@ import { Salle } from './entity/salle.entity';
 import { FindManySalleArgs, FindUniqueSalleArgs } from './dtos/find.args';
 import { CreateSalleInput } from './dtos/create-salle.input';
 import { UpdateSalleInput } from './dtos/update-salle.input';
-import { checkRowLevelPermission } from 'src/common/auth/util';
+import { checkRowLevelPermission, checkUserAffiliation } from 'src/common/auth/util';
 import { GetUserType } from 'src/common/types';
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
 import { PrismaService } from 'src/common/prisma/prisma.service';
@@ -15,7 +15,7 @@ export class SallesResolver {
   constructor(
     private readonly sallesService: SallesService,
     private readonly prisma: PrismaService,
-  ) {}
+  ) { }
 
   // @AllowAuthenticated()
   @Mutation(() => Salle)
@@ -27,8 +27,16 @@ export class SallesResolver {
     return this.sallesService.create(args);
   }
 
+  @AllowAuthenticated()
   @Query(() => [Salle], { name: 'salles' })
-  findAll(@Args() args: FindManySalleArgs) {
+  async findAll(@Args() args: FindManySalleArgs, @GetUser() user: GetUserType) {
+    const affiliation = await checkUserAffiliation(user);
+    if (affiliation) {
+      return this.sallesService.findAllByEtablissement(
+        args,
+        affiliation.etablissementId,
+      );
+    }
     return this.sallesService.findAll(args);
   }
 

@@ -18,8 +18,7 @@ export class SemestreWhereUniqueInput {
 @InputType()
 export class SemestreWhereInputStrict
   implements
-    RestrictProperties<SemestreWhereInputStrict, Prisma.SemestreWhereInput>
-{
+  RestrictProperties<SemestreWhereInputStrict, Prisma.SemestreWhereInput> {
   @Field(() => IntFilter, { nullable: true })
   id: IntFilter;
 
@@ -46,6 +45,9 @@ export class SemestreWhereInputStrict
 
   @Field(() => IntFilter, { nullable: true })
   classeId: IntFilter;
+
+  @Field(() => IntFilter, { nullable: true })
+  etablissementId: IntFilter;
 
   @Field(() => UniteEnseignementListRelationFilter, { nullable: true })
   uniteEnseignement: UniteEnseignementListRelationFilter;
@@ -91,6 +93,9 @@ export class SemestreWhereInput extends PartialType(SemestreWhereInputStrict) {
 
   @Field(() => IntFilter, { nullable: true })
   classeId: IntFilter;
+
+  @Field(() => IntFilter, { nullable: true })
+  etablissementId: IntFilter;
 
   @Field(() => UniteEnseignementListRelationFilter, { nullable: true })
   uniteEnseignement: UniteEnseignementListRelationFilter;

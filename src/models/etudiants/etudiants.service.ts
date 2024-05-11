@@ -11,7 +11,7 @@ export class EtudiantsService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly utilisateurService: UtilisateursService,
-  ) {}
+  ) { }
   async create(createEtudiantInput: CreateEtudiantInput) {
     // create utilisateur
     const utilisateur = await this.utilisateurService.create(
@@ -35,6 +35,22 @@ export class EtudiantsService {
 
   findAll(args: FindManyEtudiantArgs) {
     return this.prisma.etudiant.findMany(args);
+  }
+
+  findAllByEtablissement(args: FindManyEtudiantArgs, id: number) {
+    return this.prisma.etudiant.findMany({
+      ...args,
+      where: {
+        ...args.where,
+        profile: {
+          is: {
+            etablissementId: {
+              equals: id,
+            },
+          }
+        }
+      },
+    });
   }
 
   findOne(args: FindUniqueEtudiantArgs) {

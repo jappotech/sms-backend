@@ -11,9 +11,9 @@ import slugify from 'slugify';
 
 @Injectable()
 export class SpecialitesService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   create(createSpecialiteInput: CreateSpecialiteInput) {
-    const slug = slugify(`${createSpecialiteInput.nom.toLowerCase()}`);
+    const slug = slugify(`${createSpecialiteInput.mentionId} ${createSpecialiteInput.etablissementId || 0} ${createSpecialiteInput.nom.toLowerCase()}`);
     return this.prisma.specialite.create({
       data: { ...createSpecialiteInput, slug },
     });
@@ -21,6 +21,18 @@ export class SpecialitesService {
 
   findAll(args: FindManySpecialiteArgs) {
     return this.prisma.specialite.findMany(args);
+  }
+
+  findAllByEtablissement(args: FindManySpecialiteArgs, etablissementId: number) {
+    return this.prisma.specialite.findMany({
+      ...args,
+      where: {
+        ...args.where,
+        etablissementId: {
+          equals: etablissementId,
+        },
+      },
+    });
   }
 
   findOne(args: FindUniqueSpecialiteArgs) {

@@ -14,7 +14,7 @@ export class UtilisateursService {
   constructor(
     private readonly prisma: PrismaService,
     private accountService: AccountsService,
-  ) {}
+  ) { }
   async create(createUtilisateurInput: CreateUtilisateurInput) {
     // create user without account
     const { account, ...userData } = createUtilisateurInput;
@@ -43,6 +43,16 @@ export class UtilisateursService {
 
   findAll(args: FindManyUtilisateurArgs) {
     return this.prisma.utilisateur.findMany(args);
+  }
+
+  findAllByEtablissement(args: FindManyUtilisateurArgs, id: number) {
+    return this.prisma.utilisateur.findMany({
+      ...args,
+      where: {
+        ...args.where,
+        etablissementId: id
+      },
+    });
   }
 
   findOne(args: FindUniqueUtilisateurArgs) {

@@ -4,6 +4,6 @@ import { UniteEnseignement } from '../entity/unite-enseignement.entity';
 @InputType()
 export class CreateUniteEnseignementInput extends PickType(
   UniteEnseignement,
-  ['code', 'credit', 'nom', 'semestreId'],
+  ['code', 'credit', 'nom', 'numero', 'semestreId'],
   InputType,
-) {}
+) { }
