@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  db:
+    container_name: sms_db
+    env_file:
+      - .env
+    image: postgres
+    restart: always
+    ports:
+      - 15432:5432
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+  pgadmin:
+    container_name: sms_pgadmin
+    env_file:
+      - .env
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+    ports:
+      - '25432:80'
+    depends_on:
+      - db
+volumes:
+  db_data:

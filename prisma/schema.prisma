@@ -1,0 +1,474 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  // output   = "./generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Genre {
+  Masculin
+  Feminin
+  // Autre
+}
+
+enum GroupeSanguin {
+  A          @map("A+")
+  B          @map("B+")
+  AB         @map("AB+")
+  O          @map("O+")
+  O_NEGATIF  @map("O-")
+  A_NEGATIF  @map("A-")
+  B_NEGATIF  @map("B-")
+  AB_NEGATIF @map("AB-")
+}
+
+enum Role {
+  SUPER_ADMIN /// school administrator
+  SUPER_USER /// school administrator
+  ADMIN /// school administrator
+  UTILISATEUR
+  ETUDIANT
+  PROFESSEUR
+  COMPTABLE
+  SURVEILLANT // Autres profils de l'établissement
+  SUPERVISEUR // Read Only
+}
+
+enum Niveau {
+  LICENCE
+  MASTER
+  DOCTORAT
+}
+
+model Account {
+  id        Int      @id @default(autoincrement())
+  uid       String   @unique @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  username  String   @unique
+  password  String
+  roles     Role[]   @default([UTILISATEUR])
+  isActive  Boolean  @default(false)
+
+  userId Int
+}
+
+model Utilisateur {
+  id              Int            @id @default(autoincrement())
+  matricule       String         @unique
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  prenom          String
+  nom             String
+  contact         Contact?       @relation(fields: [contactId], references: [id])
+  dateNaissance   DateTime?
+  lieuNaissance   String?
+  adresse         Adresse?       @relation(fields: [adresseId], references: [id])
+  cni             String?
+  genre           Genre
+  nationalite     String?
+  groupeSanguin   GroupeSanguin?
+  etablissement   Etablissement? @relation(fields: [etablissementId], references: [id])
+  etablissementId Int?
+  statutCompte    String?
+  /// user role
+  roles           Role[]         @default([UTILISATEUR])
+  contactId       Int?
+  adresseId       Int?
+  etudiant        Etudiant?
+  permissions     Permission[]
+  Professeur      Professeur?
+  accountId       Int?           @unique
+}
+
+model Permission {
+  id           Int           @id @default(autoincrement())
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  role         Role[]
+  label        String        @unique
+  slug         String?       @unique
+  utilisateurs Utilisateur[]
+}
+
+model Adresse {
+  id              Int             @id @default(autoincrement())
+  pays            String
+  region          String
+  ville           String
+  codePostal      String?
+  geolocalisation String?
+  utilisateurs    Utilisateur[]
+  etablissements  Etablissement[]
+}
+
+model ReseauSocial {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  nom       String
+  username  String
+  url       String
+  contact   Contact? @relation(fields: [contactId], references: [id])
+  contactId Int?
+}
+
+model Contact {
+  id             Int             @id @default(autoincrement())
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  telephone      String          @unique
+  fix            String?         @unique
+  fax            String?         @unique
+  email          String          @unique
+  siteWeb        String?         @unique
+  reseauxSociaux ReseauSocial[]
+  utilisateurs   Utilisateur[]
+  etablissements Etablissement[]
+}
+
+model Etudiant {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  slug               String? @unique
+  ine                String  @unique // Identifiant national étudiant
+  baccaleaureat      String?
+  anneeBaccaleaureat Int?
+
+  profile            Utilisateur       @relation(fields: [profileId], references: [id])
+  profileId          Int               @unique
+  inscriptions       Inscription[]
+  notes              NoteEtudiant[]
+  feuillePresencesId Int?
+  feuillePresences   FeuillePresence[]
+  Paiement           Paiement[]
+}
+
+model Professeur {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  profile       Utilisateur     @relation(fields: [profileId], references: [id])
+  profileId     Int             @unique
+  cours         Cours[]
+  EmploiDuTemps EmploiDuTemps[]
+}
+
+model Inscription {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  reference             String   @unique // Numéro d'inscription
+  premiereInscription   Boolean  @default(false)
+  dernierDiplome        String?
+  autreEtablissement    String?
+  activiteProfessionnel String?
+  niveau                String?
+  statut                String?
+  diplomeId             Int
+  diplome               Diplome  @relation(fields: [diplomeId], references: [id])
+  etudiant              Etudiant @relation(fields: [etudiantId], references: [id])
+  etudiantId            Int
+  classeId              Int
+  classe                Classe   @relation(fields: [classeId], references: [id])
+}
+
+enum Cursus {
+  LMD
+  INTERNE
+  EXTERNE
+}
+
+model Domaine {
+  id             Int             @id @default(autoincrement())
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  nom            String
+  slug           String?         @unique
+  etablissements Etablissement[]
+  mentions       Mention[]
+}
+
+model Mention {
+  id          Int          @id @default(autoincrement())
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  nom         String
+  slug        String?      @unique
+  domaineId   Int?
+  domaine     Domaine?     @relation(fields: [domaineId], references: [id])
+  specialites Specialite[]
+}
+
+model Specialite {
+  id              Int       @id @default(autoincrement())
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  nom             String
+  slug            String?   @unique
+  etablissementId Int?
+  // filieres  Filiere[]
+  mention         Mention?  @relation(fields: [mentionId], references: [id])
+  mentionId       Int?
+  Classe          Classe[]
+  Diplome         Diplome[]
+}
+
+enum TypeDiplome {
+  LICENCE_GENERALE
+  LICENCE_PROFESSIONNELLE
+  MASTER_PROFESSIONNEL
+  MASTER_RECHERCHE
+  DOCTORAT
+}
+
+model Diplome {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  nom              String
+  finalite         String
+  entite           String // ANAQSUP - CAMES - etc.
+  habilitation     String
+  partenaires      String[]
+  dateCreation     DateTime
+  dateHabilitation DateTime
+  dateEcheance     DateTime
+  duree            Int // mois
+  inscriptions     Inscription[]
+  specialite       Specialite?   @relation(fields: [specialiteId], references: [id])
+  specialiteId     Int?
+}
+
+model Semestre {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  numero            Int
+  grade             TypeDiplome
+  dateDebut         DateTime
+  dateFin           DateTime
+  nombreSemaine     Int
+  etablissementId   Int?
+  uniteEnseignement UniteEnseignement[]
+  Classe            Classe?             @relation(fields: [classeId], references: [id])
+  classeId          Int?
+}
+
+// Un Crédit équivaut, dans l’espace REESAO, à 25 heures de Charge Totale de Travail
+model UniteEnseignement {
+  id         Int       @id @default(autoincrement())
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  code       String
+  nom        String
+  numero     Int       @default(1)
+  credit     Int // Crédits d’Évaluation Capitalisables et Transférables (CECT)
+  semestre   Semestre? @relation(fields: [semestreId], references: [id])
+  semestreId Int?
+  matieres   Matiere[]
+}
+
+model Matiere {
+  id                  Int               @id @default(autoincrement())
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+  code                String
+  nom                 String
+  credit              Int // 30 -> nbHeure = 30 * 25
+  coefficient         Int               @default(1)
+  nbHeure             Int?
+  cours               Cours[]
+  uniteEnseignement   UniteEnseignement @relation(fields: [uniteEnseignementId], references: [id])
+  uniteEnseignementId Int
+}
+
+model Etablissement {
+  id           Int           @id @default(autoincrement())
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  nom          String
+  matricule    String?
+  sigle        String?
+  dateCreation DateTime?
+  logo         String?
+  anneeEnCours String?
+  adresse      Adresse?      @relation(fields: [adresseId], references: [id])
+  contact      Contact?      @relation(fields: [contactId], references: [id])
+  utilisateurs Utilisateur[]
+  adresseId    Int?
+  contactId    Int?
+  domaines     Domaine[]
+  classes      Classe[]
+  salle        Salle[]
+}
+
+model Classe {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  nom             String
+  code            String
+  niveau          String
+  etablissement   Etablissement   @relation(fields: [etablissementId], references: [id])
+  etablissementId Int
+  semestres       Semestre[]
+  inscriptions    Inscription[]
+  specialite      Specialite      @relation(fields: [specialiteId], references: [id])
+  specialiteId    Int
+  Cours           Cours[]
+  EmploiDuTemps   EmploiDuTemps[]
+  AnneeScolaire   AnneeScolaire?  @relation(fields: [anneeScolaireId], references: [id])
+  anneeScolaireId Int?
+}
+
+enum TypeEvaluation {
+  CONTROLE_CONTINU @map("Controle Continu")
+  EXAMEN
+  TEST
+  TP
+  TD
+  PROJET
+  RAPPORT
+  MEMOIRE
+  STAGE
+  AUTRE
+}
+
+model AnneeScolaire {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  dateDebut Int
+  dateFin   Int
+  nom       String
+  classes   Classe[]
+}
+
+model EvaluationEtudiants {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  typeEvaluation TypeEvaluation
+  dateEvaluation DateTime
+  duree          Int // en heures
+  document       String // url document
+  description    String?
+  cours          Cours          @relation(fields: [coursId], references: [id])
+  coursId        Int
+  NoteEtudiant   NoteEtudiant[]
+}
+
+model NoteEtudiant {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  note                 Float
+  evaluationEtudiant   EvaluationEtudiants? @relation(fields: [evaluationEtudiantId], references: [id])
+  evaluationEtudiantId Int?
+  etudiant             Etudiant             @relation(fields: [etudiantId], references: [id])
+  etudiantId           Int
+
+  @@unique([evaluationEtudiantId, etudiantId, note])
+}
+
+model Cours {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  nom                String
+  description        String?
+  dateDebut          DateTime
+  dateFin            DateTime
+  heureDebut         DateTime
+  heureFin           DateTime
+  matiereId          Int?
+  salleId            Int?
+  classeId           Int?
+  professeurId       Int?
+  matiere            Matiere?              @relation(fields: [matiereId], references: [id])
+  salle              Salle?                @relation(fields: [salleId], references: [id])
+  classe             Classe?               @relation(fields: [classeId], references: [id])
+  professeur         Professeur?           @relation(fields: [professeurId], references: [id])
+  evaluationEtudiant EvaluationEtudiants[]
+  feuillePresences   FeuillePresence[]
+  emploiDuTemps      EmploiDuTemps[]
+}
+
+model Salle {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  nom             String
+  capacite        Int?
+  batiment        String?
+  etablissementId Int
+  etablissement   Etablissement   @relation(fields: [etablissementId], references: [id])
+  cours           Cours[]
+  estDisponible   Boolean         @default(true)
+  EmploiDuTemps   EmploiDuTemps[]
+}
+
+model FeuillePresence {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  date       DateTime
+  heureDebut DateTime
+  heureFin   DateTime
+  cours      Cours     @relation(fields: [coursId], references: [id])
+  coursId    Int
+  etudiant   Etudiant? @relation(fields: [etudiantId], references: [id])
+  etudiantId Int?
+}
+
+model EmploiDuTemps {
+  id           Int         @id @default(autoincrement())
+  coursId      Int
+  classeId     Int
+  professeurId Int? // Optionnel
+  salleId      Int
+  dateDebut    DateTime
+  dateFin      DateTime
+  cours        Cours       @relation(fields: [coursId], references: [id])
+  classe       Classe      @relation(fields: [classeId], references: [id])
+  professeur   Professeur? @relation(fields: [professeurId], references: [id])
+  salle        Salle       @relation(fields: [salleId], references: [id])
+}
+
+model Paiement {
+  id                Int      @id @default(autoincrement())
+  etudiantId        Int
+  montant           Float
+  datePaiement      DateTime
+  methodePaiement   String
+  referencePaiement String
+  typeFrais         String
+  statutPaiement    String
+  etudiant          Etudiant @relation(fields: [etudiantId], references: [id])
+}
+
+// emploi du temps
+// COMPTA | paiements - inscription + mensualité + autres indemnités (tenue, mémoire, transaport, quantine, etc.)
+// COMPTA | factures - dépenses de l'établissement (payemnt des professeurs, des surveillants, des agents, etc.)
+// COMPTA | bourses - réductions/exonérations
+// personnel
