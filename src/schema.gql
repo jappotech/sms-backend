@@ -394,7 +394,6 @@ type Query {
   bulletinNotesAnnuel(where: BulletinNotesAnnuelWhereUniqueInput!): [BulletinNotes!]!
   bulletinNotesValidationAnnee(where: BulletinNotesAnnuelWhereUniqueInput!): ResultatAnnuel!
   bulletinNotesValidationSemestre(where: BulletinNotesWhereUniqueInput!): String!
-  generateRandomNotes(where: BulletinNotesWhereUniqueInput!): [BulletinNotes!]!
   classes(where: ClasseWhereInput, orderBy: [ClasseOrderByWithRelationInput!], cursor: ClasseWhereUniqueInput, take: Float, skip: Float, distinct: [ClasseScalarFieldEnum!]): [Classe!]!
   classe(where: ClasseWhereUniqueInput!): Classe!
   contacts(where: ContactWhereInput, orderBy: [ContactOrderByWithRelationInput!], cursor: ContactWhereUniqueInput, take: Float, skip: Float, distinct: [ContactScalarFieldEnum!]): [Contact!]!
@@ -581,9 +580,9 @@ input UtilisateurWhereInput {
   permissions: PermissionListRelationFilter
   Professeur: ProfesseurRelationFilter
   etablissement: EtablissementRelationFilter
-  AND: [UtilisateurWhereInputStrict!]
-  OR: [UtilisateurWhereInputStrict!]
-  NOT: [UtilisateurWhereInputStrict!]
+  AND: [UtilisateurWhereInput!]
+  OR: [UtilisateurWhereInput!]
+  NOT: [UtilisateurWhereInput!]
 }
 
 input StringListFilter {
@@ -1201,36 +1200,6 @@ input PermissionWhereInput {
   AND: [PermissionWhereInput!]
   OR: [PermissionWhereInput!]
   NOT: [PermissionWhereInput!]
-}
-
-input UtilisateurWhereInputStrict {
-  id: IntFilter
-  matricule: StringFilter
-  createdAt: DateTimeFilter
-  updatedAt: DateTimeFilter
-  prenom: StringFilter
-  nom: StringFilter
-  dateNaissance: DateTimeFilter
-  lieuNaissance: StringFilter
-  cni: StringFilter
-  genre: StringFilter
-  nationalite: StringFilter
-  groupeSanguin: StringFilter
-  etablissementId: IntFilter
-  statutCompte: StringFilter
-  roles: StringFilter
-  contactId: IntFilter
-  adresseId: IntFilter
-  accountId: IntFilter
-  contact: ContactRelationFilter
-  adresse: AdresseRelationFilter
-  etudiant: EtudiantRelationFilter
-  permissions: PermissionListRelationFilter
-  Professeur: ProfesseurRelationFilter
-  etablissement: EtablissementRelationFilter
-  AND: [UtilisateurWhereInputStrict!]
-  OR: [UtilisateurWhereInputStrict!]
-  NOT: [UtilisateurWhereInputStrict!]
 }
 
 input AdresseOrderByWithRelationInput {
@@ -2069,7 +2038,6 @@ enum UniteEnseignementScalarFieldEnum {
 }
 
 type Mutation {
-  fileUpload(file: Upload!): Boolean!
   createAccount(createAccountInput: CreateAccountInput!): Account!
   updateAccount(updateAccountInput: UpdateAccountInput!): Account!
   removeAccount(where: AccountWhereUniqueInput!): Account!
@@ -2151,9 +2119,6 @@ type Mutation {
   removeUniteEnseignement(where: UniteEnseignementWhereUniqueInput!): UniteEnseignement!
   login(loginInput: LoginInput!): LoginResponse!
 }
-
-"""The `Upload` scalar type represents a file upload."""
-scalar Upload
 
 input CreateAccountInput {
   username: String
@@ -2368,7 +2333,6 @@ input CreateEtudiantInput {
   anneeBaccaleaureat: Float
   feuillePresencesId: Float
   profile: UtilisateurWithAccount!
-  classeId: Float
 }
 
 input UtilisateurWithAccount {
@@ -2399,7 +2363,6 @@ input UpdateEtudiantInput {
   anneeBaccaleaureat: Float
   feuillePresencesId: Float
   profile: UtilisateurWithAccount
-  classeId: Float
   id: Float!
 }
 
