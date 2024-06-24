@@ -7,7 +7,7 @@ import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class DiplomesService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
   create(createDiplomeInput: CreateDiplomeInput) {
     return this.prisma.diplome.create({
       data: createDiplomeInput,
@@ -29,11 +29,11 @@ export class DiplomesService {
               some: {
                 etablissementId: {
                   equals: etablissementId,
-                }
-              }
-            }
-          }
-        }
+                },
+              },
+            },
+          },
+        },
       },
     });
   }

@@ -18,7 +18,8 @@ export class SemestreWhereUniqueInput {
 @InputType()
 export class SemestreWhereInputStrict
   implements
-  RestrictProperties<SemestreWhereInputStrict, Prisma.SemestreWhereInput> {
+    RestrictProperties<SemestreWhereInputStrict, Prisma.SemestreWhereInput>
+{
   @Field(() => IntFilter, { nullable: true })
   id: IntFilter;
 

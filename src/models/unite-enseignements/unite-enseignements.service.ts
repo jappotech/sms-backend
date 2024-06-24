@@ -6,22 +6,36 @@ import {
 import { PrismaService } from 'src/common/prisma/prisma.service';
 import { CreateUniteEnseignementInput } from './dtos/create-unite-enseignement.input';
 import { UpdateUniteEnseignementInput } from './dtos/update-unite-enseignement.input';
-import { Classe, Prisma, Semestre, Specialite, UniteEnseignement } from '@prisma/client';
+import {
+  Classe,
+  Semestre,
+  Specialite,
+  UniteEnseignement,
+} from '@prisma/client';
 
 @Injectable()
 export class UniteEnseignementsService {
-  constructor(private readonly prisma: PrismaService) { }
-  create(createUniteEnseignementInput: CreateUniteEnseignementInput) {
-    return this.prisma.uniteEnseignement.create({
+  constructor(private readonly prisma: PrismaService) {
+    // constructor
+  }
+  async create(createUniteEnseignementInput: CreateUniteEnseignementInput) {
+    const ue = await this.prisma.uniteEnseignement.create({
       data: createUniteEnseignementInput,
     });
+
+    const newUe = await ue
+    this.setNumeroUe(newUe.semestreId, newUe);
+    return ue;
   }
 
   findAll(args: FindManyUniteEnseignementArgs) {
     return this.prisma.uniteEnseignement.findMany(args);
   }
 
-  findAllByEtablissement(args: FindManyUniteEnseignementArgs, etablissementId: number) {
+  findAllByEtablissement(
+    args: FindManyUniteEnseignementArgs,
+    etablissementId: number,
+  ) {
     return this.prisma.uniteEnseignement.findMany({
       ...args,
       where: {
@@ -33,11 +47,14 @@ export class UniteEnseignementsService {
                 etablissementId: {
                   equals: etablissementId,
                 },
-              }
-            }
-          }
-        }
+              },
+            },
+          },
+        },
       },
+      orderBy: {
+        id: 'asc'
+      }
     });
   }
 
@@ -59,40 +76,24 @@ export class UniteEnseignementsService {
 
   //
   async genererCodeUE(id: number): Promise<string> {
-    const ue: UniteEnseignement = await this.prisma.uniteEnseignement.findUnique({
-      where: {
-        id: id
-      }
-    });
+    const ue: UniteEnseignement =
+      await this.prisma.uniteEnseignement.findUnique({
+        where: {
+          id: id,
+        },
+      });
     const semestre: Semestre = await this.prisma.semestre.findUnique({
       where: {
-        id: ue.semestreId
-      }
+        id: ue.semestreId,
+      },
     });
     const code_ue = ue.numero;
     const code_semestre = semestre.numero;
-    const grade = semestre.grade.split(' ')
-    const code_niveau = grade.map((word) => word.charAt(0).toUpperCase()).join('');
-    const classe: Classe = await this.prisma.classe.findUnique({
-      where: {
-        id: semestre.classeId
-      }
-    });
-    const specialite: Specialite = await this.prisma.specialite.findUnique({
-      where: {
-        id: classe.specialiteId
-      }
-    });
-    const code_specialite = specialite.nom.split(' ').map((word) => {
-      if (word.toLocaleLowerCase() === 'et' || word.toLocaleLowerCase() === 'en' || word.toLocaleLowerCase() === 'de' || word.toLocaleLowerCase() === 'la' || word.toLocaleLowerCase() === 'du' || word.toLocaleLowerCase() === 'des' || word.toLocaleLowerCase() === 'd\'') {
-        return '';
-      }
-      return word.charAt(0).toUpperCase()
-    }).join('');
     const code_annee = this.getNumeroAnnee(semestre.numero);
 
-    const code = code_niveau + code_specialite + code_annee + code_semestre + code_ue;
-    return code;
+    // const code = code_niveau + code_specialite + code_annee + code_semestre + code_ue;
+    const code = code_annee.toString() + code_semestre.toString() + code_ue.toString();
+    return code.toString();
   }
 
   getNumeroAnnee(numeroSemestre: number): number {
@@ -110,5 +111,36 @@ export class UniteEnseignementsService {
     }
 
     return code_annee;
+  }
+
+  async setNumeroUe(semestreId: number, newUe: UniteEnseignement) {
+    console.log("🚀 ~ :", semestreId, newUe)
+    const list: UniteEnseignement[] =
+      await this.prisma.uniteEnseignement.findMany({
+        where: {
+          semestreId
+        },
+        orderBy: {
+          id: 'asc'
+        }
+      });
+    console.log("🚀 ~ UniteEnseignementsService ~ setNumeroUe ~ list:", list)
+    const semestre = await this.prisma.semestre.findUnique({ where: { id: semestreId } })
+    if (list.length === 0) {
+      const data: UniteEnseignement = { ...newUe, numero: 1, code: `${this.getNumeroAnnee(semestre.numero)}${semestre.numero}1` }
+      this.prisma.uniteEnseignement.update({
+        where: { id: newUe.id },
+        data: data,
+      });
+    } else {
+      list.map(async (ue, index) => {
+        const data: UniteEnseignement = { ...ue, numero: index + 1, code: `${this.getNumeroAnnee(semestre.numero)}${semestre.numero}${index + 1}` }
+        const res = await this.prisma.uniteEnseignement.update({
+          where: { id: ue.id },
+          data: data,
+        });
+        console.log("🚀 ~ res:", res)
+      })
+    }
   }
 }

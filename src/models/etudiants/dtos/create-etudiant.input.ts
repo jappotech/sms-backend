@@ -7,6 +7,9 @@ import { Utilisateur } from 'src/models/utilisateurs/entity/utilisateur.entity';
 export class CreateEtudiantWithProfileInput extends Etudiant {
   @Field()
   profile: UtilisateurWithAccount;
+
+  @Field({ nullable: true })
+  classeId: number;
 }
 
 @InputType()
@@ -18,6 +21,7 @@ export class CreateEtudiantInput extends PickType(
     'feuillePresencesId',
     'ine',
     'profile',
+    'classeId'
   ],
   InputType,
-) {}
+) { }

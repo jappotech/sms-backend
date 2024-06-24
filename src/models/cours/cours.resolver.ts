@@ -11,7 +11,10 @@ import { Cours } from './entity/cours.entity';
 import { FindManyCoursArgs, FindUniqueCoursArgs } from './dtos/find.args';
 import { CreateCoursInput } from './dtos/create-cours.input';
 import { UpdateCoursInput } from './dtos/update-cours.input';
-import { checkRowLevelPermission, checkUserAffiliation } from 'src/common/auth/util';
+import {
+  checkRowLevelPermission,
+  checkUserAffiliation,
+} from 'src/common/auth/util';
 import { GetUserType } from 'src/common/types';
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
 import { PrismaService } from 'src/common/prisma/prisma.service';
@@ -26,7 +29,7 @@ export class CoursResolver {
   constructor(
     private readonly coursService: CoursService,
     private readonly prisma: PrismaService,
-  ) { }
+  ) {}
 
   // @AllowAuthenticated()
   @Mutation(() => Cours)

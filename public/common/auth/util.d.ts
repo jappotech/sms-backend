@@ -1,0 +1,22 @@
+import { GetUserType, Role } from 'src/common/types';
+export declare const checkRowLevelPermission: (user: GetUserType, requestedUid?: string | string[], roles?: Role[]) => boolean;
+export declare const checkUserAffiliation: (user: GetUserType) => Promise<{
+    id: number;
+    matricule: string;
+    createdAt: Date;
+    updatedAt: Date;
+    prenom: string;
+    nom: string;
+    dateNaissance: Date;
+    lieuNaissance: string;
+    cni: string;
+    genre: import(".prisma/client").$Enums.Genre;
+    nationalite: string;
+    groupeSanguin: import(".prisma/client").$Enums.GroupeSanguin;
+    etablissementId: number;
+    statutCompte: import(".prisma/client").$Enums.StatutCompte;
+    roles: import(".prisma/client").$Enums.Role[];
+    contactId: number;
+    adresseId: number;
+    accountId: number;
+}>;

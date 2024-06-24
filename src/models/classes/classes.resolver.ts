@@ -11,7 +11,10 @@ import { Classe } from './entity/classe.entity';
 import { FindManyClasseArgs, FindUniqueClasseArgs } from './dtos/find.args';
 import { CreateClasseInput } from './dtos/create-classe.input';
 import { UpdateClasseInput } from './dtos/update-classe.input';
-import { checkRowLevelPermission, checkUserAffiliation } from 'src/common/auth/util';
+import {
+  checkRowLevelPermission,
+  checkUserAffiliation,
+} from 'src/common/auth/util';
 import { GetUserType } from 'src/common/types';
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
 import { PrismaService } from 'src/common/prisma/prisma.service';
@@ -43,10 +46,16 @@ export class ClassesResolver {
 
   @AllowAuthenticated()
   @Query(() => [Classe], { name: 'classes' })
-  async findAll(@Args() args: FindManyClasseArgs, @GetUser() user: GetUserType) {
-    const affiliation = await checkUserAffiliation(user)
+  async findAll(
+    @Args() args: FindManyClasseArgs,
+    @GetUser() user: GetUserType,
+  ) {
+    const affiliation = await checkUserAffiliation(user);
     if (affiliation) {
-      return this.classesService.findAllByEtablissement(args, affiliation.etablissementId);
+      return this.classesService.findAllByEtablissement(
+        args,
+        affiliation.etablissementId,
+      );
     }
     return this.classesService.findAll(args);
   }
@@ -124,6 +133,9 @@ export class ClassesResolver {
 
   @ResolveField(() => AnneeScolaire)
   async anneeScolaire(@Parent() parent: Classe) {
+    if (!parent.anneeScolaireId) {
+      return {};
+    }
     return this.prisma.anneeScolaire.findUnique({
       where: { id: parent.anneeScolaireId },
     });
@@ -131,6 +143,9 @@ export class ClassesResolver {
 
   @ResolveField(() => Specialite)
   async specialite(@Parent() parent: Classe) {
+    if (!parent.specialiteId) {
+      return {};
+    }
     return this.prisma.specialite.findUnique({
       where: { id: parent.specialiteId },
     });
@@ -142,5 +157,4 @@ export class ClassesResolver {
       where: { classeId: parent.id },
     });
   }
-
 }

@@ -11,7 +11,10 @@ import { Matiere } from './entity/matiere.entity';
 import { FindManyMatiereArgs, FindUniqueMatiereArgs } from './dtos/find.args';
 import { CreateMatiereInput } from './dtos/create-matiere.input';
 import { UpdateMatiereInput } from './dtos/update-matiere.input';
-import { checkRowLevelPermission, checkUserAffiliation } from 'src/common/auth/util';
+import {
+  checkRowLevelPermission,
+  checkUserAffiliation,
+} from 'src/common/auth/util';
 import { GetUserType } from 'src/common/types';
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
 import { PrismaService } from 'src/common/prisma/prisma.service';
@@ -37,10 +40,16 @@ export class MatieresResolver {
 
   @AllowAuthenticated()
   @Query(() => [Matiere], { name: 'matieres' })
-  async findAll(@Args() args: FindManyMatiereArgs, @GetUser() user: GetUserType) {
-    const affiliation = await checkUserAffiliation(user)
+  async findAll(
+    @Args() args: FindManyMatiereArgs,
+    @GetUser() user: GetUserType,
+  ) {
+    const affiliation = await checkUserAffiliation(user);
     if (affiliation) {
-      return this.matieresService.findAllByEtablissement(args, affiliation.etablissementId);
+      return this.matieresService.findAllByEtablissement(
+        args,
+        affiliation.etablissementId,
+      );
     }
     return this.matieresService.findAll(args);
   }
@@ -75,9 +84,10 @@ export class MatieresResolver {
   }
 
   @ResolveField(() => UniteEnseignement)
-  async uniteEnseignement(
-    @Parent() parent: Matiere,
-  ) {
+  async uniteEnseignement(@Parent() parent: Matiere) {
+    if (!parent.uniteEnseignementId) {
+      return {};
+    }
     return this.prisma.uniteEnseignement.findUnique({
       where: { id: parent.uniteEnseignementId },
     });

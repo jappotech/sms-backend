@@ -34,4 +34,8 @@ export class BulletinNotesResolver {
     return this.bulletinNotesService.resultatSemestre(args);
   }
 
+  @Query(() => [BulletinNotes], { name: 'generateRandomNotes' })
+  generateRandomNotes(@Args() args: FindUniqueBulletinNotesArgs) {
+    return this.bulletinNotesService.generateRandomNotes(args);
+  }
 }

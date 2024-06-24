@@ -6,4 +6,4 @@ export class CreateSpecialiteInput extends PickType(
   Specialite,
   ['mentionId', 'nom', 'etablissementId'],
   InputType,
-) { }
+) {}

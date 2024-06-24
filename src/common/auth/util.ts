@@ -32,13 +32,16 @@ export const checkRowLevelPermission = (
 export const checkUserAffiliation = async (user: GetUserType) => {
   const account: Account = await prisma.account.findUnique({
     where: { uid: user.uid },
-  })
+  });
   const utilisateur = await prisma.utilisateur.findUnique({
     where: { id: account.userId },
-  })
-  if (utilisateur.roles.includes('SUPER_ADMIN') || utilisateur.roles.includes('SUPER_USER')) {
+  });
+  if (
+    utilisateur.roles.includes('SUPER_ADMIN') ||
+    utilisateur.roles.includes('SUPER_USER')
+  ) {
     return;
   } else {
     return utilisateur;
   }
-}
+};

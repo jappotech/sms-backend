@@ -7,7 +7,10 @@ import {
 } from './dtos/find.args';
 import { CreateFeuillePresenceInput } from './dtos/create-feuille-presence.input';
 import { UpdateFeuillePresenceInput } from './dtos/update-feuille-presence.input';
-import { checkRowLevelPermission, checkUserAffiliation } from 'src/common/auth/util';
+import {
+  checkRowLevelPermission,
+  checkUserAffiliation,
+} from 'src/common/auth/util';
 import { GetUserType } from 'src/common/types';
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
 import { PrismaService } from 'src/common/prisma/prisma.service';
@@ -18,7 +21,7 @@ export class FeuillePresencesResolver {
   constructor(
     private readonly feuillePresencesService: FeuillePresencesService,
     private readonly prisma: PrismaService,
-  ) { }
+  ) {}
 
   @AllowAuthenticated()
   @Mutation(() => FeuillePresence)
@@ -32,7 +35,10 @@ export class FeuillePresencesResolver {
 
   @AllowAuthenticated()
   @Query(() => [FeuillePresence], { name: 'feuillesPresences' })
-  async findAll(@Args() args: FindManyFeuillePresenceArgs, @GetUser() user: GetUserType) {
+  async findAll(
+    @Args() args: FindManyFeuillePresenceArgs,
+    @GetUser() user: GetUserType,
+  ) {
     const affiliation = await checkUserAffiliation(user);
     if (affiliation) {
       return this.feuillePresencesService.findAllByEtablissement(

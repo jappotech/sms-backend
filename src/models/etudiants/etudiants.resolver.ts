@@ -11,7 +11,10 @@ import { Etudiant } from './entity/etudiant.entity';
 import { FindManyEtudiantArgs, FindUniqueEtudiantArgs } from './dtos/find.args';
 import { CreateEtudiantInput } from './dtos/create-etudiant.input';
 import { UpdateEtudiantInput } from './dtos/update-etudiant.input';
-import { checkRowLevelPermission, checkUserAffiliation } from 'src/common/auth/util';
+import {
+  checkRowLevelPermission,
+  checkUserAffiliation,
+} from 'src/common/auth/util';
 import { GetUserType } from 'src/common/types';
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
 import { PrismaService } from 'src/common/prisma/prisma.service';
@@ -39,7 +42,10 @@ export class EtudiantsResolver {
 
   @AllowAuthenticated()
   @Query(() => [Etudiant], { name: 'etudiants' })
-  async findAll(@Args() args: FindManyEtudiantArgs, @GetUser() user: GetUserType) {
+  async findAll(
+    @Args() args: FindManyEtudiantArgs,
+    @GetUser() user: GetUserType,
+  ) {
     const affiliation = await checkUserAffiliation(user);
     if (affiliation) {
       return this.etudiantsService.findAllByEtablissement(
@@ -82,6 +88,9 @@ export class EtudiantsResolver {
 
   @ResolveField(() => Utilisateur)
   async profile(@Parent() parent: Etudiant) {
+    if (!parent.profileId || parent.profileId === null) {
+      return null;
+    }
     return this.prisma.utilisateur.findUnique({
       where: { id: parent.profileId },
     });

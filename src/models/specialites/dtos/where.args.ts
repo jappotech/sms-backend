@@ -19,7 +19,8 @@ export class SpecialiteWhereUniqueInput {
 @InputType()
 export class SpecialiteWhereInputStrict
   implements
-  RestrictProperties<SpecialiteWhereInputStrict, Prisma.SpecialiteWhereInput> {
+    RestrictProperties<SpecialiteWhereInputStrict, Prisma.SpecialiteWhereInput>
+{
   @Field(() => IntFilter, { nullable: true })
   id: IntFilter;
 

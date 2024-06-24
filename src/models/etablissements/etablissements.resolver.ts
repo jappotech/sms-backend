@@ -14,7 +14,10 @@ import {
 } from './dtos/find.args';
 import { CreateEtablissementInput } from './dtos/create-etablissement.input';
 import { UpdateEtablissementInput } from './dtos/update-etablissement.input';
-import { checkRowLevelPermission, checkUserAffiliation } from 'src/common/auth/util';
+import {
+  checkRowLevelPermission,
+  checkUserAffiliation,
+} from 'src/common/auth/util';
 import { GetUserType } from 'src/common/types';
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
 import { PrismaService } from 'src/common/prisma/prisma.service';
@@ -29,7 +32,7 @@ export class EtablissementsResolver {
   constructor(
     private readonly etablissementsService: EtablissementsService,
     private readonly prisma: PrismaService,
-  ) { }
+  ) {}
 
   // @AllowAuthenticated()
   @Mutation(() => Etablissement)
@@ -43,7 +46,10 @@ export class EtablissementsResolver {
 
   @AllowAuthenticated()
   @Query(() => [Etablissement], { name: 'etablissements' })
-  async findAll(@Args() args: FindManyEtablissementArgs, @GetUser() user: GetUserType) {
+  async findAll(
+    @Args() args: FindManyEtablissementArgs,
+    @GetUser() user: GetUserType,
+  ) {
     const affiliation = await checkUserAffiliation(user);
     if (affiliation) {
       return this.etablissementsService.findAll({

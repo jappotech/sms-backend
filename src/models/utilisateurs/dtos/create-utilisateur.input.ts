@@ -1,4 +1,4 @@
-import { Field, InputType, ObjectType, PickType } from '@nestjs/graphql';
+import { Field, InputType, PickType } from '@nestjs/graphql';
 import { Utilisateur } from '../entity/utilisateur.entity';
 import { CreateAccountInput } from 'src/models/accounts/dtos/create-account.input';
 import { $Enums } from '@prisma/client';
@@ -38,16 +38,16 @@ export class UtilisateurWithAccount implements Utilisateur {
   @Field({ nullable: true })
   nationalite: string;
 
-  @Field((type) => String, { nullable: true })
+  @Field(() => String, { nullable: true })
   groupeSanguin: $Enums.GroupeSanguin;
 
   @Field({ nullable: true })
   etablissementId: number;
 
-  @Field({ nullable: true })
-  statutCompte: string;
+  @Field(() => String, { nullable: true })
+  statutCompte: $Enums.StatutCompte;
 
-  @Field((type) => [String], { nullable: true })
+  @Field(() => [String], { nullable: true })
   roles: $Enums.Role[];
 
   @Field({ nullable: true })

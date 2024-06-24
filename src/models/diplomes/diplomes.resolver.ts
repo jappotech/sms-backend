@@ -4,7 +4,10 @@ import { Diplome } from './entity/diplome.entity';
 import { FindManyDiplomeArgs, FindUniqueDiplomeArgs } from './dtos/find.args';
 import { CreateDiplomeInput } from './dtos/create-diplome.input';
 import { UpdateDiplomeInput } from './dtos/update-diplome.input';
-import { checkRowLevelPermission, checkUserAffiliation } from 'src/common/auth/util';
+import {
+  checkRowLevelPermission,
+  checkUserAffiliation,
+} from 'src/common/auth/util';
 import { GetUserType } from 'src/common/types';
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
 import { PrismaService } from 'src/common/prisma/prisma.service';
@@ -15,7 +18,7 @@ export class DiplomesResolver {
   constructor(
     private readonly diplomesService: DiplomesService,
     private readonly prisma: PrismaService,
-  ) { }
+  ) {}
 
   @AllowAuthenticated()
   @Mutation(() => Diplome)
@@ -29,7 +32,10 @@ export class DiplomesResolver {
 
   @AllowAuthenticated()
   @Query(() => [Diplome], { name: 'diplomes' })
-  async findAll(@Args() args: FindManyDiplomeArgs, @GetUser() user: GetUserType) {
+  async findAll(
+    @Args() args: FindManyDiplomeArgs,
+    @GetUser() user: GetUserType,
+  ) {
     /* const affiliation = await checkUserAffiliation(user);
     if (affiliation) {
       return this.diplomesService.findAllByEtablissement(

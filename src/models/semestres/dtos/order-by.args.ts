@@ -7,10 +7,11 @@ import { UniteEnseignementOrderByRelationAggregateInput } from 'src/models/unite
 @InputType()
 export class SemestreOrderByWithRelationInputStrict
   implements
-  RestrictProperties<
-    SemestreOrderByWithRelationInputStrict,
-    Prisma.SemestreOrderByWithRelationInput
-  > {
+    RestrictProperties<
+      SemestreOrderByWithRelationInputStrict,
+      Prisma.SemestreOrderByWithRelationInput
+    >
+{
   @Field(() => Prisma.SortOrder)
   id: Prisma.SortOrder;
 
@@ -51,7 +52,7 @@ export class SemestreOrderByWithRelationInputStrict
 @InputType()
 export class SemestreOrderByWithRelationInput extends PartialType(
   SemestreOrderByWithRelationInputStrict,
-) { }
+) {}
 
 @InputType()
 export class SemestreOrderByRelationAggregateInput {

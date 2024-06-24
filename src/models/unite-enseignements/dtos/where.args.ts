@@ -18,10 +18,11 @@ export class UniteEnseignementWhereUniqueInput {
 @InputType()
 export class UniteEnseignementWhereInputStrict
   implements
-  RestrictProperties<
-    UniteEnseignementWhereInputStrict,
-    Prisma.UniteEnseignementWhereInput
-  > {
+    RestrictProperties<
+      UniteEnseignementWhereInputStrict,
+      Prisma.UniteEnseignementWhereInput
+    >
+{
   @Field(() => IntFilter, { nullable: true })
   id: IntFilter;
 

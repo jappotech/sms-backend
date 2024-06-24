@@ -6,7 +6,7 @@ import { UpdateClasseInput } from './dtos/update-classe.input';
 
 @Injectable()
 export class ClassesService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
   async create(createClasseInput: CreateClasseInput) {
     // ToDo: Add logic to generate code
     createClasseInput.code =

@@ -14,7 +14,7 @@ export class UtilisateursService {
   constructor(
     private readonly prisma: PrismaService,
     private accountService: AccountsService,
-  ) { }
+  ) {}
   async create(createUtilisateurInput: CreateUtilisateurInput) {
     // create user without account
     const { account, ...userData } = createUtilisateurInput;
@@ -50,7 +50,7 @@ export class UtilisateursService {
       ...args,
       where: {
         ...args.where,
-        etablissementId: id
+        etablissementId: id,
       },
     });
   }

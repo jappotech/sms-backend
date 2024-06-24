@@ -14,7 +14,10 @@ import {
 } from './dtos/find.args';
 import { CreateSpecialiteInput } from './dtos/create-specialite.input';
 import { UpdateSpecialiteInput } from './dtos/update-specialite.input';
-import { checkRowLevelPermission, checkUserAffiliation } from 'src/common/auth/util';
+import {
+  checkRowLevelPermission,
+  checkUserAffiliation,
+} from 'src/common/auth/util';
 import { GetUserType } from 'src/common/types';
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
 import { PrismaService } from 'src/common/prisma/prisma.service';
@@ -41,7 +44,10 @@ export class SpecialitesResolver {
 
   @AllowAuthenticated()
   @Query(() => [Specialite], { name: 'specialites' })
-  async findAll(@Args() args: FindManySpecialiteArgs, @GetUser() user: GetUserType) {
+  async findAll(
+    @Args() args: FindManySpecialiteArgs,
+    @GetUser() user: GetUserType,
+  ) {
     const affiliation = await checkUserAffiliation(user);
     if (affiliation) {
       return this.specialitesService.findAllByEtablissement(
@@ -90,6 +96,9 @@ export class SpecialitesResolver {
 
   @ResolveField(() => Mention)
   async mention(@Parent() parent: Specialite) {
+    if (!parent.mentionId) {
+      return {};
+    }
     return this.prisma.mention.findUnique({
       where: { id: parent.mentionId },
     });

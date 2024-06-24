@@ -4,7 +4,8 @@ import { RestrictProperties } from 'src/common/dtos/common.input';
 
 @ObjectType()
 export class Utilisateur
-  implements RestrictProperties<Utilisateur, UtilisateurType> {
+  implements RestrictProperties<Utilisateur, UtilisateurType>
+{
   @Field({ nullable: true })
   id: number;
 
@@ -38,16 +39,16 @@ export class Utilisateur
   @Field({ nullable: true })
   nationalite: string;
 
-  @Field((type) => String, { nullable: true })
+  @Field(() => String, { nullable: true })
   groupeSanguin: $Enums.GroupeSanguin;
 
   @Field({ nullable: true })
   etablissementId: number;
 
-  @Field({ nullable: true })
-  statutCompte: string;
+  @Field(() => String, { nullable: true })
+  statutCompte: $Enums.StatutCompte;
 
-  @Field((type) => [String])
+  @Field(() => [String])
   roles: $Enums.Role[];
 
   @Field({ nullable: true })

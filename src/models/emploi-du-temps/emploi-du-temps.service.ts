@@ -10,7 +10,7 @@ import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class EmploiDuTempsService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
   create(createEmploiDuTempsInput: CreateEmploiDuTempsInput) {
     return this.prisma.emploiDuTemps.create({
       data: createEmploiDuTempsInput,
@@ -21,7 +21,10 @@ export class EmploiDuTempsService {
     return this.prisma.emploiDuTemps.findMany(args);
   }
 
-  findAllByEtablissement(args: FindManyEmploiDuTempsArgs, etablissementId: number) {
+  findAllByEtablissement(
+    args: FindManyEmploiDuTempsArgs,
+    etablissementId: number,
+  ) {
     return this.prisma.emploiDuTemps.findMany({
       ...args,
       where: {
@@ -30,9 +33,9 @@ export class EmploiDuTempsService {
           is: {
             etablissementId: {
               equals: etablissementId,
-            }
-          }
-        }
+            },
+          },
+        },
       },
     });
   }

@@ -8,10 +8,11 @@ import { MentionOrderByWithRelationInput } from 'src/models/mentions/dtos/order-
 @InputType()
 export class SpecialiteOrderByWithRelationInputStrict
   implements
-  RestrictProperties<
-    SpecialiteOrderByWithRelationInputStrict,
-    Prisma.SpecialiteOrderByWithRelationInput
-  > {
+    RestrictProperties<
+      SpecialiteOrderByWithRelationInputStrict,
+      Prisma.SpecialiteOrderByWithRelationInput
+    >
+{
   @Field(() => Prisma.SortOrder)
   id: Prisma.SortOrder;
 
@@ -46,7 +47,7 @@ export class SpecialiteOrderByWithRelationInputStrict
 @InputType()
 export class SpecialiteOrderByWithRelationInput extends PartialType(
   SpecialiteOrderByWithRelationInputStrict,
-) { }
+) {}
 
 @InputType()
 export class SpecialiteOrderByRelationAggregateInput {

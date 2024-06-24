@@ -14,7 +14,10 @@ import {
 } from './dtos/find.args';
 import { CreateProfesseurInput } from './dtos/create-professeur.input';
 import { UpdateProfesseurInput } from './dtos/update-professeur.input';
-import { checkRowLevelPermission, checkUserAffiliation } from 'src/common/auth/util';
+import {
+  checkRowLevelPermission,
+  checkUserAffiliation,
+} from 'src/common/auth/util';
 import { GetUserType } from 'src/common/types';
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
 import { PrismaService } from 'src/common/prisma/prisma.service';
@@ -40,7 +43,10 @@ export class ProfesseursResolver {
 
   @AllowAuthenticated()
   @Query(() => [Professeur], { name: 'professeurs' })
-  async findAll(@Args() args: FindManyProfesseurArgs, @GetUser() user: GetUserType) {
+  async findAll(
+    @Args() args: FindManyProfesseurArgs,
+    @GetUser() user: GetUserType,
+  ) {
     const affiliation = await checkUserAffiliation(user);
     if (affiliation) {
       return this.professeursService.findAllByEtablissement(
@@ -83,6 +89,9 @@ export class ProfesseursResolver {
 
   @ResolveField(() => Utilisateur)
   async profile(@Parent() parent: Professeur) {
+    if (!parent.profileId) {
+      return {};
+    }
     return this.prisma.utilisateur.findUnique({
       where: { id: parent.profileId },
     });

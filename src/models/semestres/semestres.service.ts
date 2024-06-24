@@ -7,7 +7,7 @@ import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class SemestresService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
   create(createSemestreInput: CreateSemestreInput) {
     return this.prisma.semestre.create({
       data: createSemestreInput,

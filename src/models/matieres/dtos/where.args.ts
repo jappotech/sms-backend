@@ -18,7 +18,7 @@ export class MatiereWhereUniqueInput {
 @InputType()
 export class MatiereWhereInputStrict
   implements
-  RestrictProperties<MatiereWhereInputStrict, Prisma.MatiereWhereInput>
+    RestrictProperties<MatiereWhereInputStrict, Prisma.MatiereWhereInput>
 {
   @Field(() => IntFilter, { nullable: true })
   id: IntFilter;

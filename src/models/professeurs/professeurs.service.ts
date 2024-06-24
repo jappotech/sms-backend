@@ -15,7 +15,7 @@ export class ProfesseursService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly utilisateurService: UtilisateursService,
-  ) { }
+  ) {}
   async create(createProfesseurInput: CreateProfesseurInput) {
     const utilisateur = await this.utilisateurService.create(
       createProfesseurInput.profile,

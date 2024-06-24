@@ -11,7 +11,10 @@ import { Domaine } from './entity/domaine.entity';
 import { FindManyDomaineArgs, FindUniqueDomaineArgs } from './dtos/find.args';
 import { CreateDomaineInput } from './dtos/create-domaine.input';
 import { UpdateDomaineInput } from './dtos/update-domaine.input';
-import { checkRowLevelPermission, checkUserAffiliation } from 'src/common/auth/util';
+import {
+  checkRowLevelPermission,
+  checkUserAffiliation,
+} from 'src/common/auth/util';
 import { GetUserType } from 'src/common/types';
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
 import { PrismaService } from 'src/common/prisma/prisma.service';
@@ -24,7 +27,7 @@ export class DomainesResolver {
   constructor(
     private readonly domainesService: DomainesService,
     private readonly prisma: PrismaService,
-  ) { }
+  ) {}
 
   @AllowAuthenticated()
   @Mutation(() => Domaine)
@@ -38,13 +41,19 @@ export class DomainesResolver {
 
   @AllowAuthenticated()
   @Query(() => [Domaine], { name: 'domaines' })
-  async findAll(@Args() args: FindManyDomaineArgs, @GetUser() user: GetUserType) {
+  async findAll(
+    @Args() args: FindManyDomaineArgs,
+    @GetUser() user: GetUserType,
+  ) {
     return this.domainesService.findAll(args);
   }
 
   @AllowAuthenticated()
   @Query(() => [Domaine], { name: 'domaines_etablissement' })
-  async findAllByEtablissement(@Args() args: FindManyDomaineArgs, @GetUser() user: GetUserType) {
+  async findAllByEtablissement(
+    @Args() args: FindManyDomaineArgs,
+    @GetUser() user: GetUserType,
+  ) {
     const affiliation = await checkUserAffiliation(user);
     if (affiliation) {
       return this.domainesService.findAllByEtablissement(
@@ -87,7 +96,7 @@ export class DomainesResolver {
 
   @AllowAuthenticated()
   @ResolveField(() => [Mention])
-  async mentions(@Parent() parent: Domaine, @GetUser() user: GetUserType,) {
+  async mentions(@Parent() parent: Domaine, @GetUser() user: GetUserType) {
     const affiliation = await checkUserAffiliation(user);
     return this.prisma.mention.findMany({
       where: {
@@ -104,7 +113,7 @@ export class DomainesResolver {
               },
             },
           },
-        ]
+        ],
       },
     });
   }

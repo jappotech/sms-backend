@@ -11,7 +11,10 @@ import { Semestre } from './entity/semestre.entity';
 import { FindManySemestreArgs, FindUniqueSemestreArgs } from './dtos/find.args';
 import { CreateSemestreInput } from './dtos/create-semestre.input';
 import { UpdateSemestreInput } from './dtos/update-semestre.input';
-import { checkRowLevelPermission, checkUserAffiliation } from 'src/common/auth/util';
+import {
+  checkRowLevelPermission,
+  checkUserAffiliation,
+} from 'src/common/auth/util';
 import { GetUserType } from 'src/common/types';
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
 import { PrismaService } from 'src/common/prisma/prisma.service';
@@ -38,9 +41,13 @@ export class SemestresResolver {
 
   @AllowAuthenticated()
   @Query(() => [Semestre], { name: 'semestres' })
-  async findAll(@Args() args: FindManySemestreArgs, @GetUser() user: GetUserType) {
+  async findAll(
+    @Args() args: FindManySemestreArgs,
+    @GetUser() user: GetUserType,
+  ) {
     const affiliation = await checkUserAffiliation(user);
     if (affiliation) {
+      console.log("🚀 ~ SemestresResolver ~ affiliation:", affiliation)
       return this.semestresService.findAllByEtablissement(
         args,
         affiliation.etablissementId,
@@ -82,6 +89,7 @@ export class SemestresResolver {
   async uniteEnseignements(@Parent() parent: Semestre) {
     return this.prisma.uniteEnseignement.findMany({
       where: { semestreId: parent.id },
+      orderBy: { id: 'asc' },
       include: {
         matieres: true,
       },

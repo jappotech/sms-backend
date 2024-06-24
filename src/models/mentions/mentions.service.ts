@@ -8,7 +8,7 @@ import slugify from 'slugify';
 
 @Injectable()
 export class MentionsService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
   async create(createMentionInput: CreateMentionInput) {
     const { specialites, ...data } = createMentionInput;
     const slug = slugify(`${createMentionInput.nom.toLowerCase()}`);
@@ -51,8 +51,8 @@ export class MentionsService {
                 id: etablissementId,
               },
             },
-          }
-        }
+          },
+        },
       },
     });
   }

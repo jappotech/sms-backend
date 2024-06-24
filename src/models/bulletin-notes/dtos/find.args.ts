@@ -34,7 +34,7 @@ class FindManyBulletinNotesArgsStrict {
 @ArgsType()
 export class FindManyBulletinNotesArgs extends PartialType(
   FindManyBulletinNotesArgsStrict,
-) { }
+) {}
 
 @ArgsType()
 export class FindUniqueBulletinNotesArgs {

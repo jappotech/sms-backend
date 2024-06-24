@@ -1,0 +1,87 @@
+import { DiplomesService } from './diplomes.service';
+import { FindManyDiplomeArgs, FindUniqueDiplomeArgs } from './dtos/find.args';
+import { CreateDiplomeInput } from './dtos/create-diplome.input';
+import { UpdateDiplomeInput } from './dtos/update-diplome.input';
+import { GetUserType } from 'src/common/types';
+import { PrismaService } from 'src/common/prisma/prisma.service';
+import { Prisma } from '@prisma/client';
+export declare class DiplomesResolver {
+    private readonly diplomesService;
+    private readonly prisma;
+    constructor(diplomesService: DiplomesService, prisma: PrismaService);
+    createDiplome(args: CreateDiplomeInput, user: GetUserType): Prisma.Prisma__DiplomeClient<{
+        id: number;
+        createdAt: Date;
+        updatedAt: Date;
+        nom: string;
+        finalite: string;
+        entite: string;
+        habilitation: string;
+        partenaires: string[];
+        dateCreation: Date;
+        dateHabilitation: Date;
+        dateEcheance: Date;
+        duree: number;
+        specialiteId: number;
+    }, never, import("@prisma/client/runtime/library").DefaultArgs>;
+    findAll(args: FindManyDiplomeArgs, user: GetUserType): Promise<{
+        id: number;
+        createdAt: Date;
+        updatedAt: Date;
+        nom: string;
+        finalite: string;
+        entite: string;
+        habilitation: string;
+        partenaires: string[];
+        dateCreation: Date;
+        dateHabilitation: Date;
+        dateEcheance: Date;
+        duree: number;
+        specialiteId: number;
+    }[]>;
+    findOne(args: FindUniqueDiplomeArgs): Prisma.Prisma__DiplomeClient<{
+        id: number;
+        createdAt: Date;
+        updatedAt: Date;
+        nom: string;
+        finalite: string;
+        entite: string;
+        habilitation: string;
+        partenaires: string[];
+        dateCreation: Date;
+        dateHabilitation: Date;
+        dateEcheance: Date;
+        duree: number;
+        specialiteId: number;
+    }, null, import("@prisma/client/runtime/library").DefaultArgs>;
+    updateDiplome(args: UpdateDiplomeInput, user: GetUserType): Promise<{
+        id: number;
+        createdAt: Date;
+        updatedAt: Date;
+        nom: string;
+        finalite: string;
+        entite: string;
+        habilitation: string;
+        partenaires: string[];
+        dateCreation: Date;
+        dateHabilitation: Date;
+        dateEcheance: Date;
+        duree: number;
+        specialiteId: number;
+    }>;
+    removeDiplome(args: FindUniqueDiplomeArgs, user: GetUserType): Promise<{
+        id: number;
+        createdAt: Date;
+        updatedAt: Date;
+        nom: string;
+        finalite: string;
+        entite: string;
+        habilitation: string;
+        partenaires: string[];
+        dateCreation: Date;
+        dateHabilitation: Date;
+        dateEcheance: Date;
+        duree: number;
+        specialiteId: number;
+    }>;
+}

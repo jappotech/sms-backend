@@ -10,7 +10,7 @@ import { UpdateAnneeScolaireInput } from './dtos/update-annee-scolaire.input';
 
 @Injectable()
 export class AnneeScolairesService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
   create(createAnneeScolaireInput: CreateAnneeScolaireInput) {
     return this.prisma.anneeScolaire.create({
       data: createAnneeScolaireInput,
@@ -21,11 +21,14 @@ export class AnneeScolairesService {
     return this.prisma.anneeScolaire.findMany(args);
   }
 
-  async findAllByEtablissement(args: FindManyAnneeScolaireArgs, etablissementId: number) {
+  async findAllByEtablissement(
+    args: FindManyAnneeScolaireArgs,
+    etablissementId: number,
+  ) {
     const etablissement = await this.prisma.etablissement.findUnique({
       where: {
         id: etablissementId,
-      }
+      },
     });
     const anneeEnCours = etablissement.anneeEnCours;
     return this.prisma.anneeScolaire.findMany({
@@ -34,7 +37,7 @@ export class AnneeScolairesService {
         ...args.where,
         nom: {
           equals: anneeEnCours,
-        }
+        },
       },
     });
   }

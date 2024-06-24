@@ -59,6 +59,13 @@ model Account {
   userId Int
 }
 
+enum StatutCompte {
+  NOT_FINALIZED
+  ACTIVE
+  BLOCKED
+  DELETED
+}
+
 model Utilisateur {
   id              Int            @id @default(autoincrement())
   matricule       String         @unique
@@ -76,7 +83,7 @@ model Utilisateur {
   groupeSanguin   GroupeSanguin?
   etablissement   Etablissement? @relation(fields: [etablissementId], references: [id])
   etablissementId Int?
-  statutCompte    String?
+  statutCompte    StatutCompte?  @default(ACTIVE)
   /// user role
   roles           Role[]         @default([UTILISATEUR])
   contactId       Int?

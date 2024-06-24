@@ -14,7 +14,10 @@ import {
 } from './dtos/find.args';
 import { CreateEvaluationEtudiantsInput } from './dtos/create-evaluation-etudiants.input';
 import { UpdateEvaluationEtudiantsInput } from './dtos/update-evaluation-etudiants.input';
-import { checkRowLevelPermission, checkUserAffiliation } from 'src/common/auth/util';
+import {
+  checkRowLevelPermission,
+  checkUserAffiliation,
+} from 'src/common/auth/util';
 import { GetUserType } from 'src/common/types';
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
 import { PrismaService } from 'src/common/prisma/prisma.service';
@@ -27,7 +30,7 @@ export class EvaluationEtudiantsResolver {
   constructor(
     private readonly evaluationEtudiantsService: EvaluationEtudiantsService,
     private readonly prisma: PrismaService,
-  ) { }
+  ) {}
 
   @AllowAuthenticated()
   @Mutation(() => EvaluationEtudiants)
@@ -42,7 +45,10 @@ export class EvaluationEtudiantsResolver {
 
   @AllowAuthenticated()
   @Query(() => [EvaluationEtudiants], { name: 'evaluationsEtudiants' })
-  async findAll(@Args() args: FindManyEvaluationEtudiantsArgs, @GetUser() user: GetUserType) {
+  async findAll(
+    @Args() args: FindManyEvaluationEtudiantsArgs,
+    @GetUser() user: GetUserType,
+  ) {
     const affiliation = await checkUserAffiliation(user);
     if (affiliation) {
       return this.evaluationEtudiantsService.findAllByEtablissement(

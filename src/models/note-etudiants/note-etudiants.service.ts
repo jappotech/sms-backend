@@ -10,7 +10,7 @@ import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class NoteEtudiantsService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
   create(createNoteEtudiantInput: CreateNoteEtudiantInput) {
     return this.prisma.noteEtudiant.create({
       data: createNoteEtudiantInput,
@@ -34,7 +34,7 @@ export class NoteEtudiantsService {
                   equals: id,
                 },
               },
-            }
+            },
           },
         },
       },

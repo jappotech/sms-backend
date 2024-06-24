@@ -1,0 +1,111 @@
+import { EtudiantsService } from './etudiants.service';
+import { Etudiant } from './entity/etudiant.entity';
+import { FindManyEtudiantArgs, FindUniqueEtudiantArgs } from './dtos/find.args';
+import { CreateEtudiantInput } from './dtos/create-etudiant.input';
+import { UpdateEtudiantInput } from './dtos/update-etudiant.input';
+import { GetUserType } from 'src/common/types';
+import { PrismaService } from 'src/common/prisma/prisma.service';
+import { Prisma } from '@prisma/client';
+export declare class EtudiantsResolver {
+    private readonly etudiantsService;
+    private readonly prisma;
+    constructor(etudiantsService: EtudiantsService, prisma: PrismaService);
+    createEtudiant(args: CreateEtudiantInput, user: GetUserType): Promise<{
+        id: number;
+        createdAt: Date;
+        updatedAt: Date;
+        slug: string;
+        ine: string;
+        baccaleaureat: string;
+        anneeBaccaleaureat: number;
+        profileId: number;
+        feuillePresencesId: number;
+    }>;
+    findAll(args: FindManyEtudiantArgs, user: GetUserType): Promise<{
+        id: number;
+        createdAt: Date;
+        updatedAt: Date;
+        slug: string;
+        ine: string;
+        baccaleaureat: string;
+        anneeBaccaleaureat: number;
+        profileId: number;
+        feuillePresencesId: number;
+    }[]>;
+    findOne(args: FindUniqueEtudiantArgs): Prisma.Prisma__EtudiantClient<{
+        id: number;
+        createdAt: Date;
+        updatedAt: Date;
+        slug: string;
+        ine: string;
+        baccaleaureat: string;
+        anneeBaccaleaureat: number;
+        profileId: number;
+        feuillePresencesId: number;
+    }, null, import("@prisma/client/runtime/library").DefaultArgs>;
+    updateEtudiant(args: UpdateEtudiantInput, user: GetUserType): Promise<{
+        id: number;
+        createdAt: Date;
+        updatedAt: Date;
+        slug: string;
+        ine: string;
+        baccaleaureat: string;
+        anneeBaccaleaureat: number;
+        profileId: number;
+        feuillePresencesId: number;
+    }>;
+    removeEtudiant(args: FindUniqueEtudiantArgs, user: GetUserType): Promise<{
+        id: number;
+        createdAt: Date;
+        updatedAt: Date;
+        slug: string;
+        ine: string;
+        baccaleaureat: string;
+        anneeBaccaleaureat: number;
+        profileId: number;
+        feuillePresencesId: number;
+    }>;
+    profile(parent: Etudiant): Promise<{
+        id: number;
+        matricule: string;
+        createdAt: Date;
+        updatedAt: Date;
+        prenom: string;
+        nom: string;
+        dateNaissance: Date;
+        lieuNaissance: string;
+        cni: string;
+        genre: import(".prisma/client").$Enums.Genre;
+        nationalite: string;
+        groupeSanguin: import(".prisma/client").$Enums.GroupeSanguin;
+        etablissementId: number;
+        statutCompte: import(".prisma/client").$Enums.StatutCompte;
+        roles: import(".prisma/client").$Enums.Role[];
+        contactId: number;
+        adresseId: number;
+        accountId: number;
+    }>;
+    notes(parent: Etudiant): Promise<{
+        id: number;
+        createdAt: Date;
+        updatedAt: Date;
+        note: number;
+        evaluationEtudiantId: number;
+        etudiantId: number;
+    }[]>;
+    inscriptions(parent: Etudiant): Promise<{
+        id: number;
+        createdAt: Date;
+        updatedAt: Date;
+        reference: string;
+        premiereInscription: boolean;
+        dernierDiplome: string;
+        autreEtablissement: string;
+        activiteProfessionnel: string;
+        niveau: string;
+        statut: string;
+        diplomeId: number;
+        etudiantId: number;
+        classeId: number;
+    }[]>;
+}

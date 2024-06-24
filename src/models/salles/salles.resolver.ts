@@ -4,7 +4,10 @@ import { Salle } from './entity/salle.entity';
 import { FindManySalleArgs, FindUniqueSalleArgs } from './dtos/find.args';
 import { CreateSalleInput } from './dtos/create-salle.input';
 import { UpdateSalleInput } from './dtos/update-salle.input';
-import { checkRowLevelPermission, checkUserAffiliation } from 'src/common/auth/util';
+import {
+  checkRowLevelPermission,
+  checkUserAffiliation,
+} from 'src/common/auth/util';
 import { GetUserType } from 'src/common/types';
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
 import { PrismaService } from 'src/common/prisma/prisma.service';
@@ -15,7 +18,7 @@ export class SallesResolver {
   constructor(
     private readonly sallesService: SallesService,
     private readonly prisma: PrismaService,
-  ) { }
+  ) {}
 
   // @AllowAuthenticated()
   @Mutation(() => Salle)

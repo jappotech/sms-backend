@@ -14,7 +14,10 @@ import {
 } from './dtos/find.args';
 import { CreateInscriptionInput } from './dtos/create-inscription.input';
 import { UpdateInscriptionInput } from './dtos/update-inscription.input';
-import { checkRowLevelPermission, checkUserAffiliation } from 'src/common/auth/util';
+import {
+  checkRowLevelPermission,
+  checkUserAffiliation,
+} from 'src/common/auth/util';
 import { GetUserType } from 'src/common/types';
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
 import { PrismaService } from 'src/common/prisma/prisma.service';
@@ -42,7 +45,10 @@ export class InscriptionsResolver {
 
   @AllowAuthenticated()
   @Query(() => [Inscription], { name: 'inscriptions' })
-  async findAll(@Args() args: FindManyInscriptionArgs, @GetUser() user: GetUserType) {
+  async findAll(
+    @Args() args: FindManyInscriptionArgs,
+    @GetUser() user: GetUserType,
+  ) {
     const affiliation = await checkUserAffiliation(user);
     if (affiliation) {
       return this.inscriptionsService.findAllByEtablissement(
@@ -84,6 +90,9 @@ export class InscriptionsResolver {
 
   @ResolveField(() => Etudiant)
   async etudiant(@Parent() parent: Inscription) {
+    if (!parent.etudiantId) {
+      return {};
+    }
     return this.prisma.etudiant.findUnique({
       where: { id: parent.etudiantId },
       include: { profile: true },
@@ -92,6 +101,9 @@ export class InscriptionsResolver {
 
   @ResolveField(() => Classe)
   async classe(@Parent() parent: Inscription) {
+    if (!parent.classeId) {
+      return {};
+    }
     return this.prisma.classe.findUnique({
       where: { id: parent.classeId },
       include: { etablissement: true, semestres: true },

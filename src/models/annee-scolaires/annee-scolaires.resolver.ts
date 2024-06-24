@@ -7,7 +7,10 @@ import {
 } from './dtos/find.args';
 import { CreateAnneeScolaireInput } from './dtos/create-annee-scolaire.input';
 import { UpdateAnneeScolaireInput } from './dtos/update-annee-scolaire.input';
-import { checkRowLevelPermission, checkUserAffiliation } from 'src/common/auth/util';
+import {
+  checkRowLevelPermission,
+  checkUserAffiliation,
+} from 'src/common/auth/util';
 import { GetUserType } from 'src/common/types';
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
 import { PrismaService } from 'src/common/prisma/prisma.service';
@@ -17,7 +20,7 @@ export class AnneeScolairesResolver {
   constructor(
     private readonly anneeScolairesService: AnneeScolairesService,
     private readonly prisma: PrismaService,
-  ) { }
+  ) {}
 
   @AllowAuthenticated()
   @Mutation(() => AnneeScolaire)
@@ -31,11 +34,17 @@ export class AnneeScolairesResolver {
 
   @AllowAuthenticated()
   @Query(() => [AnneeScolaire], { name: 'anneeScolaires' })
-  async findAll(@Args() args: FindManyAnneeScolaireArgs, @GetUser() user: GetUserType) {
-    const affiliation = await checkUserAffiliation(user)
-    affiliation
+  async findAll(
+    @Args() args: FindManyAnneeScolaireArgs,
+    @GetUser() user: GetUserType,
+  ) {
+    const affiliation = await checkUserAffiliation(user);
+    affiliation;
     if (affiliation) {
-      return this.anneeScolairesService.findAllByEtablissement(args, affiliation.etablissementId);
+      return this.anneeScolairesService.findAllByEtablissement(
+        args,
+        affiliation.etablissementId,
+      );
     }
     return this.anneeScolairesService.findAll(args);
   }

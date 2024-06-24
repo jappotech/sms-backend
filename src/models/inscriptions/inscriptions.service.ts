@@ -8,6 +8,7 @@ import { CreateInscriptionInput } from './dtos/create-inscription.input';
 import { UpdateInscriptionInput } from './dtos/update-inscription.input';
 import { Prisma } from '@prisma/client';
 import { randomUUID } from 'crypto';
+import { CreateEtudiantInput } from '../etudiants/dtos/create-etudiant.input';
 
 @Injectable()
 export class InscriptionsService {
@@ -19,6 +20,10 @@ export class InscriptionsService {
       data: createInscriptionInput,
     });
   }
+
+  /* async bulkCreation(etudiants: CreateEtudiantInput) {
+    // TODO: optimize
+  } */
 
   findAll(args: FindManyInscriptionArgs) {
     return this.prisma.inscription.findMany(args);

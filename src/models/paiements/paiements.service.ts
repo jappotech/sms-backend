@@ -9,7 +9,7 @@ import slugify from 'slugify';
 
 @Injectable()
 export class PaiementsService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
   create(createPaiementInput: CreatePaiementInput) {
     createPaiementInput.referencePaiement = uniqueId(
       slugify(

@@ -4,7 +4,10 @@ import { Paiement } from './entity/paiement.entity';
 import { FindManyPaiementArgs, FindUniquePaiementArgs } from './dtos/find.args';
 import { CreatePaiementInput } from './dtos/create-paiement.input';
 import { UpdatePaiementInput } from './dtos/update-paiement.input';
-import { checkRowLevelPermission, checkUserAffiliation } from 'src/common/auth/util';
+import {
+  checkRowLevelPermission,
+  checkUserAffiliation,
+} from 'src/common/auth/util';
 import { GetUserType } from 'src/common/types';
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
 import { PrismaService } from 'src/common/prisma/prisma.service';
@@ -15,7 +18,7 @@ export class PaiementsResolver {
   constructor(
     private readonly paiementsService: PaiementsService,
     private readonly prisma: PrismaService,
-  ) { }
+  ) {}
 
   @AllowAuthenticated()
   @Mutation(() => Paiement)
@@ -29,7 +32,10 @@ export class PaiementsResolver {
 
   @AllowAuthenticated()
   @Query(() => [Paiement], { name: 'paiements' })
-  async findAll(@Args() args: FindManyPaiementArgs, @GetUser() user: GetUserType) {
+  async findAll(
+    @Args() args: FindManyPaiementArgs,
+    @GetUser() user: GetUserType,
+  ) {
     const affiliation = await checkUserAffiliation(user);
     if (affiliation) {
       return this.paiementsService.findAllByEtablissement(

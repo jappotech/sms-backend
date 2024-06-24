@@ -14,7 +14,10 @@ import {
 } from './dtos/find.args';
 import { CreateUniteEnseignementInput } from './dtos/create-unite-enseignement.input';
 import { UpdateUniteEnseignementInput } from './dtos/update-unite-enseignement.input';
-import { checkRowLevelPermission, checkUserAffiliation } from 'src/common/auth/util';
+import {
+  checkRowLevelPermission,
+  checkUserAffiliation,
+} from 'src/common/auth/util';
 import { GetUserType } from 'src/common/types';
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
 import { PrismaService } from 'src/common/prisma/prisma.service';
@@ -41,7 +44,10 @@ export class UniteEnseignementsResolver {
 
   @AllowAuthenticated()
   @Query(() => [UniteEnseignement], { name: 'uniteEnseignements' })
-  async findAll(@Args() args: FindManyUniteEnseignementArgs, @GetUser() user: GetUserType) {
+  async findAll(
+    @Args() args: FindManyUniteEnseignementArgs,
+    @GetUser() user: GetUserType,
+  ) {
     const affiliation = await checkUserAffiliation(user);
     if (affiliation) {
       return this.uniteEnseignementsService.findAllByEtablissement(
@@ -79,8 +85,10 @@ export class UniteEnseignementsResolver {
     const uniteEnseignement = await this.prisma.uniteEnseignement.findUnique({
       where: { id: args.id },
     });
-    const codeUE = await this.uniteEnseignementsService.genererCodeUE(uniteEnseignement.id);
-    console.log("🚀 ~ codeUE:", codeUE)
+    const codeUE = await this.uniteEnseignementsService.genererCodeUE(
+      uniteEnseignement.id,
+    );
+    console.log('🚀 ~ codeUE:', codeUE);
     // checkRowLevelPermission(user, uniteEnseignement.uid)
     return this.uniteEnseignementsService.update({ ...args, code: codeUE });
   }
@@ -101,6 +109,7 @@ export class UniteEnseignementsResolver {
   async matieres(@Parent() parent: UniteEnseignement) {
     return this.prisma.matiere.findMany({
       where: { uniteEnseignementId: parent.id },
+      orderBy: { id: 'asc' }
     });
   }
 }

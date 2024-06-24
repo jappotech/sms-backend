@@ -10,7 +10,7 @@ import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class EvaluationEtudiantsService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
   create(createEvaluationEtudiantsInput: CreateEvaluationEtudiantsInput) {
     return this.prisma.evaluationEtudiants.create({
       data: createEvaluationEtudiantsInput,
@@ -33,10 +33,10 @@ export class EvaluationEtudiantsService {
                 etablissementId: {
                   equals: id,
                 },
-              }
-            }
-          }
-        }
+              },
+            },
+          },
+        },
       },
     });
   }

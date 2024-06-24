@@ -73,7 +73,10 @@ describe('BulletinNotesService', () => {
             notes: [
               {
                 matiere: { id: 1, name: 'Matiere1', credit: 3, coefficient: 2 },
-                note: [{ id: 1, note: 12 }, { id: 2, note: 15 }],
+                note: [
+                  { id: 1, note: 12 },
+                  { id: 2, note: 15 },
+                ],
                 moyenne: '13.50',
                 moyenneCoeff: '54',
                 resultat: true,
@@ -88,7 +91,10 @@ describe('BulletinNotesService', () => {
             notes: [
               {
                 matiere: { id: 2, name: 'Matiere2', credit: 4, coefficient: 3 },
-                note: [{ id: 1, note: 12 }, { id: 2, note: 15 }],
+                note: [
+                  { id: 1, note: 12 },
+                  { id: 2, note: 15 },
+                ],
                 moyenne: '13.50',
                 moyenneCoeff: '40.5',
                 resultat: true,

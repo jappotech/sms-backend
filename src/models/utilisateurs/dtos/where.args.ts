@@ -1,5 +1,5 @@
 import { Field, InputType, PartialType } from '@nestjs/graphql';
-import { $Enums, Prisma } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import {
   DateTimeFilter,
   IntFilter,
@@ -8,10 +8,7 @@ import {
   StringListFilter,
 } from 'src/common/dtos/common.input';
 import { ContactRelationFilter } from 'src/models/contacts/dtos/where.args';
-import {
-  AdresseListRelationFilter,
-  AdresseRelationFilter,
-} from 'src/models/adresses/dtos/where.args';
+import { AdresseRelationFilter } from 'src/models/adresses/dtos/where.args';
 import { EtablissementRelationFilter } from 'src/models/etablissements/dtos/where.args';
 import { EtudiantRelationFilter } from 'src/models/etudiants/dtos/where.args';
 import { ProfesseurRelationFilter } from 'src/models/professeurs/dtos/where.args';
@@ -26,10 +23,10 @@ export class UtilisateurWhereUniqueInput {
 @InputType()
 export class UtilisateurWhereInputStrict
   implements
-    RestrictProperties<
-      UtilisateurWhereInputStrict,
-      Prisma.UtilisateurWhereInput
-    >
+  RestrictProperties<
+    UtilisateurWhereInputStrict,
+    Prisma.UtilisateurWhereInput
+  >
 {
   @Field(() => IntFilter, { nullable: true })
   id: IntFilter;
@@ -71,7 +68,7 @@ export class UtilisateurWhereInputStrict
   etablissementId: IntFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  statutCompte: StringFilter;
+  statutCompte: Prisma.EnumStatutCompteNullableFilter;
 
   @Field(() => StringFilter, { nullable: true })
   roles: Prisma.EnumRoleNullableListFilter;
@@ -84,7 +81,6 @@ export class UtilisateurWhereInputStrict
 
   @Field(() => IntFilter, { nullable: true })
   accountId: IntFilter;
-
   @Field(() => ContactRelationFilter, { nullable: true })
   contact: ContactRelationFilter;
 
@@ -157,7 +153,7 @@ export class UtilisateurWhereInput extends PartialType(
   etablissementId: IntFilter;
 
   @Field(() => StringFilter, { nullable: true })
-  statutCompte: StringFilter;
+  statutCompte: Prisma.EnumStatutCompteNullableFilter;
 
   @Field(() => StringListFilter, { nullable: true })
   roles: Prisma.EnumRoleNullableListFilter;
@@ -189,14 +185,13 @@ export class UtilisateurWhereInput extends PartialType(
   @Field(() => EtablissementRelationFilter, { nullable: true })
   etablissement: EtablissementRelationFilter;
 
-  @Field(() => [UtilisateurWhereInput], { nullable: true })
-  AND: UtilisateurWhereInput[];
+  @Field(() => [UtilisateurWhereInputStrict], { nullable: true })
+  AND: UtilisateurWhereInputStrict[];
 
-  @Field(() => [UtilisateurWhereInput], { nullable: true })
-  OR: UtilisateurWhereInput[];
-
-  @Field(() => [UtilisateurWhereInput], { nullable: true })
-  NOT: UtilisateurWhereInput[];
+  @Field(() => [UtilisateurWhereInputStrict], { nullable: true })
+  OR: UtilisateurWhereInputStrict[];
+  @Field(() => [UtilisateurWhereInputStrict], { nullable: true })
+  NOT: UtilisateurWhereInputStrict[];
 }
 
 @InputType()

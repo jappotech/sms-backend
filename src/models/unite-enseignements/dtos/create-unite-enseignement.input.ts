@@ -6,4 +6,4 @@ export class CreateUniteEnseignementInput extends PickType(
   UniteEnseignement,
   ['code', 'credit', 'nom', 'numero', 'semestreId'],
   InputType,
-) { }
+) {}

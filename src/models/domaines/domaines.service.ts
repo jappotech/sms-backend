@@ -8,7 +8,7 @@ import slugify from 'slugify';
 
 @Injectable()
 export class DomainesService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
   async create(createDomaineInput: CreateDomaineInput) {
     const { mentions, ...data } = createDomaineInput;
 
@@ -45,7 +45,7 @@ export class DomainesService {
           some: {
             id: etablissementId,
           },
-        }
+        },
       },
     });
   }

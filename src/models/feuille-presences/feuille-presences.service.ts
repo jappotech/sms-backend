@@ -10,7 +10,7 @@ import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class FeuillePresencesService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
   create(createFeuillePresenceInput: CreateFeuillePresenceInput) {
     return this.prisma.feuillePresence.create({
       data: createFeuillePresenceInput,
@@ -33,10 +33,10 @@ export class FeuillePresencesService {
                 etablissementId: {
                   equals: id,
                 },
-              }
-            }
-          }
-        }
+              },
+            },
+          },
+        },
       },
     });
   }

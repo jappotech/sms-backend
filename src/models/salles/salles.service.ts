@@ -7,7 +7,7 @@ import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class SallesService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
   create(createSalleInput: CreateSalleInput) {
     return this.prisma.salle.create({
       data: createSalleInput,

@@ -4,7 +4,8 @@ import { RestrictProperties } from 'src/common/dtos/common.input';
 
 @ObjectType()
 export class Specialite
-  implements RestrictProperties<Specialite, SpecialiteType> {
+  implements RestrictProperties<Specialite, SpecialiteType>
+{
   @Field({ nullable: true })
   id: number;
 

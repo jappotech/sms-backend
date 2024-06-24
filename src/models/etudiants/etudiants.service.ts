@@ -5,6 +5,7 @@ import { CreateEtudiantInput } from './dtos/create-etudiant.input';
 import { UpdateEtudiantInput } from './dtos/update-etudiant.input';
 import { UtilisateursService } from '../utilisateurs/utilisateurs.service';
 import slugify from 'slugify';
+import { uniqueId } from 'lodash';
 
 @Injectable()
 export class EtudiantsService {
@@ -19,11 +20,12 @@ export class EtudiantsService {
     );
 
     // create etudiant without profile
-    const { profile, ...studentData } = createEtudiantInput;
+    const { profile, classeId, ...studentData } = createEtudiantInput;
     const slug = slugify(
       `${profile.nom.toLowerCase()} ${utilisateur.accountId} ${profile.prenom.toLowerCase()}`,
     );
-    return this.prisma.etudiant.create({
+
+    const etudiant = this.prisma.etudiant.create({
       data: {
         ...studentData,
         profileId: utilisateur.id,
@@ -31,6 +33,27 @@ export class EtudiantsService {
         ine: studentData.ine || slug,
       },
     });
+
+    // create inscription
+    if (createEtudiantInput.classeId) {
+      const etudiantId = (await etudiant).id;
+      const inscription = await this.prisma.inscription.create({
+        data: {
+          etudiantId: etudiantId,
+          classeId: createEtudiantInput.classeId,
+          diplomeId: 1,
+          reference: uniqueId('2024_'),
+          premiereInscription: true,
+          dernierDiplome: null,
+          autreEtablissement: null,
+          activiteProfessionnel: null,
+          niveau: null,
+          statut: null,
+        },
+      });
+    }
+
+    return etudiant;
   }
 
   findAll(args: FindManyEtudiantArgs) {
@@ -47,8 +70,8 @@ export class EtudiantsService {
             etablissementId: {
               equals: id,
             },
-          }
-        }
+          },
+        },
       },
     });
   }

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
@@ -34,9 +34,11 @@ import { JwtModule } from '@nestjs/jwt';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import { AuthModule } from './auth/auth.module';
 import { AccountsModule } from './models/accounts/accounts.module';
-import { AnneeScolaire } from './models/annee-scolaires/entity/annee-scolaire.entity';
 import { AnneeScolairesModule } from './models/annee-scolaires/annee-scolaires.module';
 import { BulletinNotesModule } from './models/bulletin-notes/bulletin-notes.module';
+
+import { graphqlUploadExpress } from 'graphql-upload-ts';
+import { FileUploadResolver } from './common/utils/file-upload.resolver';
 
 @Module({
   imports: [
@@ -51,6 +53,7 @@ import { BulletinNotesModule } from './models/bulletin-notes/bulletin-notes.modu
     }),
 
     PrismaModule,
+
     JwtModule.register({
       global: true,
       secret: 'jwtConstants.secret',
@@ -87,6 +90,12 @@ import { BulletinNotesModule } from './models/bulletin-notes/bulletin-notes.modu
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, FileUploadResolver],
 })
-export class AppModule { }
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 1 }))
+      .forRoutes('graphql');
+  }
+}

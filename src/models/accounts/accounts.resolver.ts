@@ -1,4 +1,12 @@
-import { Resolver, Query, Mutation, Args, ResolveField, Parent, Int } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  ResolveField,
+  Parent,
+  Int,
+} from '@nestjs/graphql';
 import { AccountsService } from './accounts.service';
 import { Account } from './entity/account.entity';
 import { FindManyAccountArgs, FindUniqueAccountArgs } from './dtos/find.args';

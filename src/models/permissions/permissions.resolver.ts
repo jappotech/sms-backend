@@ -18,7 +18,7 @@ export class PermissionsResolver {
   constructor(
     private readonly permissionsService: PermissionsService,
     private readonly prisma: PrismaService,
-  ) { }
+  ) {}
 
   @AllowAuthenticated()
   @Mutation(() => Permission)
