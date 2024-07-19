@@ -441,14 +441,21 @@ model FeuillePresence {
   etudiantId Int?
 }
 
+
+
 model EmploiDuTemps {
   id           Int         @id @default(autoincrement())
+  title      String
+  daysOfWeek String []
+  startTime String 
+  endTime   String 
+  color   String
+  startRecur String
+  endRecur String
   coursId      Int
   classeId     Int
   professeurId Int? // Optionnel
   salleId      Int
-  dateDebut    DateTime
-  dateFin      DateTime
   cours        Cours       @relation(fields: [coursId], references: [id])
   classe       Classe      @relation(fields: [classeId], references: [id])
   professeur   Professeur? @relation(fields: [professeurId], references: [id])

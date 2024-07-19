@@ -102,7 +102,7 @@ export class ClassesResolver {
     });
   }
 
-  @ResolveField(() => [EvaluationEtudiants])
+/*  @ResolveField(() => [EvaluationEtudiants])
   async evaluations(@Parent() parent: Classe) {
     const cours = await this.prisma.cours.findMany({
       where: { classeId: parent.id },
@@ -120,7 +120,27 @@ export class ClassesResolver {
       resolve(evaluationEtudiants);
       reject([]);
     });
+  }*/
+
+  @ResolveField(() => [EvaluationEtudiants])
+  async evaluations(@Parent() parent: Classe) {
+    const cours = await this.prisma.cours.findMany({
+      where: { classeId: parent.id },
+    });
+  
+    const evaluationEtudiants = [];
+  
+    for (const cour of cours) {
+      const evaluations = await this.prisma.evaluationEtudiants.findMany({
+        where: { coursId: cour.id },
+      });
+      evaluationEtudiants.push(...evaluations);
+    }
+  
+    return evaluationEtudiants;
   }
+  
+
 
   @ResolveField(() => AnneeScolaire)
   async anneeScolaire(@Parent() parent: Classe) {
