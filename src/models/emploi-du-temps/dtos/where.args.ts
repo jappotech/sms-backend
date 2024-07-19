@@ -1,6 +1,11 @@
 import { Field, InputType, PartialType } from '@nestjs/graphql'
 import { Prisma } from '@prisma/client'
-import { RestrictProperties, IntFilter, StringFilter, DateTimeFilter } from 'src/common/dtos/common.input'
+import {
+  StringListFilter,
+  IntFilter,
+  RestrictProperties,
+  StringFilter,
+} from 'src/common/dtos/common.input';
 import { ProfesseurRelationFilter } from 'src/models/professeurs/dtos/where.args';
 import { SalleRelationFilter } from 'src/models/salles/dtos/where.args';
 import { ClasseRelationFilter } from 'src/models/classes/dtos/where.args';
@@ -13,31 +18,30 @@ export class EmploiDuTempsWhereUniqueInput {
 }
 
 @InputType()
-export class EmploiDuTempsWhereInputStrict implements RestrictProperties<EmploiDuTempsWhereInputStrict, Prisma.EmploiDuTempsWhereInput> 
-{
+export class EmploiDuTempsWhereInputStrict implements RestrictProperties<EmploiDuTempsWhereInputStrict, Prisma.EmploiDuTempsWhereInput> {
   @Field(() => IntFilter, { nullable: true })
   id: IntFilter;
 
   @Field(() => StringFilter, { nullable: true })
   title: StringFilter;
 
+  @Field(() => StringListFilter)
+  daysOfWeek: StringListFilter;
+
+  @Field(type => StringFilter, { nullable: true })
+  startTime: StringFilter;
+
+  @Field(type => StringFilter, { nullable: true })
+  endTime: StringFilter;
+
   @Field(() => StringFilter, { nullable: true })
-  daysOfWeek: StringFilter;
-
-  @Field(type => DateTimeFilter, { nullable: true })
-  startTime: DateTimeFilter;
-
-  @Field(type => DateTimeFilter, { nullable: true })
-  endTime: DateTimeFilter;
-
-  @Field(() => StringFilter, { nullable: true })   
   color: StringFilter;
 
-  @Field(type => DateTimeFilter, { nullable: true })
-  startRecur: DateTimeFilter;
+  @Field(type => StringFilter, { nullable: true })
+  startRecur: StringFilter;
 
-  @Field(type => DateTimeFilter, { nullable: true })
-  endRecur: DateTimeFilter;
+  @Field(type => StringFilter, { nullable: true })
+  endRecur: StringFilter;
 
   @Field(() => IntFilter, { nullable: true })
   coursId: IntFilter;
@@ -59,18 +63,18 @@ export class EmploiDuTempsWhereInputStrict implements RestrictProperties<EmploiD
 
   @Field(() => ClasseRelationFilter, { nullable: true })
   classe: ClasseRelationFilter;
-  
+
   @Field(() => CoursRelationFilter, { nullable: true })
   cours: CoursRelationFilter;
 
   @Field(() => [EmploiDuTempsWhereInputStrict], { nullable: true })
-  AND: EmploiDuTempsWhereInput[]
+  AND: EmploiDuTempsWhereInputStrict[]
 
   @Field(() => [EmploiDuTempsWhereInputStrict], { nullable: true })
-  OR: EmploiDuTempsWhereInput[]
+  OR: EmploiDuTempsWhereInputStrict[]
 
   @Field(() => [EmploiDuTempsWhereInputStrict], { nullable: true })
-  NOT: EmploiDuTempsWhereInput[]
+  NOT: EmploiDuTempsWhereInputStrict[]
 }
 
 @InputType()
@@ -83,23 +87,23 @@ export class EmploiDuTempsWhereInput extends PartialType(
   @Field(() => StringFilter, { nullable: true })
   title: StringFilter;
 
-  @Field(() => StringFilter, { nullable: true })
-  daysOfWeek: StringFilter;
+  @Field(() => StringListFilter, { nullable: true })
+  daysOfWeek: StringListFilter;
 
-  @Field(type => DateTimeFilter, { nullable: true })
-  startTime: DateTimeFilter;
+  @Field(type => StringFilter, { nullable: true })
+  startTime: StringFilter;
 
-  @Field(type => DateTimeFilter, { nullable: true })
-  endTime: DateTimeFilter;
+  @Field(type => StringFilter, { nullable: true })
+  endTime: StringFilter;
 
   @Field(() => StringFilter, { nullable: true })
   color: StringFilter;
 
-  @Field(type => DateTimeFilter, { nullable: true })
-  startRecur: DateTimeFilter;
+  @Field(type => StringFilter, { nullable: true })
+  startRecur: StringFilter;
 
-  @Field(type => DateTimeFilter, { nullable: true })
-  endRecur: DateTimeFilter;
+  @Field(type => StringFilter, { nullable: true })
+  endRecur: StringFilter;
 
   @Field(() => IntFilter, { nullable: true })
   coursId: IntFilter;
@@ -121,7 +125,7 @@ export class EmploiDuTempsWhereInput extends PartialType(
 
   @Field(() => ClasseRelationFilter, { nullable: true })
   classe: ClasseRelationFilter;
-  
+
   @Field(() => CoursRelationFilter, { nullable: true })
   cours: CoursRelationFilter;
 
@@ -139,7 +143,7 @@ export class EmploiDuTempsWhereInput extends PartialType(
 export class EmploiDuTempsListRelationFilter {
   @Field(() => EmploiDuTempsWhereInput, { nullable: true })
   every?: EmploiDuTempsWhereInput;
- @Field(() => EmploiDuTempsWhereInput, { nullable: true })
+  @Field(() => EmploiDuTempsWhereInput, { nullable: true })
   some?: EmploiDuTempsWhereInput;
   @Field(() => EmploiDuTempsWhereInput, { nullable: true })
   none?: EmploiDuTempsWhereInput;

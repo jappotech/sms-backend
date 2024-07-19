@@ -3,7 +3,7 @@ import { EmploiDuTemps as EmploiDuTempsType } from '@prisma/client'
 import { RestrictProperties } from 'src/common/dtos/common.input'
 
 @ObjectType()
-export class EmploiDuTemps implements RestrictProperties<EmploiDuTemps,EmploiDuTempsType> {
+export class EmploiDuTemps implements RestrictProperties<EmploiDuTemps, EmploiDuTempsType> {
   @Field({ nullable: true })
   id: number;
 
@@ -11,23 +11,23 @@ export class EmploiDuTemps implements RestrictProperties<EmploiDuTemps,EmploiDuT
   title: string;
 
   @Field({ nullable: true })
-  daysOfWeek: Date;
+  daysOfWeek: string[];
 
   @Field({ nullable: true })
-  startTime: Date
+  startTime: string
 
   @Field({ nullable: true })
-  endTime: Date
+  endTime: string
 
   @Field({ nullable: true })
   color: string
 
   @Field({ nullable: true })
-  startRecur: Date
+  startRecur: string
 
   @Field({ nullable: true })
-  endRecur: Date
-  
+  endRecur: string
+
   @Field({ nullable: true })
   coursId: number
 

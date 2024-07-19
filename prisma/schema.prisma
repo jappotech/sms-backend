@@ -441,17 +441,15 @@ model FeuillePresence {
   etudiantId Int?
 }
 
-
-
 model EmploiDuTemps {
   id           Int         @id @default(autoincrement())
-  title      String
-  daysOfWeek String []
-  startTime String 
-  endTime   String 
-  color   String
-  startRecur String
-  endRecur String
+  title        String
+  daysOfWeek   String[]
+  startTime    String
+  endTime      String
+  color        String
+  startRecur   String
+  endRecur     String
   coursId      Int
   classeId     Int
   professeurId Int? // Optionnel

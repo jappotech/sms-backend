@@ -256,12 +256,17 @@ type Mention {
 
 type EmploiDuTemps {
   id: Float
+  title: String
+  daysOfWeek: [String!]
+  startTime: String
+  endTime: String
+  color: String
+  startRecur: String
+  endRecur: String
   coursId: Float
+  salleId: Float
   classeId: Float
   professeurId: Float
-  salleId: Float
-  dateDebut: DateTime
-  dateFin: DateTime
 }
 
 type Etudiant {
@@ -405,7 +410,6 @@ type Query {
   domaines(where: DomaineWhereInput, orderBy: [DomaineOrderByWithRelationInput!], cursor: DomaineWhereUniqueInput, take: Float, skip: Float, distinct: [DomaineScalarFieldEnum!]): [Domaine!]!
   domaines_etablissement(where: DomaineWhereInput, orderBy: [DomaineOrderByWithRelationInput!], cursor: DomaineWhereUniqueInput, take: Float, skip: Float, distinct: [DomaineScalarFieldEnum!]): [Domaine!]!
   domaine(where: DomaineWhereUniqueInput!): Domaine!
-  emploisDuTemps(where: EmploiDuTempsWhereInput, orderBy: [EmploiDuTempsOrderByWithRelationInput!], cursor: EmploiDuTempsWhereUniqueInput, take: Float, skip: Float, distinct: [EmploiDuTempsScalarFieldEnum!]): [EmploiDuTemps!]!
   emploiDuTemps(where: EmploiDuTempsWhereUniqueInput!): EmploiDuTemps!
   etablissements(where: EtablissementWhereInput, orderBy: [EtablissementOrderByWithRelationInput!], cursor: EtablissementWhereUniqueInput, take: Float, skip: Float, distinct: [EtablissementScalarFieldEnum!]): [Etablissement!]!
   etablissement(where: EtablissementWhereUniqueInput!): Etablissement!
@@ -934,29 +938,24 @@ input EmploiDuTempsListRelationFilter {
 
 input EmploiDuTempsWhereInput {
   id: IntFilter
+  title: StringFilter
+  daysOfWeek: StringListFilter
+  startTime: StringFilter
+  endTime: StringFilter
+  color: StringFilter
+  startRecur: StringFilter
+  endRecur: StringFilter
   coursId: IntFilter
   classeId: IntFilter
   professeurId: IntFilter
   salleId: IntFilter
-  dateDebut: DateTimeFilter
-  dateFin: DateTimeFilter
-  cours: CoursRelationFilter
-  classe: ClasseRelationFilter
   professeur: ProfesseurRelationFilter
   salle: SalleRelationFilter
+  classe: ClasseRelationFilter
+  cours: CoursRelationFilter
   AND: [EmploiDuTempsWhereInput!]
   OR: [EmploiDuTempsWhereInput!]
   NOT: [EmploiDuTempsWhereInput!]
-}
-
-input CoursRelationFilter {
-  is: CoursWhereInput
-  isNot: CoursWhereInput
-}
-
-input ClasseRelationFilter {
-  is: ClasseWhereInput
-  isNot: ClasseWhereInput
 }
 
 input ProfesseurRelationFilter {
@@ -980,6 +979,16 @@ input ProfesseurWhereInput {
 input UtilisateurRelationFilter {
   is: UtilisateurWhereInput
   isNot: UtilisateurWhereInput
+}
+
+input ClasseRelationFilter {
+  is: ClasseWhereInput
+  isNot: ClasseWhereInput
+}
+
+input CoursRelationFilter {
+  is: CoursWhereInput
+  isNot: CoursWhereInput
 }
 
 input EvaluationEtudiantsListRelationFilter {
@@ -1653,32 +1662,8 @@ enum DomaineScalarFieldEnum {
   slug
 }
 
-input EmploiDuTempsOrderByWithRelationInput {
-  id: SortOrder
-  coursId: SortOrder
-  classeId: SortOrder
-  professeurId: SortOrder
-  salleId: SortOrder
-  dateDebut: SortOrder
-  dateFin: SortOrder
-  cours: CoursOrderByWithRelationInput
-  classe: ClasseOrderByWithRelationInput
-  professeur: ProfesseurOrderByWithRelationInput
-  salle: SalleOrderByWithRelationInput
-}
-
 input EmploiDuTempsWhereUniqueInput {
   id: Float
-}
-
-enum EmploiDuTempsScalarFieldEnum {
-  id
-  coursId
-  classeId
-  professeurId
-  salleId
-  dateDebut
-  dateFin
 }
 
 input EtablissementWhereUniqueInput {
@@ -2279,21 +2264,31 @@ input UpdateDomaineInput {
 }
 
 input CreateEmploiDuTempsInput {
+  title: String
+  daysOfWeek: [String!]
+  startTime: String
+  endTime: String
+  color: String
+  startRecur: String
+  endRecur: String
   coursId: Float
+  salleId: Float
   classeId: Float
   professeurId: Float
-  salleId: Float
-  dateDebut: DateTime
-  dateFin: DateTime
 }
 
 input UpdateEmploiDuTempsInput {
+  title: String
+  daysOfWeek: [String!]
+  startTime: String
+  endTime: String
+  color: String
+  startRecur: String
+  endRecur: String
   coursId: Float
+  salleId: Float
   classeId: Float
   professeurId: Float
-  salleId: Float
-  dateDebut: DateTime
-  dateFin: DateTime
   id: Float!
 }
 
