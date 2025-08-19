@@ -22,16 +22,23 @@ export class BulletinNotesService {
   async resultatAnnuel(args: FindUniqueBulletinNotesAnnuelArgs) {
     const classe = await this.prisma.classe.findUnique({
       where: { id: args.where.classeId },
-      include: { semestres: true, AnneeScolaire: true },
+      include: { AnneeScolaire: true, uniteEnseignements: { include: { semestre: true } } },
     });
     if (!classe) {
       throw new NotFoundException('Classe non trouvée');
     }
+    // Récupérer les semestres uniques via les UE de la classe
+    const semestres = classe.uniteEnseignements
+      .map(ue => ue.semestre)
+      .filter((semestre, index, array) => 
+        array.findIndex(s => s.id === semestre.id) === index
+      );
+    
     const resultats: BulletinNotes[] = [];
     let semestreValide = true;
     let moyenneAnnuelle = 0;
     let totalCredit = 0;
-    for (const semestre of classe.semestres) {
+    for (const semestre of semestres) {
       const bulletin = await this.bulletinSemestre({
         where: {
           etudiantId: args.where.etudiantId,
@@ -47,7 +54,7 @@ export class BulletinNotesService {
       resultats.push(bulletin);
     }
     const res: ResultatAnnuel = {
-      moyenneAnnuelle: (moyenneAnnuelle / classe.semestres.length).toFixed(2),
+      moyenneAnnuelle: (moyenneAnnuelle / semestres.length).toFixed(2),
       totalCredit,
       resultat: semestreValide ? 'Année Validée' : 'Année Invalidée',
     }
@@ -86,13 +93,20 @@ export class BulletinNotesService {
     }
     const classe = await this.prisma.classe.findUnique({
       where: { id: args.where.classeId },
-      include: { semestres: true, AnneeScolaire: true },
+      include: { AnneeScolaire: true, uniteEnseignements: { include: { semestre: true } } },
     });
     if (!classe) {
       throw new NotFoundException('Classe non trouvée');
     }
+    // Récupérer les semestres uniques via les UE de la classe
+    const semestres = classe.uniteEnseignements
+      .map(ue => ue.semestre)
+      .filter((semestre, index, array) => 
+        array.findIndex(s => s.id === semestre.id) === index
+      );
+      
     const resultats: BulletinNotes[] = [];
-    for (const semestre of classe.semestres) {
+    for (const semestre of semestres) {
       const bulletin = await this.bulletinSemestre({
         where: {
           etudiantId: etudiant.id,
@@ -125,7 +139,10 @@ export class BulletinNotesService {
     let countMatiere = 0;
 
     const uniteEnseignements = await this.prisma.uniteEnseignement.findMany({
-      where: { semestreId: args.where.semestreId },
+      where: { 
+        semestreId: args.where.semestreId,
+        classeId: args.where.classeId
+      },
     });
 
     for (const uniteEnseignement of uniteEnseignements) {
@@ -150,38 +167,26 @@ export class BulletinNotesService {
         g_totalCredit += matiere.credit;
         g_totalCoef += matiere.coefficient;
         countMatiere++;
-        const coursList = matiere.cours;
-        for (const cours of coursList) {
-          const evaluationEtudiant =
-            await this.prisma.evaluationEtudiants.findMany({
-              where: {
-                coursId: cours.id,
-                NoteEtudiant: { some: { etudiantId: etudiant.id } },
-              },
-              include: { NoteEtudiant: true },
-            });
-          const notesEtudiant = evaluationEtudiant.filter(
-            async (evaluation: EvaluationEtudiants) => {
-              const notes = await this.prisma.noteEtudiant.findMany({
-                where: { evaluationEtudiantId: evaluation.id, etudiantId: etudiant.id },
-              });
-
-              return notes.filter((x) => x.evaluationEtudiantId === evaluation.id);
-            },
-          );
-          const notesEtd = [];
-          if (notesEtudiant.length > 0) {
-            for (const n of notesEtudiant) {
-              if (n.NoteEtudiant && n.NoteEtudiant.length > 0) {
-                n.NoteEtudiant.forEach((ne: NoteEtudiant) => {
-                  if (ne.etudiantId === etudiant.id) // Pas nécessaire mais pour plus de sécurité
-                    notesEtd.push(ne);
-                });
+        // Récupérer directement toutes les notes pour cette matière et cet étudiant
+        const notesEtudiant = await this.prisma.noteEtudiant.findMany({
+          where: {
+            etudiantId: etudiant.id,
+            evaluationEtudiant: {
+              cours: {
+                matiereId: matiere.id
               }
             }
-            noteData.note = notesEtd;
+          },
+          include: {
+            evaluationEtudiant: {
+              include: {
+                cours: true
+              }
+            }
           }
-        }
+        });
+        
+        noteData.note = notesEtudiant;
         const moyenneMatiere = noteData.note.length > 0 ? (
           noteData.note.reduce((acc, note) => {
             return acc + note.note;

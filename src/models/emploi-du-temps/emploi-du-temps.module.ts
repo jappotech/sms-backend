@@ -1,6 +1,6 @@
-import { Module } from '@nestjs/common';
-import { EmploiDuTempsService } from './emploi-du-temps.service';
-import { EmploiDuTempsResolver } from './emploi-du-temps.resolver';
+import { Module } from '@nestjs/common'
+import { EmploiDuTempsService } from './emploi-du-temps.service'
+import { EmploiDuTempsResolver } from './emploi-du-temps.resolver'
 
 @Module({
   providers: [EmploiDuTempsResolver, EmploiDuTempsService],

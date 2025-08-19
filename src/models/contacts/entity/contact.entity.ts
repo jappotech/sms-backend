@@ -13,7 +13,7 @@ export class Contact implements RestrictProperties<Contact, ContactType> {
   @Field({ nullable: true })
   updatedAt: Date;
 
-  @Field({ nullable: true })
+  @Field({ nullable: false })
   telephone: string;
 
   @Field({ nullable: true })

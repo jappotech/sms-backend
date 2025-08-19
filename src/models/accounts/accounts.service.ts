@@ -4,7 +4,7 @@ import { PrismaService } from 'src/common/prisma/prisma.service';
 import { CreateAccountInput } from './dtos/create-account.input';
 import { UpdateAccountInput } from './dtos/update-account.input';
 import { randomUUID } from 'crypto';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class AccountsService {

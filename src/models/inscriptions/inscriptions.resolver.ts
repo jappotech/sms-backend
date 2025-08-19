@@ -14,6 +14,7 @@ import {
 } from './dtos/find.args';
 import { CreateInscriptionInput } from './dtos/create-inscription.input';
 import { UpdateInscriptionInput } from './dtos/update-inscription.input';
+import { ImportInscriptionsInput } from './dtos/import-inscriptions.input';
 import { checkRowLevelPermission, checkUserAffiliation } from 'src/common/auth/util';
 import { GetUserType } from 'src/common/types';
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
@@ -22,6 +23,8 @@ import { Prisma } from '@prisma/client';
 import { Etudiant } from '../etudiants/entity/etudiant.entity';
 import { Utilisateur } from '../utilisateurs/entity/utilisateur.entity';
 import { Classe } from '../classes/entity/classe.entity';
+import { Diplome } from '../diplomes/entity/diplome.entity';
+import { GraphQLUpload } from 'graphql-upload-minimal';
 
 @Resolver(() => Inscription)
 export class InscriptionsResolver {
@@ -94,7 +97,39 @@ export class InscriptionsResolver {
   async classe(@Parent() parent: Inscription) {
     return this.prisma.classe.findUnique({
       where: { id: parent.classeId },
-      include: { etablissement: true, semestres: true },
+      include: { etablissement: true },
     });
   }
+
+  @ResolveField(() => Diplome)
+  async diplome(@Parent() parent: Inscription) {
+    return this.prisma.diplome.findUnique({
+      where: { id: parent.diplomeId },
+    });
+  }
+
+  @AllowAuthenticated()
+  @Mutation(() => ImportResult)
+  async importInscriptions(
+    @Args('importInput') importInput: ImportInscriptionsInput,
+    @GetUser() user: GetUserType,
+  ) {
+    // Vérifier les permissions - pour l'instant tout utilisateur authentifié peut importer
+    return this.inscriptionsService.importFromFile(importInput);
+  }
+}
+
+// Définition du type de résultat pour l'importation
+import { ObjectType, Field, Int } from '@nestjs/graphql';
+
+@ObjectType()
+export class ImportResult {
+  @Field(() => Boolean)
+  success: boolean;
+
+  @Field(() => Int)
+  count: number;
+
+  @Field(() => [Inscription])
+  inscriptions: Inscription[];
 }

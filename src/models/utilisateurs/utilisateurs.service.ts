@@ -6,7 +6,6 @@ import {
 import { PrismaService } from 'src/common/prisma/prisma.service';
 import { CreateUtilisateurInput } from './dtos/create-utilisateur.input';
 import { UpdateUtilisateurInput } from './dtos/update-utilisateur.input';
-import { Prisma } from '@prisma/client';
 import { AccountsService } from '../accounts/accounts.service';
 
 @Injectable()
@@ -59,16 +58,13 @@ export class UtilisateursService {
     return this.prisma.utilisateur.findUnique(args);
   }
 
-  async findMe(uid: string) {
-    const account = await this.prisma.account.findUnique({
-      where: {
-        uid: uid,
-      },
-    });
+  async findMe(userId: number) {
+    if (!userId && userId !== 0) {
+      throw new Error('User ID is required');
+    }
     return this.prisma.utilisateur.findUnique({
-      where: {
-        id: account.userId,
-      },
+      where: { id: userId },
+      include: { contact: true, adresse: true },
     });
   }
 

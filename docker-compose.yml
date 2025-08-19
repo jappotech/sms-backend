@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:15
+    container_name: iscom_db
+    env_file:
+      - ./docker/.env
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "15432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  backend:
+    build: .
+    container_name: iscom_backend
+    env_file:
+      - ./.env
+    environment:
+      # Compose DATABASE_URL from db service if not provided in .env
+      DATABASE_URL: ${DATABASE_URL:-postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}?schema=public}
+      NODE_ENV: production
+    depends_on:
+      - db
+    ports:
+      # Map host 4000 to container 3000 by default to avoid conflicts with frontend on 3000
+      - "${BACKEND_HOST_PORT:-4000}:3000"
+    restart: unless-stopped
+
+volumes:
+  db_data:

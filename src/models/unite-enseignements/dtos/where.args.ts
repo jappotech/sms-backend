@@ -6,6 +6,7 @@ import {
   RestrictProperties,
   StringFilter,
 } from 'src/common/dtos/common.input';
+import { ClasseRelationFilter } from 'src/models/classes/dtos/where.args';
 import { MatiereListRelationFilter } from 'src/models/matieres/dtos/where.args';
 import { SemestreRelationFilter } from 'src/models/semestres/dtos/where.args';
 
@@ -48,6 +49,12 @@ export class UniteEnseignementWhereInputStrict
 
   @Field(() => SemestreRelationFilter, { nullable: true })
   semestre: SemestreRelationFilter;
+
+  @Field(() => IntFilter, { nullable: true })
+  classeId: IntFilter;
+
+  @Field(() => ClasseRelationFilter, { nullable: true })
+  classe: ClasseRelationFilter;
 
   @Field(() => MatiereListRelationFilter, { nullable: true })
   matieres: MatiereListRelationFilter;
@@ -96,14 +103,14 @@ export class UniteEnseignementWhereInput extends PartialType(
   @Field(() => MatiereListRelationFilter, { nullable: true })
   matieres: MatiereListRelationFilter;
 
-  @Field(() => [UniteEnseignementWhereInput], { nullable: true })
-  AND: UniteEnseignementWhereInput[];
+  @Field(() => [UniteEnseignementWhereInputStrict], { nullable: true })
+  AND: UniteEnseignementWhereInputStrict[];
 
-  @Field(() => [UniteEnseignementWhereInput], { nullable: true })
-  OR: UniteEnseignementWhereInput[];
+  @Field(() => [UniteEnseignementWhereInputStrict], { nullable: true })
+  OR: UniteEnseignementWhereInputStrict[];
 
-  @Field(() => [UniteEnseignementWhereInput], { nullable: true })
-  NOT: UniteEnseignementWhereInput[];
+  @Field(() => [UniteEnseignementWhereInputStrict], { nullable: true })
+  NOT: UniteEnseignementWhereInputStrict[];
 }
 
 @InputType()

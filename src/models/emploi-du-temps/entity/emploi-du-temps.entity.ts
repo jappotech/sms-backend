@@ -1,29 +1,43 @@
-import { Field, ObjectType } from '@nestjs/graphql';
-import { EmploiDuTemps as EmploiDuTempsType } from '@prisma/client';
-import { RestrictProperties } from 'src/common/dtos/common.input';
+import { ObjectType, Field } from '@nestjs/graphql'
+import { EmploiDuTemps as EmploiDuTempsType } from '@prisma/client'
+import { RestrictProperties } from 'src/common/dtos/common.input'
 
 @ObjectType()
-export class EmploiDuTemps
-  implements RestrictProperties<EmploiDuTemps, EmploiDuTempsType>
-{
+export class EmploiDuTemps implements RestrictProperties<EmploiDuTemps, EmploiDuTempsType> {
   @Field({ nullable: true })
   id: number;
 
   @Field({ nullable: true })
-  coursId: number;
+  title: string;
 
   @Field({ nullable: true })
-  classeId: number;
+  daysOfWeek: string[];
 
   @Field({ nullable: true })
-  professeurId: number;
+  startTime: string
 
   @Field({ nullable: true })
-  salleId: number;
+  endTime: string
 
   @Field({ nullable: true })
-  dateDebut: Date;
+  color: string
 
   @Field({ nullable: true })
-  dateFin: Date;
+  startRecur: string
+
+  @Field({ nullable: true })
+  endRecur: string
+
+  @Field({ nullable: true })
+  coursId: number
+
+  @Field({ nullable: true })
+  salleId: number
+
+  @Field({ nullable: true })
+  classeId: number
+
+  @Field({ nullable: true })
+  professeurId: number
+
 }

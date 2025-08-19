@@ -1,10 +1,12 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { UniteEnseignement as UniteEnseignementType } from '@prisma/client';
 import { RestrictProperties } from 'src/common/dtos/common.input';
+import { Semestre } from '../../semestres/entity/semestre.entity';
+import { Matiere } from '../../matieres/entity/matiere.entity';
 
 @ObjectType()
 export class UniteEnseignement
-  implements RestrictProperties<UniteEnseignement, UniteEnseignementType> {
+  implements RestrictProperties<Omit<UniteEnseignement, 'semestre' | 'matieres'>, UniteEnseignementType> {
   @Field({ nullable: true })
   id: number;
 
@@ -28,4 +30,13 @@ export class UniteEnseignement
 
   @Field({ nullable: true })
   semestreId: number;
+
+  @Field({ nullable: true })
+  classeId: number;
+
+  @Field(() => Semestre, { nullable: true })
+  semestre?: Semestre;
+
+  @Field(() => [Matiere], { nullable: true })
+  matieres?: Matiere[];
 }

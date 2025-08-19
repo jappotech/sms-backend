@@ -8,6 +8,7 @@ import { EtablissementOrderByWithRelationInput } from 'src/models/etablissements
 import { InscriptionOrderByRelationAggregateInput } from 'src/models/inscriptions/dtos/order-by.args';
 import { SemestreOrderByRelationAggregateInput } from 'src/models/semestres/dtos/order-by.args';
 import { SpecialiteOrderByWithRelationInput } from 'src/models/specialites/dtos/order-by.args';
+import { UniteEnseignementOrderByRelationAggregateInput } from 'src/models/unite-enseignements/dtos/order-by.args';
 
 @InputType()
 export class ClasseOrderByWithRelationInputStrict
@@ -50,8 +51,7 @@ export class ClasseOrderByWithRelationInputStrict
   @Field(() => EtablissementOrderByWithRelationInput, { nullable: true })
   etablissement: EtablissementOrderByWithRelationInput;
 
-  @Field(() => SemestreOrderByRelationAggregateInput, { nullable: true })
-  semestres: SemestreOrderByRelationAggregateInput;
+
 
   @Field(() => InscriptionOrderByRelationAggregateInput, { nullable: true })
   inscriptions: InscriptionOrderByRelationAggregateInput;
@@ -64,6 +64,9 @@ export class ClasseOrderByWithRelationInputStrict
 
   @Field(() => EmploiDuTempsOrderByRelationAggregateInput, { nullable: true })
   EmploiDuTemps: EmploiDuTempsOrderByRelationAggregateInput;
+
+  @Field(() => UniteEnseignementOrderByRelationAggregateInput, { nullable: true })
+  uniteEnseignements: UniteEnseignementOrderByRelationAggregateInput;
 }
 
 @InputType()

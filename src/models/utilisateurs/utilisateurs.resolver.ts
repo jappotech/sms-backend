@@ -56,8 +56,9 @@ export class UtilisateursResolver {
   @AllowAuthenticated()
   @Query(() => Utilisateur, { name: 'me' })
   findMe(@GetUser() user: GetUserType) {
+    console.log("🚀 ~ UtilisateursResolver ~ findMe ~ user:", user)
     // checkRowLevelPermission(user, args.uid)
-    return this.utilisateursService.findMe(user.uid);
+    return this.utilisateursService.findMe(user.userId);
   }
 
   @AllowAuthenticated()

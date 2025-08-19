@@ -26,16 +26,12 @@ export class MatieresService {
         ...args.where,
         uniteEnseignement: {
           is: {
-            semestre: {
+            classe: {
               is: {
-                Classe: {
-                  is: {
-                    etablissementId: {
-                      equals: etablissementId,
-                    },
-                  },
-                }
-              }
+                etablissementId: {
+                  equals: etablissementId,
+                },
+              },
             }
           }
         }

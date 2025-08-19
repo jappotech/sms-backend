@@ -17,7 +17,9 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "seed": "ts-node prisma/seed.ts",
+    "generate-notes": "ts-node scripts/generate-notes.ts"
   },
   "dependencies": {
     "@apollo/server": "^4.10.0",
@@ -30,25 +32,31 @@
     "@nestjs/jwt": "^10.2.0",
     "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.0.0",
-    "@prisma/client": "^5.13.0",
-    "bcrypt": "^5.1.1",
+    "@prisma/client": "5.22.0",
+    "bcryptjs": "^3.0.2",
+    "csv-parser": "^3.2.0",
     "graphql": "^16.8.1",
+    "graphql-upload": "^17.0.0",
+    "graphql-upload-minimal": "^1.6.1",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
     "slugify": "^1.6.6",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
     "@nestjs/schematics": "^10.0.0",
     "@nestjs/testing": "^10.0.0",
     "@types/express": "^4.17.17",
+    "@types/graphql-upload": "^17.0.0",
     "@types/jest": "^29.5.2",
     "@types/multer": "^1.4.11",
     "@types/node": "^20.3.1",
     "@types/supertest": "^2.0.12",
+    "@types/xlsx": "^0.0.36",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "eslint": "^8.42.0",
@@ -81,5 +89,8 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   }
 }

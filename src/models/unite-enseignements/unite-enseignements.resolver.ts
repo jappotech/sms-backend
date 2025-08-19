@@ -20,6 +20,7 @@ import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator';
 import { PrismaService } from 'src/common/prisma/prisma.service';
 import { Prisma } from '@prisma/client';
 import { Matiere } from '../matieres/entity/matiere.entity';
+import { Semestre } from '../semestres/entity/semestre.entity';
 import { AppService } from 'src/app.service';
 
 @Resolver(() => UniteEnseignement)
@@ -101,6 +102,13 @@ export class UniteEnseignementsResolver {
   async matieres(@Parent() parent: UniteEnseignement) {
     return this.prisma.matiere.findMany({
       where: { uniteEnseignementId: parent.id },
+    });
+  }
+
+  @ResolveField(() => Semestre)
+  async semestre(@Parent() parent: UniteEnseignement) {
+    return this.prisma.semestre.findUnique({
+      where: { id: parent.semestreId },
     });
   }
 }

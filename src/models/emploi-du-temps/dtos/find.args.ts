@@ -1,29 +1,19 @@
-import {
-  ArgsType,
-  Field,
-  registerEnumType,
-  PartialType,
-} from '@nestjs/graphql';
-import { Prisma } from '@prisma/client';
-import { EmploiDuTempsOrderByWithRelationInput } from './order-by.args';
-import {
-  EmploiDuTempsWhereInput,
-  EmploiDuTempsWhereUniqueInput,
-} from './where.args';
-import { RestrictProperties } from 'src/common/dtos/common.input';
+import { ArgsType, Field, registerEnumType, PartialType } from '@nestjs/graphql'
+import { Prisma } from '@prisma/client'
+import { EmploiDuTempsOrderByWithRelationInput } from './order-by.args'
+import { EmploiDuTempsWhereInput, EmploiDuTempsWhereUniqueInput } from './where.args'
+import { RestrictProperties } from 'src/common/dtos/common.input'
 
 registerEnumType(Prisma.EmploiDuTempsScalarFieldEnum, {
   name: 'EmploiDuTempsScalarFieldEnum',
-});
+})
 
 @ArgsType()
 class FindManyEmploiDuTempsArgsStrict
-  implements
-    RestrictProperties<
-      FindManyEmploiDuTempsArgsStrict,
-      Omit<Prisma.EmploiDuTempsFindManyArgs, 'include' | 'select'>
-    >
+  implements RestrictProperties<FindManyEmploiDuTempsArgsStrict, Omit<Prisma.EmploiDuTempsFindManyArgs, 'include' | 'select'>>
 {
+
+
   @Field(() => EmploiDuTempsWhereInput, { nullable: true })
   where: EmploiDuTempsWhereInput;
 
@@ -40,7 +30,9 @@ class FindManyEmploiDuTempsArgsStrict
   skip: number;
 
   @Field(() => [Prisma.EmploiDuTempsScalarFieldEnum])
-  distinct: Prisma.EmploiDuTempsScalarFieldEnum[];
+  distinct: Prisma.EmploiDuTempsScalarFieldEnum[]
+  
+
 }
 
 @ArgsType()
@@ -50,5 +42,5 @@ export class FindManyEmploiDuTempsArgs extends PartialType(
 
 @ArgsType()
 export class FindUniqueEmploiDuTempsArgs {
-  where: EmploiDuTempsWhereUniqueInput;
+  where: EmploiDuTempsWhereUniqueInput
 }

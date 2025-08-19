@@ -1,4 +1,4 @@
-import { GetUserType, Role } from 'src/common/types';
+import { GetUserType } from 'src/common/types';
 import { ForbiddenException } from '@nestjs/common';
 import { has } from 'lodash';
 import { Account } from 'src/models/accounts/entity/account.entity';
@@ -9,11 +9,11 @@ const prisma = new PrismaService();
 export const checkRowLevelPermission = (
   user: GetUserType,
   requestedUid?: string | string[],
-  roles: Role[] = ['UTILISATEUR'],
+  roles: string[] = ['UTILISATEUR'],
 ) => {
   if (!requestedUid) return false;
 
-  const hasRole = user.roles?.some((role) => roles.includes(role));
+  const hasRole = roles.includes(user.role);
 
   if (!hasRole) throw new ForbiddenException();
 
@@ -30,15 +30,32 @@ export const checkRowLevelPermission = (
 };
 
 export const checkUserAffiliation = async (user: GetUserType) => {
-  const account: Account = await prisma.account.findUnique({
-    where: { uid: user.uid },
-  })
-  const utilisateur = await prisma.utilisateur.findUnique({
-    where: { id: account.userId },
-  })
-  if (utilisateur.roles.includes('SUPER_ADMIN') || utilisateur.roles.includes('SUPER_USER')) {
-    return;
-  } else {
-    return utilisateur;
+  // Ensure payload contains the bound Utilisateur ID
+  if (user.userId == null) {
+    throw new ForbiddenException('Utilisateur non identifié');
   }
+
+  // In the schema, Account has a relation to Utilisateur via userId (number).
+  // We should query Account by userId, not by Account.id.
+  const account = await prisma.account.findFirst({
+    where: { userId: user.userId },
+  });
+
+  if (!account) {
+    throw new ForbiddenException('Compte introuvable pour cet utilisateur');
+  }
+
+  // SUPER roles bypass affiliation filters
+  if (account.roles.includes('SUPER_ADMIN') || account.roles.includes('SUPER_USER')) {
+    return;
+  }
+
+  const utilisateur = await prisma.utilisateur.findUnique({
+    where: { id: user.userId },
+  });
+
+  if (!utilisateur) {
+    throw new ForbiddenException('Utilisateur introuvable');
+  }
+  return utilisateur;
 }
