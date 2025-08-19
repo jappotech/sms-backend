@@ -27,7 +27,7 @@ export class AppService {
     const code_semestre = semestre.numero;
     const grade = semestre.grade.split(' ')
     const code_niveau = grade.map((word) => word.charAt(0).toUpperCase()).join('');
-    const classe: Classe = await this.prisma.classe.findUnique(semestre.classeId);
+    const classe: Classe = await this.prisma.classe.findUnique(ue.classeId);
     const specialite: Specialite = await this.prisma.specialite.findUnique(classe.specialiteId);
     const code_specialite = specialite.nom.split(' ').map((word) => word.charAt(0).toUpperCase()).join('');
     const code_annee = this.getNumeroAnnee(semestre.numero);

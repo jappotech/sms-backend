@@ -83,6 +83,19 @@ export class MentionsResolver {
   @ResolveField(() => [Specialite])
   async specialites(@Parent() parent: Mention, @GetUser() user: GetUserType) {
     const affiliation = await checkUserAffiliation(user);
+    
+    // Si l'utilisateur n'a pas d'affiliation, retourner toutes les spécialités liées à cette mention
+    if (!affiliation) {
+      return this.prisma.specialite.findMany({
+        where: {
+          mention: {
+            id: parent.id,
+          }
+        },
+      });
+    }
+    
+    // Sinon, filtrer par établissement de l'utilisateur
     return this.prisma.specialite.findMany({
       where: {
         AND: [

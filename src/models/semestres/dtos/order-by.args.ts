@@ -38,14 +38,8 @@ export class SemestreOrderByWithRelationInputStrict
   @Field(() => Prisma.SortOrder)
   etablissementId: Prisma.SortOrder;
 
-  @Field(() => Prisma.SortOrder)
-  classeId: Prisma.SortOrder | Prisma.SortOrderInput;
-
   @Field(() => UniteEnseignementOrderByRelationAggregateInput)
   uniteEnseignement: UniteEnseignementOrderByRelationAggregateInput;
-
-  @Field(() => ClasseOrderByWithRelationInput)
-  Classe: ClasseOrderByWithRelationInput;
 }
 
 @InputType()

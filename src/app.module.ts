@@ -34,7 +34,6 @@ import { JwtModule } from '@nestjs/jwt';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import { AuthModule } from './auth/auth.module';
 import { AccountsModule } from './models/accounts/accounts.module';
-import { AnneeScolaire } from './models/annee-scolaires/entity/annee-scolaire.entity';
 import { AnneeScolairesModule } from './models/annee-scolaires/annee-scolaires.module';
 import { BulletinNotesModule } from './models/bulletin-notes/bulletin-notes.module';
 
@@ -45,9 +44,11 @@ import { BulletinNotesModule } from './models/bulletin-notes/bulletin-notes.modu
       driver: ApolloDriver,
       fieldResolverEnhancers: ['guards'],
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      sortSchema: true,
       introspection: true,
       playground: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
+      context: ({ req, res }) => ({ req, res }),
     }),
 
     PrismaModule,

@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from 'src/common/prisma/prisma.service';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import { LoginInput } from './dtos/login.input';
 
 @Injectable()
@@ -21,16 +21,14 @@ export class AuthService {
       if (!isMatch) {
         return null;
       }
-      const {
-        password,
-        id,
-        userId,
-        createdAt,
-        updatedAt,
-        username,
-        ...result
-      } = user;
-      return result;
+      // Build minimal, safe JWT payload required by guards/resolvers
+      return {
+        id: user.uid, // align with GetUserType.id usage (maps to uid)
+        uid: user.uid,
+        userId: user.userId, // Utilisateur.id for row-level checks
+        role: Array.isArray(user.roles) && user.roles.length > 0 ? user.roles[0] : 'UTILISATEUR',
+        permissions: [],
+      };
     }
     return null;
   }

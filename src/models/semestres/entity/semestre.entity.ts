@@ -30,7 +30,4 @@ export class Semestre implements RestrictProperties<Semestre, SemestreType> {
 
   @Field({ nullable: true })
   etablissementId: number;
-
-  @Field({ nullable: true })
-  classeId: number;
 }

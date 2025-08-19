@@ -7,7 +7,7 @@ import {
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { JwtService } from '@nestjs/jwt';
 import { Reflector } from '@nestjs/core';
-import { Role } from 'src/common/types';
+
 import { PrismaService } from 'src/common/prisma/prisma.service';
 import { $Enums, Account } from '@prisma/client';
 
@@ -53,11 +53,11 @@ export class AuthGuard implements CanActivate {
     req: any,
     context: ExecutionContext,
   ): Promise<boolean> {
-    const requiredRoles = this.getMetadata<Role[]>('roles', context);
+    const requiredRoles: string[] = this.getMetadata<string[]>('roles', context);
     const account: Account = await this.prisma.account.findUnique({
       where: { uid: req.user.uid },
     });
-    const userRoles = account.roles;
+    const userRoles: string[] = account.roles;
 
     req.user.roles = userRoles;
 
@@ -65,9 +65,7 @@ export class AuthGuard implements CanActivate {
       return true;
     }
 
-    const hasRole = userRoles.some((userRole) =>
-      requiredRoles.every((requiredRole) => requiredRole === userRole),
-    );
+    const hasRole = requiredRoles.some((role: string) => userRoles.includes(role));
 
     if (!hasRole) {
       throw new UnauthorizedException('Invalid role.');

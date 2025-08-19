@@ -13,6 +13,7 @@ import { EtablissementRelationFilter } from 'src/models/etablissements/dtos/wher
 import { InscriptionListRelationFilter } from 'src/models/inscriptions/dtos/where.args';
 import { SemestreListRelationFilter } from 'src/models/semestres/dtos/where.args';
 import { SpecialiteRelationFilter } from 'src/models/specialites/dtos/where.args';
+import { UniteEnseignementListRelationFilter } from 'src/models/unite-enseignements/dtos/where.args';
 
 @InputType()
 export class ClasseWhereUniqueInput {
@@ -59,7 +60,6 @@ export class ClasseWhereInputStrict
   etablissement: EtablissementRelationFilter;
 
   @Field(() => SemestreListRelationFilter, { nullable: true })
-  semestres: SemestreListRelationFilter;
 
   @Field(() => InscriptionListRelationFilter, { nullable: true })
   inscriptions: InscriptionListRelationFilter;
@@ -72,6 +72,9 @@ export class ClasseWhereInputStrict
 
   @Field(() => EmploiDuTempsListRelationFilter, { nullable: true })
   EmploiDuTemps: EmploiDuTempsListRelationFilter;
+
+  @Field(() => UniteEnseignementListRelationFilter, { nullable: true })
+  uniteEnseignements: UniteEnseignementListRelationFilter;
 
   @Field(() => [ClasseWhereInputStrict], { nullable: true })
   AND: ClasseWhereInputStrict[];
@@ -119,7 +122,6 @@ export class ClasseWhereInput extends PartialType(ClasseWhereInputStrict) {
   etablissement: EtablissementRelationFilter;
 
   @Field(() => SemestreListRelationFilter, { nullable: true })
-  semestres: SemestreListRelationFilter;
 
   @Field(() => InscriptionListRelationFilter, { nullable: true })
   inscriptions: InscriptionListRelationFilter;
@@ -133,14 +135,14 @@ export class ClasseWhereInput extends PartialType(ClasseWhereInputStrict) {
   @Field(() => EmploiDuTempsListRelationFilter, { nullable: true })
   EmploiDuTemps: EmploiDuTempsListRelationFilter;
 
-  @Field(() => [ClasseWhereInput], { nullable: true })
-  AND: ClasseWhereInput[];
+  @Field(() => [ClasseWhereInputStrict], { nullable: true })
+  AND: ClasseWhereInputStrict[];
 
-  @Field(() => [ClasseWhereInput], { nullable: true })
-  OR: ClasseWhereInput[];
+  @Field(() => [ClasseWhereInputStrict], { nullable: true })
+  OR: ClasseWhereInputStrict[];
 
-  @Field(() => [ClasseWhereInput], { nullable: true })
-  NOT: ClasseWhereInput[];
+  @Field(() => [ClasseWhereInputStrict], { nullable: true })
+  NOT: ClasseWhereInputStrict[];
 }
 
 @InputType()

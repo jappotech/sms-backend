@@ -23,6 +23,7 @@ import { EvaluationEtudiants } from '../evaluation-etudiants/entity/evaluation-e
 import { AnneeScolaire } from '../annee-scolaires/entity/annee-scolaire.entity';
 import { Specialite } from '../specialites/entity/specialite.entity';
 import { Cours } from '../cours/entity/cours.entity';
+import { UniteEnseignement } from '../unite-enseignements/entity/unite-enseignement.entity';
 
 @Resolver(() => Classe)
 export class ClassesResolver {
@@ -82,16 +83,29 @@ export class ClassesResolver {
 
   @ResolveField(() => [Semestre])
   async semestres(@Parent() parent: Classe) {
-    return this.prisma.semestre.findMany({
+    // Récupérer les semestres via les UE de la classe
+    const ues = await this.prisma.uniteEnseignement.findMany({
       where: { classeId: parent.id },
+      include: { semestre: true },
+      distinct: ['semestreId'],
+    });
+    
+    // Retourner les semestres uniques avec leurs UE et matières
+    const semestres = await this.prisma.semestre.findMany({
+      where: { 
+        id: { in: ues.map(ue => ue.semestreId) }
+      },
       include: {
         uniteEnseignement: {
+          where: { classeId: parent.id }, // Filtrer les UE de cette classe uniquement
           include: {
             matieres: true,
           },
         },
       },
     });
+    
+    return semestres;
   }
 
   @ResolveField(() => [Inscription])
@@ -160,6 +174,17 @@ export class ClassesResolver {
   async cours(@Parent() parent: Classe) {
     return this.prisma.cours.findMany({
       where: { classeId: parent.id },
+    });
+  }
+
+  @ResolveField(() => [UniteEnseignement])
+  async uniteEnseignements(@Parent() parent: Classe) {
+    return this.prisma.uniteEnseignement.findMany({
+      where: { classeId: parent.id },
+      include: { 
+        semestre: true,
+        matieres: true 
+      },
     });
   }
 

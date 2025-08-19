@@ -263,8 +263,6 @@ model Semestre {
   nombreSemaine     Int
   etablissementId   Int?
   uniteEnseignement UniteEnseignement[]
-  Classe            Classe?             @relation(fields: [classeId], references: [id])
-  classeId          Int?
 }
 
 // Un Crédit équivaut, dans l’espace REESAO, à 25 heures de Charge Totale de Travail
@@ -278,6 +276,8 @@ model UniteEnseignement {
   credit     Int // Crédits d’Évaluation Capitalisables et Transférables (CECT)
   semestre   Semestre? @relation(fields: [semestreId], references: [id])
   semestreId Int?
+  classe     Classe?   @relation(fields: [classeId], references: [id])
+  classeId   Int?
   matieres   Matiere[]
 }
 
@@ -320,19 +320,19 @@ model Classe {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  nom             String
-  code            String
-  niveau          String
-  etablissement   Etablissement   @relation(fields: [etablissementId], references: [id])
-  etablissementId Int
-  semestres       Semestre[]
-  inscriptions    Inscription[]
-  specialite      Specialite      @relation(fields: [specialiteId], references: [id])
-  specialiteId    Int
-  Cours           Cours[]
-  EmploiDuTemps   EmploiDuTemps[]
-  AnneeScolaire   AnneeScolaire?  @relation(fields: [anneeScolaireId], references: [id])
-  anneeScolaireId Int?
+  nom                String
+  code               String
+  niveau             String
+  etablissement      Etablissement      @relation(fields: [etablissementId], references: [id])
+  etablissementId    Int
+  inscriptions       Inscription[]
+  specialite         Specialite         @relation(fields: [specialiteId], references: [id])
+  specialiteId       Int
+  uniteEnseignements UniteEnseignement[]
+  Cours              Cours[]
+  EmploiDuTemps      EmploiDuTemps[]
+  AnneeScolaire      AnneeScolaire?     @relation(fields: [anneeScolaireId], references: [id])
+  anneeScolaireId    Int?
 }
 
 enum TypeEvaluation {

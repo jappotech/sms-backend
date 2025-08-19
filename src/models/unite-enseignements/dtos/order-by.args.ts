@@ -1,6 +1,7 @@
 import { Field, InputType, PartialType } from '@nestjs/graphql';
 import { Prisma } from '@prisma/client';
 import { RestrictProperties } from 'src/common/dtos/common.input';
+import { ClasseOrderByWithRelationInput } from 'src/models/classes/dtos/order-by.args';
 import { MatiereOrderByRelationAggregateInput } from 'src/models/matieres/dtos/order-by.args';
 import { SemestreOrderByWithRelationInput } from 'src/models/semestres/dtos/order-by.args';
 
@@ -37,6 +38,12 @@ export class UniteEnseignementOrderByWithRelationInputStrict
 
   @Field(() => SemestreOrderByWithRelationInput)
   semestre: SemestreOrderByWithRelationInput;
+
+  @Field(() => Prisma.SortOrder)
+  classeId: Prisma.SortOrder | Prisma.SortOrderInput;
+
+  @Field(() => ClasseOrderByWithRelationInput)
+  classe: ClasseOrderByWithRelationInput;
 
   @Field(() => MatiereOrderByRelationAggregateInput)
   matieres: MatiereOrderByRelationAggregateInput;

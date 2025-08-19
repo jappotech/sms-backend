@@ -89,6 +89,17 @@ export class DomainesResolver {
   @ResolveField(() => [Mention])
   async mentions(@Parent() parent: Domaine, @GetUser() user: GetUserType,) {
     const affiliation = await checkUserAffiliation(user);
+    
+    // Si l'utilisateur n'a pas d'affiliation, retourner toutes les mentions liées à ce domaine
+    if (!affiliation) {
+      return this.prisma.mention.findMany({
+        where: {
+          domaineId: parent.id,
+        },
+      });
+    }
+    
+    // Sinon, filtrer par établissement de l'utilisateur
     return this.prisma.mention.findMany({
       where: {
         AND: [

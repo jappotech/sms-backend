@@ -26,15 +26,11 @@ export class UniteEnseignementsService {
       ...args,
       where: {
         ...args.where,
-        semestre: {
+        classe: {
           is: {
-            Classe: {
-              is: {
-                etablissementId: {
-                  equals: etablissementId,
-                },
-              }
-            }
+            etablissementId: {
+              equals: etablissementId,
+            },
           }
         }
       },
@@ -75,7 +71,7 @@ export class UniteEnseignementsService {
     const code_niveau = grade.map((word) => word.charAt(0).toUpperCase()).join('');
     const classe: Classe = await this.prisma.classe.findUnique({
       where: {
-        id: semestre.classeId
+        id: ue.classeId
       }
     });
     const specialite: Specialite = await this.prisma.specialite.findUnique({

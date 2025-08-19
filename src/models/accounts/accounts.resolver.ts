@@ -29,14 +29,14 @@ export class AccountsResolver {
   @AllowAuthenticated()
   @Query(() => [Account], { name: 'accounts' })
   findAll(@Args() args: FindManyAccountArgs, @GetUser() user: GetUserType) {
-    checkRowLevelPermission(user, user.uid, ['ADMIN']);
+    checkRowLevelPermission(user, user.id, ['ADMIN']);
     return this.accountsService.findAll(args);
   }
 
   @AllowAuthenticated()
   @Query(() => Account, { name: 'account' })
   findOne(@Args() args: FindUniqueAccountArgs, @GetUser() user: GetUserType) {
-    checkRowLevelPermission(user, user.uid);
+    checkRowLevelPermission(user, user.id);
     return this.accountsService.findOne(args);
   }
 
@@ -60,7 +60,7 @@ export class AccountsResolver {
     @GetUser() user: GetUserType,
   ) {
     const account = await this.prisma.account.findUnique(args);
-    checkRowLevelPermission(user, user.uid, ['ADMIN']);
+    checkRowLevelPermission(user, user.id, ['ADMIN']);
     return this.accountsService.remove(args);
   }
 
